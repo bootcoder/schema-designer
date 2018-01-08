@@ -26,3 +26,15 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.card {
+  height: 200px;
+  width: 200px;
+  border: 1px dashed blue
+}
+
+.card-element {
+  height: 30px;
+  width: 150px;
+  border: 1px solid black
+}
