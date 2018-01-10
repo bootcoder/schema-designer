@@ -14,6 +14,8 @@ class SandBox extends Component {
         <div className='SandBox'>
           <div className='grid'>
             <Draggable
+              bounds='parent'
+              defaultPosition={{x:200, y:200}}
               handle='.handle'>
               <div className='card'>
                 <p className='handle'>Some stuff</p>
