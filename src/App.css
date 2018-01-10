@@ -1,3 +1,7 @@
+* {
+  outline: 1px solid red;
+}
+
 .card {
   background-color: papayaWhip;
   height: 200px;
