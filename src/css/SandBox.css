@@ -8,15 +8,15 @@ input:checked ~ .SandBox {
 
  input:checked ~  label {
   left: 0;
-  background-color: red;
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
 }
 
  label {
   z-index: 2;
   position: absolute;
-  top: 10%;
+  top: 25%;
   left: 150px;
-  background-color: blue;
 
   -moz-transition: left 0.5s ease;
   transition: left 0.5s ease;
@@ -43,4 +43,9 @@ input:checked ~ .SandBox {
   background-image: linear-gradient(0deg, transparent 24%, rgba(255, 255, 255, .05) 25%, rgba(255, 255, 255, .05) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .05) 75%, rgba(255, 255, 255, .05) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(255, 255, 255, .05) 25%, rgba(255, 255, 255, .05) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .05) 75%, rgba(255, 255, 255, .05) 76%, transparent 77%, transparent);
   background-size:40px 40px;
   height:100%;
+}
+
+.toggle-img {
+  height: 35px;
+  width: 35px;
 }

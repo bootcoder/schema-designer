@@ -9,7 +9,7 @@ class SandBox extends Component {
     return (
       <div className='container'>
         <input id='toggle-sidebar' type='checkbox' role='button' />
-        <label htmlFor='toggle-sidebar'>toggle</label>
+        <label htmlFor='toggle-sidebar'><img className='toggle-img' src={require('../images/arrow.png')} alt='toggle-sidebar' /></label>
         <SideBar />
         <div className='SandBox'>
           <div className='grid'>
