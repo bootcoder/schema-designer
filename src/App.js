@@ -1,23 +1,17 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import Draggable, { DraggableCore } from 'react-draggable'
-import './App.css';
+import Header from './components/Header'
+import './App.css'
 
 class App extends Component {
-  constructor () {
-    super()
-  }
-  
-  render() {
+  render () {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <Draggable>
+      <div className='App'>
+        <Header />
+        <Draggable
+          handle='.handle'>
           <div className='card'>
-            <p>Some stuff</p>
+            <p class='handle'>Some stuff</p>
             <div className='card-element'>
               Card 1
             </div>
@@ -27,12 +21,9 @@ class App extends Component {
             </div>
           </div>
         </Draggable>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App
