@@ -1,11 +1,41 @@
+ input[type=checkbox] {
+  display: none;
+}
+
+input:checked ~ .SandBox {
+  left: 0;
+}
+
+ input:checked ~  label {
+  left: 0;
+  background-color: red;
+}
+
+ label {
+  z-index: 2;
+  position: absolute;
+  top: 10%;
+  left: 150px;
+  background-color: blue;
+
+  -moz-transition: left 0.5s ease;
+  transition: left 0.5s ease;
+}
+
 .SandBox {
   background-color: #434343;
+  position: absolute;
+  left: 150px;
+  right: 0;
   background-image: linear-gradient(#434343, #282828);
   height: 10000px;
   margin: 0;
   outline: 3px dashed red;
   padding: 0;
   width: 10000px;
+
+  -moz-transition: left 1.0s ease;
+  transition: left 1.0s ease;
 }
 
 .grid {
