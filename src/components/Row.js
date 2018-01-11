@@ -12,7 +12,7 @@ class Row extends Component {
   render () {
     const details = this.props.details
     return (
-      <div className='Row'>
+      <div className='Row' style={{backgroundColor: `${details.color}`}}>
         {details.title}
       </div>
     )

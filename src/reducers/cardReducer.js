@@ -4,6 +4,7 @@ export default function cardReducer (state = [], action) {
   switch (action.type) {
     case types.CREATE_CARD:
       return [...state, {
+        id: Math.random().toString(36).substring(2, 10) + Math.random().toString(36).substring(2, 10),
         title: 'new table',
         position: {
           x: 50,
@@ -16,6 +17,8 @@ export default function cardReducer (state = [], action) {
           }
         ]
       }]
+    case types.SELECT_CARD:
+      return [...state]
     default:
       return state
   }

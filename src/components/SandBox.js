@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-// import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as cardActions from '../actions/cardActions'
@@ -10,11 +9,6 @@ import '../css/SandBox.css'
 class SandBox extends Component {
   constructor (props, context) {
     super(props, context)
-
-    this.state = {
-      cards: []
-    }
-
     this.displayCard = this.displayCard.bind(this)
   }
 
@@ -23,6 +17,7 @@ class SandBox extends Component {
       <Card
         key={index}
         details={card}
+        actions={this.props.actions}
       />
     )
   }

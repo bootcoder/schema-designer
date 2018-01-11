@@ -6,6 +6,7 @@ import configureStore from './store/configureStore'
 import Header from './components/Header'
 import SandBox from './components/SandBox'
 import './App.css'
+
 const store = configureStore()
 
 class App extends Component {
