@@ -1,8 +1,5 @@
 import React, { Component } from 'react'
 // import { Link } from 'react-router-dom'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import * as cardActions from '../actions/cardActions'
 import '../css/SideBar.css'
 
 class SideBar extends Component {
@@ -15,16 +12,4 @@ class SideBar extends Component {
   }
 }
 
-function mapStateToProps (state, ownProps) {
-  return {
-    cards: state.cards
-  }
-}
-
-function mapDispatchToProps (dispatch) {
-  return {
-    actions: bindActionCreators(cardActions, dispatch)
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(SideBar)
+export default SideBar

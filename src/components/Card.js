@@ -1,8 +1,5 @@
 import React, { Component } from 'react'
-import * as cardActions from '../actions/cardActions'
 import Draggable, { DraggableCore } from 'react-draggable'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import Row from './Row'
 import '../css/Card.css'
 
