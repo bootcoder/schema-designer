@@ -1,7 +1,22 @@
 import * as types from './actionTypes'
 
-export function createCard (card) {
-  return {type: types.CREATE_CARD, card}
+function generateNewCard () {
+  const newCardId = Math.random().toString(36).substring(2, 5) + Math.random().toString(36).substring(2, 5)
+  return {
+    id: newCardId,
+    title: 'new table',
+    position: {
+      x: 50,
+      y: 50 },
+    rows: [{
+      id: 1,
+      title: 'id',
+      color: 'brown' }]
+  }
+}
+
+export function createCard () {
+  return {type: types.CREATE_CARD, card: generateNewCard()}
 }
 
 export function selectCard (card) {
