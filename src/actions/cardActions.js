@@ -11,3 +11,7 @@ export function selectCard (card) {
 export function selectRow (row, card) {
   return {type: types.SELECT_ROW, row, card}
 }
+
+export function addRow (cardId) {
+  return {type: types.ADD_ROW, cardId}
+}

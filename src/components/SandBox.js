@@ -32,7 +32,9 @@ class SandBox extends Component {
             src={require('../images/arrow.png')}
             alt='toggle-sidebar' />
         </label>
-        <SideBar actions={this.props.actions} />
+        <SideBar
+          actions={this.props.actions}
+          nav={this.props.nav} />
         <div className='SandBox'>
           <div className='grid'>
             {this.props.cards.map(this.displayCard)}
@@ -45,7 +47,8 @@ class SandBox extends Component {
 
 function mapStateToProps (state, ownProps) {
   return {
-    cards: state.cards
+    cards: state.cards,
+    nav: state.nav
   }
 }
 
