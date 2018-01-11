@@ -7,3 +7,7 @@ export function createCard (card) {
 export function selectCard (card) {
   return {type: types.SELECT_CARD, card}
 }
+
+export function selectRow (row, card) {
+  return {type: types.SELECT_ROW, row, card}
+}

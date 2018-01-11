@@ -26,7 +26,12 @@ class SandBox extends Component {
     return (
       <div className='container'>
         <input id='toggle-sidebar' type='checkbox' role='button' />
-        <label htmlFor='toggle-sidebar'><img className='toggle-img' src={require('../images/arrow.png')} alt='toggle-sidebar' /></label>
+        <label htmlFor='toggle-sidebar'>
+          <img
+            className='toggle-img'
+            src={require('../images/arrow.png')}
+            alt='toggle-sidebar' />
+        </label>
         <SideBar actions={this.props.actions} />
         <div className='SandBox'>
           <div className='grid'>

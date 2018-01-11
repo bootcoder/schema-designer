@@ -1,7 +1,9 @@
 import * as types from '../actions/actionTypes'
 
-const emptyCard = {
-  id: Math.random().toString(36).substring(2, 10) + Math.random().toString(36).substring(2, 10),
+const newCardId = Math.random().toString(36).substring(2, 5) + Math.random().toString(36).substring(2, 5)
+
+const newCard = {
+  id: newCardId,
   title: 'new table',
   position: {
     x: 50,
@@ -9,6 +11,7 @@ const emptyCard = {
   },
   rows: [
     {
+      id: 1,
       title: 'id',
       color: 'brown'
     }
@@ -18,7 +21,7 @@ const emptyCard = {
 export default function cardReducer (state = [], action) {
   switch (action.type) {
     case types.CREATE_CARD:
-      return [...state, emptyCard]
+      return [...state, newCard]
 
     default:
       return state

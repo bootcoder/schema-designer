@@ -6,9 +6,6 @@ import '../css/Card.css'
 class Card extends Component {
   constructor (props, context) {
     super(props, context)
-    this.state = {
-      card: this.props.details
-    }
 
     this.displayRow = this.displayRow.bind(this)
   }
@@ -16,16 +13,17 @@ class Card extends Component {
   displayRow (row, index) {
     return (
       <Row
-        key={index}
+        actions={this.props.actions}
+        card={this.props.details}
         details={row}
+        key={index}
       />
     )
   }
 
   render () {
     const details = this.props.details
-    console.log('****************************!')
-    // console.log(store)
+
     return (
       <Draggable
         bounds='parent'
@@ -39,19 +37,5 @@ class Card extends Component {
     )
   }
 }
-
-// function mapStateToProps (state, ownProps) {
-//   return {
-//     cards: state.cards
-//   }
-// }
-//
-// function mapDispatchToProps (dispatch) {
-//   return {
-//     actions: bindActionCreators(cardActions, dispatch)
-//   }
-// }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(Card)
 
 export default Card
