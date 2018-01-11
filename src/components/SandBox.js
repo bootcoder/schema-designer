@@ -4,15 +4,27 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as cardActions from '../actions/cardActions'
 import SideBar from './SideBar'
-import Draggable, { DraggableCore } from 'react-draggable'
+import Card from './Card'
 import '../css/SandBox.css'
 
 class SandBox extends Component {
   constructor (props, context) {
     super(props, context)
+
     this.state = {
       cards: []
     }
+
+    this.displayCard = this.displayCard.bind(this)
+  }
+
+  displayCard (card, index) {
+    return (
+      <Card
+        key={index}
+        details={card}
+      />
+    )
   }
 
   render () {
@@ -23,20 +35,7 @@ class SandBox extends Component {
         <SideBar />
         <div className='SandBox'>
           <div className='grid'>
-            <Draggable
-              bounds='parent'
-              defaultPosition={{x: 200, y: 200}}
-              handle='.handle'>
-              <div className='card'>
-                <p className='handle'>Some stuff</p>
-                <div className='card-element'>
-                  Feild 1
-                </div>
-                <div className='card-element'>
-                  Feild 2
-                </div>
-              </div>
-            </Draggable>
+            {this.props.cards.map(this.displayCard)}
           </div>
         </div>
       </div>
