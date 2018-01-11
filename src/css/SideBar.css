@@ -7,3 +7,10 @@
   left: 0;
   bottom: 0;
 }
+
+.SideBar button {
+  display: block;
+  margin: 2% auto 2% auto;
+  width: 50%;
+
+}
