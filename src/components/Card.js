@@ -35,7 +35,7 @@ class Card extends Component {
         defaultPosition={{x: details.position.x, y: details.position.y}}
         handle='.handle'>
         <div
-          className={details.selected ? 'Card selected' : 'Card'}
+          className={details.selected ? 'Card selected-card' : 'Card'}
           onClick={this.selectCard}
           >
           <p className='handle'>{details.title}</p>

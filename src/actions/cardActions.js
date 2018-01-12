@@ -12,7 +12,8 @@ function generateNewCard () {
     rows: [{
       id: 1,
       title: 'id',
-      color: 'brown' }]
+      selected: false,
+      color: 'gray' }]
   }
 }
 

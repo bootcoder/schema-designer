@@ -15,6 +15,10 @@
   outline: 1px solid black;
 }
 
-.selected {
+.selected-card {
   outline: 2px solid lime;
+}
+
+.selected-row {
+  outline: 2px dotted lime;
 }

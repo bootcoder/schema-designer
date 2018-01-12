@@ -5,7 +5,8 @@ function newRow (card) {
   return {
     id: newId + 1,
     title: 'new_field',
-    color: 'brown'
+    selected: false,
+    color: 'gray'
   }
 }
 
@@ -18,6 +19,18 @@ export default function cardReducer (state = [], action) {
         }
         return Object.assign({}, card, {selected: true})
       })
+
+    case types.SELECT_ROW:
+      return state.map((card) => {
+        const rows = card.rows.map((row) => {
+          if (card.id === action.card.id && row.id === action.row.id) {
+            return Object.assign({}, row, {selected: true})
+          }
+          return Object.assign({}, row, {selected: false})
+        })
+        return Object.assign({}, card, {rows: rows})
+      })
+
     case types.CREATE_CARD:
       return [...state, action.card]
 
