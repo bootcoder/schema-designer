@@ -30,7 +30,7 @@ input:checked ~ .SandBox {
   background-image: linear-gradient(#434343, #282828);
   height: 10000px;
   margin: 0;
-  outline: 3px dashed red;
+  outline: 2px solid black;
   padding: 0;
   width: 10000px;
 

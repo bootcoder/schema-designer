@@ -11,6 +11,13 @@ function newRow (card) {
 
 export default function cardReducer (state = [], action) {
   switch (action.type) {
+    case types.SELECT_CARD:
+      return state.map((card) => {
+        if (card.id !== action.card.id) {
+          return Object.assign({}, card, {selected: false})
+        }
+        return Object.assign({}, card, {selected: true})
+      })
     case types.CREATE_CARD:
       return [...state, action.card]
 

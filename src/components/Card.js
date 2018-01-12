@@ -8,6 +8,7 @@ class Card extends Component {
     super(props, context)
 
     this.displayRow = this.displayRow.bind(this)
+    this.selectCard = this.selectCard.bind(this)
   }
 
   displayRow (row, index) {
@@ -21,6 +22,10 @@ class Card extends Component {
     )
   }
 
+  selectCard () {
+    this.props.actions.selectCard(this.props.details)
+  }
+
   render () {
     const details = this.props.details
 
@@ -29,7 +34,10 @@ class Card extends Component {
         bounds='parent'
         defaultPosition={{x: details.position.x, y: details.position.y}}
         handle='.handle'>
-        <div className='card' onClick={() => this.props.actions.selectCard(details)}>
+        <div
+          className={details.selected ? 'Card selected' : 'Card'}
+          onClick={this.selectCard}
+          >
           <p className='handle'>{details.title}</p>
           {details.rows.map(this.displayRow)}
         </div>

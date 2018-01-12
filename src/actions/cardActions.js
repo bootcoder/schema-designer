@@ -5,6 +5,7 @@ function generateNewCard () {
   return {
     id: newCardId,
     title: 'new table',
+    selected: false,
     position: {
       x: 50,
       y: 50 },
