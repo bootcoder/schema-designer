@@ -25,12 +25,16 @@ export function selectCard (card) {
   return {type: types.SELECT_CARD, card}
 }
 
-export function selectRow (row, card) {
+export function selectRow (card, row) {
   return {type: types.SELECT_ROW, row, card}
 }
 
 export function addRow (cardId) {
   return {type: types.ADD_ROW, cardId}
+}
+
+export function removeRow (cardId, rowId) {
+  return {type: types.REMOVE_ROW, cardId: cardId, rowId: rowId}
 }
 
 export function updatePosition (card, data) {

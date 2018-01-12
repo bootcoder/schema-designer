@@ -7,11 +7,11 @@ const defaultState = {
 
 export default function navReducer (state = defaultState, action) {
   switch (action.type) {
-    case types.SELECT_ROW:
-      return Object.assign({}, state, {selectedRowId: action.row.id, selectedCardId: action.card.id})
-
     case types.SELECT_CARD:
       return Object.assign({}, state, {selectedCardId: action.card.id})
+
+    case types.SELECT_ROW:
+      return Object.assign({}, state, {selectedRowId: action.row.id})
 
     default:
       return state

@@ -3,6 +3,7 @@
 }
 
 .Card {
+  position: absolute;
   display: inline-block;
   outline: 2px solid white;
 }
@@ -16,6 +17,7 @@
 }
 
 .selected-card {
+  z-index: 1000;
   outline: 2px solid lime;
 }
 

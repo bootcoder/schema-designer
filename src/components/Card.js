@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Draggable, { DraggableCore } from 'react-draggable'
+import Draggable from 'react-draggable'
 import Row from './Row'
 import '../css/Card.css'
 
@@ -37,14 +37,12 @@ class Card extends Component {
     return (
       <Draggable
         bounds='parent'
-        defaultPosition={{x: details.position.x, y: details.position.y}}
-        position={null}
+        position={{x: details.position.x, y: details.position.y}}
         onStop={this.handleDrag}
-        handle='.handle'>
+        handle='.handle' >
         <div
           className={details.selected ? 'Card selected-card' : 'Card'}
-          onClick={this.selectCard}
-          >
+          onClick={this.selectCard} >
           <p className='handle'>{details.title}</p>
           {details.rows.map(this.displayRow)}
         </div>

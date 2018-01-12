@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import * as cardActions from '../actions/cardActions'
 
 class Row extends Component {
   render () {
@@ -8,7 +7,7 @@ class Row extends Component {
       <div
         className={details.selected ? 'Row selected-row' : 'Row'}
         style={{backgroundColor: `${details.color}`}}
-        onClick={() => this.props.actions.selectRow(details, this.props.card)} >
+        onClick={() => this.props.actions.selectRow(this.props.card, details)} >
         {details.title}
       </div>
     )

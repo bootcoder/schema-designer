@@ -12,6 +12,22 @@ function newRow (card) {
 
 export default function cardReducer (state = [], action) {
   switch (action.type) {
+    case types.ADD_ROW:
+      return state.map((card) => {
+        if (card.id !== action.cardId) { return card }
+        return Object.assign({}, card, {rows: [...card.rows, newRow(card)]})
+      })
+
+    case types.CREATE_CARD:
+      return [...state, action.card]
+
+    case types.REMOVE_ROW:
+      return state.map((card) => {
+        if (card.id !== action.cardId) { return card }
+        const rows = card.rows.filter(e => e.id !== action.rowId)
+        return Object.assign({}, card, {rows})
+      })
+
     case types.SELECT_CARD:
       return state.map((card) => {
         if (card.id !== action.card.id) {
@@ -38,15 +54,6 @@ export default function cardReducer (state = [], action) {
           {},
           card,
           {position: {x: action.position.x, y: action.position.y}})
-      })
-
-    case types.CREATE_CARD:
-      return [...state, action.card]
-
-    case types.ADD_ROW:
-      return state.map((card) => {
-        if (card.id !== action.cardId) { return card }
-        return Object.assign({}, card, {rows: [...card.rows, newRow(card)]})
       })
 
     default:
