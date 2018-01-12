@@ -1,0 +1,26 @@
+.Row {
+  padding: 5px 10px 5px 10px;
+}
+
+.Table {
+  position: absolute;
+  display: inline-block;
+  outline: 2px solid white;
+}
+
+.handle {
+  text-align: center;
+  background-color: goldenRod;
+  padding: 5px 10px 5px 10px;
+  margin: 0;
+  outline: 1px solid black;
+}
+
+.selected-table {
+  z-index: 1000;
+  outline: 2px solid lime;
+}
+
+.selected-row {
+  outline: 2px dotted lime;
+}
