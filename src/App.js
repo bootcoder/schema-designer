@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import configureStore from './store/configureStore'
-// import PropTypes from 'prop-types'
 import Header from './components/Header'
 import SandBox from './components/SandBox'
 import './App.css'

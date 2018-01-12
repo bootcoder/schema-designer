@@ -21,6 +21,9 @@ export default function cardReducer (state = [], action) {
     case types.CREATE_CARD:
       return [...state, action.card]
 
+    case types.REMOVE_CARD:
+      return state.filter((card) => card.id !== action.cardId)
+
     case types.REMOVE_ROW:
       return state.map((card) => {
         if (card.id !== action.cardId) { return card }

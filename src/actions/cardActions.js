@@ -33,6 +33,10 @@ export function addRow (cardId) {
   return {type: types.ADD_ROW, cardId}
 }
 
+export function removeCard (cardId) {
+  return {type: types.REMOVE_CARD, cardId}
+}
+
 export function removeRow (cardId, rowId) {
   return {type: types.REMOVE_ROW, cardId: cardId, rowId: rowId}
 }
