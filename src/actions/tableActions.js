@@ -25,6 +25,10 @@ export function createTable () {
   return {type: types.CREATE_TABLE, table: generateNewTable()}
 }
 
+export function moveDown (tableId, rowId) {
+  return {type: types.MOVE_DOWN, tableId, rowId}
+}
+
 export function moveUp (tableId, rowId) {
   return {type: types.MOVE_UP, tableId, rowId}
 }

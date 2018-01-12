@@ -21,6 +21,17 @@ export default function tableReducer (state = [], action) {
     case types.CREATE_TABLE:
       return [...state, action.table]
 
+    case types.MOVE_DOWN:
+      return state.map((table) => {
+        if (table.id !== action.tableId) { return table }
+        const rows = [...table.rows]
+        const targetIndex = rows.findIndex((row) => row.id === action.rowId)
+        if (targetIndex === rows.length - 1) { return table }
+        const row = rows.splice(targetIndex, 1)[0]
+        rows.splice(targetIndex + 1, 0, row)
+        return Object.assign({}, table, {rows})
+      })
+
     case types.MOVE_UP:
       return state.map((table) => {
         if (table.id !== action.tableId) { return table }

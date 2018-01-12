@@ -1,5 +1,6 @@
 export const ADD_ROW = 'ADD_ROW'
 export const CREATE_TABLE = 'CREATE_TABLE'
+export const MOVE_DOWN = 'MOVE_DOWN'
 export const MOVE_UP = 'MOVE_UP'
 export const REMOVE_ROW = 'REMOVE_ROW'
 export const REMOVE_TABLE = 'REMOVE_TABLE'
