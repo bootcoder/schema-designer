@@ -7,8 +7,8 @@ function generateNewCard () {
     title: 'new table',
     selected: false,
     position: {
-      x: 50,
-      y: 50 },
+      x: Math.floor(Math.random() * (800 - 50) + 50),
+      y: Math.floor(Math.random() * (500 - 50) + 50) },
     rows: [{
       id: 1,
       title: 'id',
