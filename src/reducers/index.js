@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux'
-import cards from './cardReducer'
+import tables from './tableReducer'
 import nav from './navReducer'
 
 const rootReducer = combineReducers({
-  cards,
+  tables,
   nav
 })
 
