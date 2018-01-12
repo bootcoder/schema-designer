@@ -31,6 +31,15 @@ export default function cardReducer (state = [], action) {
         return Object.assign({}, card, {rows: rows})
       })
 
+    case types.UPDATE_POSITION:
+      return state.map((card) => {
+        if (card.id !== action.card.id) { return card }
+        return Object.assign(
+          {},
+          card,
+          {position: {x: action.position.x, y: action.position.y}})
+      })
+
     case types.CREATE_CARD:
       return [...state, action.card]
 

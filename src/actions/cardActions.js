@@ -32,3 +32,7 @@ export function selectRow (row, card) {
 export function addRow (cardId) {
   return {type: types.ADD_ROW, cardId}
 }
+
+export function updatePosition (card, data) {
+  return {type: types.UPDATE_POSITION, card, position: {x: data.lastX, y: data.lastY}}
+}
