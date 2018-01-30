@@ -24,11 +24,11 @@ class Table extends Component {
   }
 
   selectTable () {
-    this.props.actions.selectTable(this.props.details)
+    this.props.actions.selectTable(this.props.details.id)
   }
 
   handleDrag (e, data) {
-    this.props.actions.updatePosition(this.props.details, data)
+    this.props.actions.updatePosition(this.props.details.id, data)
   }
 
   render () {

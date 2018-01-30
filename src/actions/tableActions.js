@@ -41,14 +41,14 @@ export function removeTable (tableId) {
   return {type: types.REMOVE_TABLE, tableId}
 }
 
-export function selectRow (table, row) {
-  return {type: types.SELECT_ROW, row, table}
+export function selectRow (tableId, row) {
+  return {type: types.SELECT_ROW, row, tableId}
 }
 
-export function selectTable (table) {
-  return {type: types.SELECT_TABLE, table}
+export function selectTable (tableId) {
+  return {type: types.SELECT_TABLE, tableId}
 }
 
-export function updatePosition (table, data) {
-  return {type: types.UPDATE_POSITION, table, position: {x: data.lastX, y: data.lastY}}
+export function updatePosition (tableId, data) {
+  return {type: types.UPDATE_POSITION, tableId, position: {x: data.lastX, y: data.lastY}}
 }

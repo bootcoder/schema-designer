@@ -55,7 +55,7 @@ export default function tableReducer (state = [], action) {
 
     case types.SELECT_TABLE:
       return state.map((table) => {
-        if (table.id !== action.table.id) {
+        if (table.id !== action.tableId) {
           return Object.assign({}, table, {selected: false})
         }
         return Object.assign({}, table, {selected: true})
@@ -64,7 +64,7 @@ export default function tableReducer (state = [], action) {
     case types.SELECT_ROW:
       return state.map((table) => {
         const rows = table.rows.map((row) => {
-          if (table.id === action.table.id && row.id === action.row.id) {
+          if (table.id === action.tableId && row.id === action.row.id) {
             return Object.assign({}, row, {selected: true})
           }
           return Object.assign({}, row, {selected: false})
@@ -74,7 +74,7 @@ export default function tableReducer (state = [], action) {
 
     case types.UPDATE_POSITION:
       return state.map((table) => {
-        if (table.id !== action.table.id) { return table }
+        if (table.id !== action.tableId) { return table }
         return Object.assign(
           {},
           table,
