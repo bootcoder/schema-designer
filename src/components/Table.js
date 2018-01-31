@@ -8,7 +8,6 @@ class Table extends Component {
     super(props, context)
 
     this.displayRow = this.displayRow.bind(this)
-    this.selectTable = this.selectTable.bind(this)
     this.handleDrag = this.handleDrag.bind(this)
   }
 
@@ -16,18 +15,15 @@ class Table extends Component {
     return (
       <Row
         actions={this.props.actions}
-        table={this.props.details}
         details={row}
         key={index}
+        table={this.props.details}
       />
     )
   }
 
-  selectTable () {
-    this.props.actions.selectTable(this.props.details.id)
-  }
-
   handleDrag (e, data) {
+    this.props.actions.selectTable(this.props.details.id)
     this.props.actions.updatePosition(this.props.details.id, data)
   }
 
@@ -41,8 +37,7 @@ class Table extends Component {
         onStop={this.handleDrag}
         handle='.handle' >
         <div
-          className={details.selected ? 'Table selected-table' : 'Table'}
-          onClick={this.selectTable} >
+          className={details.selected ? 'Table selected-table' : 'Table'}>
           <p className='handle'>{details.title}</p>
           {details.rows.map(this.displayRow)}
         </div>
