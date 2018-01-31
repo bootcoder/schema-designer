@@ -97,13 +97,12 @@ export function selectTable (tableId) {
   return {type: types.SELECT_TABLE, tableId}
 }
 
-export function toggleEditRow () {
-  return (dispatch, getState) => {
-    let { nav } = getState()
+export function toggleEditRow (tableId, rowId) {
+  return (dispatch) => {
     return dispatch({
       type: types.TOGGLE_EDIT_ROW,
-      tableId: nav.selectedTableId,
-      rowId: nav.selectedRowId
+      tableId,
+      rowId
     })
   }
 }

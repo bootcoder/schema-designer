@@ -23,7 +23,7 @@ class SideBar extends Component {
   }
 
   handleEditRow () {
-    this.props.actions.toggleEditRow()
+    this.props.actions.toggleEditRow(this.props.nav.selectedTableId, this.props.nav.selectedRowId)
   }
 
   handleMoveDown () {
