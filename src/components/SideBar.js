@@ -6,6 +6,7 @@ class SideBar extends Component {
     super(props, context)
     this.handleCreateTable = this.handleCreateTable.bind(this)
     this.handleAddRow = this.handleAddRow.bind(this)
+    this.handleEditRow = this.handleEditRow.bind(this)
     this.handleRemoveRow = this.handleRemoveRow.bind(this)
     this.handleRemoveTable = this.handleRemoveTable.bind(this)
     this.handleMoveUp = this.handleMoveUp.bind(this)
@@ -19,6 +20,10 @@ class SideBar extends Component {
   handleCreateTable () {
     let newTable = this.props.actions.createTable().table.id
     this.props.actions.selectTable(newTable)
+  }
+
+  handleEditRow () {
+    this.props.actions.toggleEditRow()
   }
 
   handleMoveDown () {
@@ -45,6 +50,7 @@ class SideBar extends Component {
         <button onClick={this.handleCreateTable}>New Table</button>
         <button onClick={this.handleRemoveTable}>RM Table</button>
         <button onClick={this.handleAddRow}>Add Row</button>
+        <button onClick={this.handleEditRow}>Edit Row</button>
         <button onClick={this.handleRemoveRow}>RM Row</button>
         <button onClick={this.handleMoveUp}>Row UP</button>
         <button onClick={this.handleMoveDown}>Row DN</button>

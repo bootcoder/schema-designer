@@ -11,6 +11,7 @@ function generateNewTable () {
       y: Math.floor(Math.random() * (500 - 50) + 50) },
     rows: [{
       id: 0,
+      edit: false,
       title: 'id',
       selected: false,
       color: 'gray' }]
@@ -22,6 +23,7 @@ function generateRow (table) {
   newId = table.rows.length > 0 && table.rows.reduce((max, b) => Math.max(max, b.id), table.rows[0].id)
   return {
     id: newId + 1,
+    edit: false,
     title: 'new_field',
     selected: false,
     color: 'gray'
@@ -93,6 +95,17 @@ export function selectRow (tableId, rowId = null) {
 
 export function selectTable (tableId) {
   return {type: types.SELECT_TABLE, tableId}
+}
+
+export function toggleEditRow () {
+  return (dispatch, getState) => {
+    let { nav } = getState()
+    return dispatch({
+      type: types.TOGGLE_EDIT_ROW,
+      tableId: nav.selectedTableId,
+      rowId: nav.selectedRowId
+    })
+  }
 }
 
 export function updatePosition (tableId, data) {
