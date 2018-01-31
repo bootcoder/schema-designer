@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Draggable from 'react-draggable'
 import Row from './Row'
+import EditRow from './EditRow'
 import '../css/Table.css'
 
 class Table extends Component {
@@ -12,14 +13,20 @@ class Table extends Component {
   }
 
   displayRow (row, index) {
-    return (
-      <Row
+    console.log(row.edit)
+    return row.edit
+      ? <EditRow
         actions={this.props.actions}
         details={row}
         key={index}
         table={this.props.details}
       />
-    )
+      : <Row
+        actions={this.props.actions}
+        details={row}
+        key={index}
+        table={this.props.details}
+      />
   }
 
   handleDrag (e, data) {

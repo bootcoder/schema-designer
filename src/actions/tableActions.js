@@ -111,3 +111,15 @@ export function toggleEditRow () {
 export function updatePosition (tableId, data) {
   return {type: types.UPDATE_POSITION, tableId, position: {x: data.lastX, y: data.lastY}}
 }
+
+export function updateRow (row) {
+  return (dispatch, getState) => {
+    let { nav } = getState()
+    return dispatch({
+      type: types.UPDATE_ROW,
+      tableId: nav.selectedTableId,
+      rowId: nav.selectedRowId,
+      row
+    })
+  }
+}

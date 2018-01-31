@@ -83,6 +83,18 @@ export default function tableReducer (state = [], action) {
           {position: {x: action.position.x, y: action.position.y}})
       })
 
+    case types.UPDATE_ROW:
+      return state.map((table) => {
+        const rows = table.rows.map((row) => {
+          if (table.id === action.tableId && row.id === action.rowId) {
+            return Object.assign({}, action.row, {edit: false})
+          } else {
+            return row
+          }
+        })
+        return Object.assign({}, table, {rows: rows})
+      })
+
     default:
       return state
   }
