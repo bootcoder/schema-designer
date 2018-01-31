@@ -60,9 +60,12 @@ export function updatePosition (tableId, data) {
   return {type: types.UPDATE_POSITION, tableId, position: {x: data.lastX, y: data.lastY}}
 }
 
-export function addAndSelectRow (tableId) {
-  return (dispatch) => {
-    dispatch(addRow(tableId))
-    dispatch(selectRow(tableId))
+export function addNewRow (tableId) {
+  return (dispatch, getState) => {
+    new Promise((resolve, reject) => {
+      resolve(dispatch(addRow(tableId)))
+    }).then((row) => {
+      return dispatch(selectRow(tableId, row.id))
+    })
   }
 }

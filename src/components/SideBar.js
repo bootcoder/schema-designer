@@ -13,8 +13,7 @@ class SideBar extends Component {
   }
 
   handleAddRow () {
-    // this.props.actions.addRow(this.props.nav.selectedTableId)
-    this.props.actions.addAndSelectRow(this.props.nav.selectedTableId)
+    this.props.actions.addNewRow(this.props.nav.selectedTableId)
   }
 
   handleCreateTable () {
