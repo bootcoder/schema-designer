@@ -8,7 +8,7 @@ const defaultState = {
 export default function navReducer (state = defaultState, action) {
   switch (action.type) {
     case types.SELECT_TABLE:
-      return Object.assign({}, state, {selectedTableId: action.tableId, selectedRowId: ''})
+      return Object.assign({}, state, {selectedTableId: action.tableId})
 
     case types.SELECT_ROW:
       return Object.assign({}, state, {selectedRowId: action.rowId})

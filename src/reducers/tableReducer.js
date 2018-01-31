@@ -1,21 +1,11 @@
 import * as types from '../actions/actionTypes'
 
-function newRow (table) {
-  const newId = table.rows.reduce((max, b) => Math.max(max, b.id), table.rows[0].id)
-  return {
-    id: newId + 1,
-    title: 'new_field',
-    selected: false,
-    color: 'gray'
-  }
-}
-
 export default function tableReducer (state = [], action) {
   switch (action.type) {
     case types.ADD_ROW:
       return state.map((table) => {
         if (table.id !== action.tableId) { return table }
-        return Object.assign({}, table, {rows: [...table.rows, newRow(table)]})
+        return Object.assign({}, table, {rows: [...table.rows, action.row]})
       })
 
     case types.CREATE_TABLE:

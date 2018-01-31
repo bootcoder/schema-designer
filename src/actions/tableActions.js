@@ -17,8 +17,33 @@ function generateNewTable () {
   }
 }
 
-export function addRow (tableId) {
-  return {type: types.ADD_ROW, tableId}
+function generateRow (table) {
+  let newId = 0
+  newId = table.rows.length > 0 && table.rows.reduce((max, b) => Math.max(max, b.id), table.rows[0].id)
+  return {
+    id: newId + 1,
+    title: 'new_field',
+    selected: false,
+    color: 'gray'
+  }
+}
+
+export function addNewRow (tableId) {
+  return (dispatch, getState) => {
+    new Promise((resolve, reject) => {
+      let { tables } = getState()
+      let table = tables.filter(table => table.id === tableId)[0]
+      let newRow = generateRow(table)
+      dispatch(addRow(tableId, newRow))
+      resolve(newRow)
+    }).then((row) => {
+      return dispatch(selectRow(tableId, row.id))
+    })
+  }
+}
+
+export function addRow (tableId, row) {
+  return {type: types.ADD_ROW, tableId, row}
 }
 
 export function createTable () {
@@ -34,7 +59,21 @@ export function moveUp (tableId, rowId) {
 }
 
 export function removeRow (tableId, rowId) {
-  return {type: types.REMOVE_ROW, tableId: tableId, rowId: rowId}
+  return (dispatch, getState) => {
+    let { tables } = getState()
+    let rows = tables.filter(table => table.id === tableId)[0].rows
+    let row = rows.filter(row => row.id === rowId)[0]
+    let newRowId = null
+    if (rows.length === 1) {
+      // no action here, but the conditional is needed to catch
+    } else if (rows[rows.indexOf(row) + 1] !== undefined) {
+      newRowId = rows[rows.indexOf(row) + 1].id
+    } else if (rows[rows.indexOf(row) - 1] !== undefined) {
+      newRowId = rows[rows.indexOf(row) - 1].id
+    }
+    dispatch({type: types.REMOVE_ROW, tableId: tableId, rowId: rowId})
+    return dispatch(selectRow(tableId, newRowId))
+  }
 }
 
 export function removeTable (tableId) {
@@ -46,7 +85,7 @@ export function selectRow (tableId, rowId = null) {
     if (rowId === null) {
       let { tables } = getState()
       let rows = tables.filter(table => table.id === tableId)[0].rows
-      rowId = rows[rows.length - 1].id
+      rowId = rows.length > 0 && rows[rows.length - 1].id
     }
     return dispatch({type: types.SELECT_ROW, rowId, tableId})
   }
@@ -58,14 +97,4 @@ export function selectTable (tableId) {
 
 export function updatePosition (tableId, data) {
   return {type: types.UPDATE_POSITION, tableId, position: {x: data.lastX, y: data.lastY}}
-}
-
-export function addNewRow (tableId) {
-  return (dispatch, getState) => {
-    new Promise((resolve, reject) => {
-      resolve(dispatch(addRow(tableId)))
-    }).then((row) => {
-      return dispatch(selectRow(tableId, row.id))
-    })
-  }
 }
