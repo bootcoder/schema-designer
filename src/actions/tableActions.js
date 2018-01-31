@@ -41,8 +41,15 @@ export function removeTable (tableId) {
   return {type: types.REMOVE_TABLE, tableId}
 }
 
-export function selectRow (tableId, row) {
-  return {type: types.SELECT_ROW, row, tableId}
+export function selectRow (tableId, rowId = null) {
+  return (dispatch, getState) => {
+    if (rowId === null) {
+      let { tables } = getState()
+      let rows = tables.filter(table => table.id === tableId)[0].rows
+      rowId = rows[rows.length - 1].id
+    }
+    return dispatch({type: types.SELECT_ROW, rowId, tableId})
+  }
 }
 
 export function selectTable (tableId) {
@@ -51,4 +58,11 @@ export function selectTable (tableId) {
 
 export function updatePosition (tableId, data) {
   return {type: types.UPDATE_POSITION, tableId, position: {x: data.lastX, y: data.lastY}}
+}
+
+export function addAndSelectRow (tableId) {
+  return (dispatch) => {
+    dispatch(addRow(tableId))
+    dispatch(selectRow(tableId))
+  }
 }

@@ -7,7 +7,7 @@ class Row extends Component {
       <div
         className={details.selected ? 'Row selected-row' : 'Row'}
         style={{backgroundColor: `${details.color}`}}
-        onClick={() => this.props.actions.selectRow(this.props.table.id, details)} >
+        onClick={() => this.props.actions.selectRow(this.props.table.id, details.id)} >
         {details.title}
       </div>
     )

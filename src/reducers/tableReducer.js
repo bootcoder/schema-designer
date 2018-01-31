@@ -64,7 +64,7 @@ export default function tableReducer (state = [], action) {
     case types.SELECT_ROW:
       return state.map((table) => {
         const rows = table.rows.map((row) => {
-          if (table.id === action.tableId && row.id === action.row.id) {
+          if (table.id === action.tableId && row.id === action.rowId) {
             return Object.assign({}, row, {selected: true})
           }
           return Object.assign({}, row, {selected: false})

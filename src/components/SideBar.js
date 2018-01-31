@@ -14,11 +14,11 @@ class SideBar extends Component {
 
   handleAddRow () {
     // this.props.actions.addRow(this.props.nav.selectedTableId)
-    this.props.actions.testThunk(this.props.nav.selectedTableId)
+    this.props.actions.addAndSelectRow(this.props.nav.selectedTableId)
   }
 
   handleCreateTable () {
-    let newTable = this.props.actions.createTable().table
+    let newTable = this.props.actions.createTable().table.id
     this.props.actions.selectTable(newTable)
   }
 
