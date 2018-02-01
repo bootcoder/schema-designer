@@ -6,6 +6,7 @@ function generateNewTable () {
     id: newTableId,
     title: 'new table',
     selected: false,
+    edit: false,
     position: {
       x: Math.floor(Math.random() * (800 - 50) + 50),
       y: Math.floor(Math.random() * (500 - 50) + 50) },
@@ -115,4 +116,8 @@ export function updateRow (row) {
       row
     })
   }
+}
+
+export function updateTableTile (tableId, title) {
+  return {type: types.UPDATE_TABLE_TITLE, tableId, title}
 }
