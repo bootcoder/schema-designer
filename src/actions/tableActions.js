@@ -4,7 +4,7 @@ function generateNewTable () {
   const newTableId = Math.random().toString(36).substring(2, 5) + Math.random().toString(36).substring(2, 5)
   return {
     id: newTableId,
-    title: 'new table',
+    name: 'new table',
     selected: false,
     edit: false,
     position: {
@@ -118,6 +118,6 @@ export function updateRow (row) {
   }
 }
 
-export function updateTableTile (tableId, title) {
-  return {type: types.UPDATE_TABLE_TITLE, tableId, title}
+export function updateTableName (tableId, name) {
+  return {type: types.UPDATE_TABLE_NAME, tableId, name}
 }

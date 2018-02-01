@@ -12,8 +12,8 @@ class Table extends Component {
 
     this.displayRow = this.displayRow.bind(this)
     this.handleDrag = this.handleDrag.bind(this)
-    this.handleUpdateTitle = this.handleUpdateTitle.bind(this)
-    this.saveTitle = this.saveTitle.bind(this)
+    this.handleUpdateName = this.handleUpdateName.bind(this)
+    this.saveName = this.saveName.bind(this)
     this.toggleEditTable = this.toggleEditTable.bind(this)
   }
 
@@ -36,17 +36,17 @@ class Table extends Component {
   displayTableName () {
     if (this.state.edit) {
       return (
-        <form onSubmit={this.saveTitle} >
+        <form onSubmit={this.saveName} >
           <input
             type='text'
-            name='title'
-            onChange={this.handleUpdateTitle}
-            value={this.state.title}
+            name='name'
+            onChange={this.handleUpdateName}
+            value={this.state.name}
           />
         </form>
       )
     } else {
-      return <p onDoubleClick={this.toggleEditTable} className='handle'>{this.state.title}</p>
+      return <p onDoubleClick={this.toggleEditTable} className='handle'>{this.state.name}</p>
     }
   }
 
@@ -55,15 +55,15 @@ class Table extends Component {
     this.props.actions.updatePosition(this.props.details.id, data)
   }
 
-  handleUpdateTitle (event) {
-    let newState = Object.assign({}, this.state, {title: event.target.value})
+  handleUpdateName (event) {
+    let newState = Object.assign({}, this.state, {name: event.target.value})
     this.setState(newState)
   }
 
-  saveTitle () {
+  saveName () {
     let newState = Object.assign({}, this.state, {edit: false})
     this.setState(newState)
-    this.props.actions.updateTableTitle(newState.id, newState.title)
+    this.props.actions.updateTableName(newState.id, newState.name)
   }
 
   toggleEditTable () {

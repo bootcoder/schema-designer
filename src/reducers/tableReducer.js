@@ -95,10 +95,10 @@ export default function tableReducer (state = [], action) {
         return Object.assign({}, table, {rows: rows})
       })
 
-    case types.UPDATE_TABLE_TITLE:
+    case types.UPDATE_TABLE_NAME:
       return state.map(table => {
         if (table.id !== action.tableId) { return table }
-        return Object.assign({}, table, {title: action.title})
+        return Object.assign({}, table, {name: action.name})
       })
 
     default:
