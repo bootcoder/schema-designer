@@ -73,7 +73,7 @@ export function removeRow (tableId, rowId) {
     } else if (rows[rows.indexOf(row) - 1] !== undefined) {
       newRowId = rows[rows.indexOf(row) - 1].id
     }
-    dispatch({type: types.REMOVE_ROW, tableId: tableId, rowId: rowId})
+    dispatch({type: types.REMOVE_ROW, tableId, rowId})
     return dispatch(selectRow(tableId, newRowId))
   }
 }
@@ -98,13 +98,7 @@ export function selectTable (tableId) {
 }
 
 export function toggleEditRow (tableId, rowId) {
-  return (dispatch) => {
-    return dispatch({
-      type: types.TOGGLE_EDIT_ROW,
-      tableId,
-      rowId
-    })
-  }
+  return { type: types.TOGGLE_EDIT_ROW, tableId, rowId }
 }
 
 export function updatePosition (tableId, data) {

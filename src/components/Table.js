@@ -13,7 +13,6 @@ class Table extends Component {
   }
 
   displayRow (row, index) {
-    console.log(row.edit)
     return row.edit
       ? <EditRow
         actions={this.props.actions}

@@ -34,7 +34,8 @@ class SandBox extends Component {
         </label>
         <SideBar
           actions={this.props.actions}
-          nav={this.props.nav} />
+          nav={this.props.nav}
+        />
         <div className='SandBox'>
           <div className='grid'>
             {this.props.tables.map(this.displayTable)}
