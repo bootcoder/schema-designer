@@ -37,10 +37,11 @@ class Table extends Component {
     if (this.state.edit) {
       return (
         <form onSubmit={this.saveName} >
-          <input
+          <input autoFocus
             type='text'
             name='name'
             onChange={this.handleUpdateName}
+            onFocus={(e) => e.target.select()}
             value={this.state.name}
           />
         </form>
