@@ -11,7 +11,10 @@ export default function navReducer (state = defaultState, action) {
       return Object.assign({}, state, {selectedTableId: action.tableId})
 
     case types.SELECT_ROW:
-      return Object.assign({}, state, {selectedRowId: action.rowId})
+      return Object.assign(
+        {},
+        state,
+        {selectedTableId: action.tableId, selectedRowId: action.rowId})
 
     default:
       return state

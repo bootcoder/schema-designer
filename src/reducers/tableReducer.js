@@ -43,14 +43,6 @@ export default function tableReducer (state = [], action) {
         return Object.assign({}, table, {rows})
       })
 
-    case types.SELECT_TABLE:
-      return state.map((table) => {
-        if (table.id !== action.tableId) {
-          return Object.assign({}, table, {selected: false})
-        }
-        return Object.assign({}, table, {selected: true})
-      })
-
     case types.SELECT_ROW:
       return state.map((table) => {
         const rows = table.rows.map((row) => {
@@ -60,6 +52,14 @@ export default function tableReducer (state = [], action) {
           return Object.assign({}, row, {selected: false})
         })
         return Object.assign({}, table, {rows: rows})
+      })
+
+    case types.SELECT_TABLE:
+      return state.map((table) => {
+        if (table.id !== action.tableId) {
+          return Object.assign({}, table, {selected: false})
+        }
+        return Object.assign({}, table, {selected: true})
       })
 
     case types.TOGGLE_EDIT_ROW:

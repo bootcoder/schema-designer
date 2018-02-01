@@ -90,6 +90,7 @@ export function selectRow (tableId, rowId = null) {
       let rows = tables.filter(table => table.id === tableId)[0].rows
       rowId = rows.length > 0 && rows[rows.length - 1].id
     }
+    dispatch(selectTable(tableId))
     return dispatch({type: types.SELECT_ROW, rowId, tableId})
   }
 }
