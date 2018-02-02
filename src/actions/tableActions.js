@@ -70,6 +70,7 @@ export function deselectOtherRows (tableId) {
         }
         return row
       })
+      return newTables
     })
   }
 }
@@ -88,6 +89,7 @@ export function disableEditAndSave () {
         return newRow
       })
     })
+    return tables
   }
 }
 
@@ -118,7 +120,12 @@ export function removeRow (tableId, rowId) {
 }
 
 export function removeTable (tableId) {
-  return {type: types.REMOVE_TABLE, tableId}
+  return (dispatch, getState) => {
+    let { tables } = getState()
+    let newTable = tables.filter(table => table.id !== tableId)[0]
+    newTable && dispatch(selectTable(newTable.id))
+    return dispatch({type: types.REMOVE_TABLE, tableId})
+  }
 }
 
 export function selectRow (tableId, rowId = null) {
