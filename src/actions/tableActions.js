@@ -88,6 +88,7 @@ export function disableEditAndSave () {
         dispatch(updateRow(newRow))
         return newRow
       })
+      return newTable
     })
     return tables
   }
