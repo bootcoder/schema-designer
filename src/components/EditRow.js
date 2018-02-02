@@ -4,25 +4,24 @@ class EditRow extends Component {
   constructor (props) {
     super(props)
 
-    this.state = this.props.details
-
     this.handleChange = this.handleChange.bind(this)
     this.handleSave = this.handleSave.bind(this)
   }
 
   handleChange (event) {
-    let newState = Object.assign({}, this.state)
+    let newState = Object.assign({}, this.props.details)
     newState[event.target.name] = event.target.value
-    this.setState(newState)
+    this.props.actions.updateRow(newState)
   }
 
   handleSave (event) {
     event.preventDefault()
-    this.props.actions.updateRow(this.state)
+    const newRow = Object.assign({}, this.props.details, {edit: false})
+    this.props.actions.updateRow(newRow)
   }
 
   render () {
-    const details = this.state
+    const details = this.props.details
     return (
       <div className='EditRow'>
         <form onSubmit={this.handleSave} >

@@ -4,7 +4,8 @@ function generateNewTable () {
   const newTableId = Math.random().toString(36).substring(2, 5) + Math.random().toString(36).substring(2, 5)
   return {
     id: newTableId,
-    name: 'new table',
+    // NOTE: Remove this and reset to 'new table' for production
+    name: newTableId,
     selected: false,
     edit: false,
     position: {
@@ -13,6 +14,7 @@ function generateNewTable () {
     rows: [{
       id: 0,
       edit: false,
+      tableId: newTableId,
       title: 'id',
       selected: false,
       color: 'gray' }]
@@ -25,6 +27,7 @@ function generateRow (table) {
   return {
     id: newId + 1,
     edit: false,
+    tableId: table.id,
     title: 'new_field',
     selected: false,
     color: 'gray'
@@ -51,6 +54,41 @@ export function addRow (tableId, row) {
 
 export function createTable () {
   return {type: types.CREATE_TABLE, table: generateNewTable()}
+}
+
+export function deselectOtherRows (tableId) {
+  return (dispatch, getState) => {
+    let { tables } = getState()
+    let newTables = [...tables]
+    newTables.map(table => {
+      if (table.id === tableId) { return table }
+      table.rows.map(row => {
+        if (row.selected || row.edit) {
+          const newRow = Object.assign({}, row, {selected: false})
+          dispatch(updateRow(newRow))
+          return newRow
+        }
+        return row
+      })
+    })
+  }
+}
+
+export function disableEditAndSave () {
+  return (dispatch, getState) => {
+    let { nav, tables } = getState()
+    tables.map(table => {
+      if (table.id !== nav.selectedTableId) { return table }
+      let newTable = Object.assign({}, table, {edit: false})
+      dispatch(updateTable(newTable))
+      newTable.rows.map(row => {
+        if (row.id !== nav.selectedRowId) { return row }
+        let newRow = Object.assign({}, row, {edit: false})
+        dispatch(updateRow(newRow))
+        return newRow
+      })
+    })
+  }
 }
 
 export function moveDown (tableId, rowId) {
@@ -85,18 +123,26 @@ export function removeTable (tableId) {
 
 export function selectRow (tableId, rowId = null) {
   return (dispatch, getState) => {
+    let { tables, nav } = getState()
+
+    if (rowId !== null && (tableId !== nav.selectedTableId || rowId !== nav.selectedRowId)) {
+      dispatch(disableEditAndSave())
+    }
     if (rowId === null) {
-      let { tables } = getState()
       let rows = tables.filter(table => table.id === tableId)[0].rows
       rowId = rows.length > 0 && rows[rows.length - 1].id
     }
+
     dispatch(selectTable(tableId))
     return dispatch({type: types.SELECT_ROW, rowId, tableId})
   }
 }
 
 export function selectTable (tableId) {
-  return {type: types.SELECT_TABLE, tableId}
+  return dispatch => {
+    dispatch(deselectOtherRows(tableId))
+    return dispatch({type: types.SELECT_TABLE, tableId})
+  }
 }
 
 export function toggleEditRow (tableId, rowId) {
@@ -109,14 +155,17 @@ export function updatePosition (tableId, data) {
 
 export function updateRow (row) {
   return (dispatch, getState) => {
-    let { nav } = getState()
     return dispatch({
       type: types.UPDATE_ROW,
-      tableId: nav.selectedTableId,
-      rowId: nav.selectedRowId,
+      tableId: row.tableId,
+      rowId: row.id,
       row
     })
   }
+}
+
+export function updateTable (table) {
+  return {type: types.UPDATE_TABLE, table}
 }
 
 export function updateTableName (tableId, name) {

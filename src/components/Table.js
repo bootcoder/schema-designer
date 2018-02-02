@@ -8,8 +8,6 @@ class Table extends Component {
   constructor (props, context) {
     super(props, context)
 
-    this.state = Object.assign({}, this.props.details)
-
     this.displayRow = this.displayRow.bind(this)
     this.handleDrag = this.handleDrag.bind(this)
     this.handleUpdateName = this.handleUpdateName.bind(this)
@@ -34,7 +32,7 @@ class Table extends Component {
   }
 
   displayTableName () {
-    if (this.state.edit) {
+    if (this.props.details.edit) {
       return (
         <form onSubmit={this.saveName} >
           <input autoFocus
@@ -42,34 +40,38 @@ class Table extends Component {
             name='name'
             onChange={this.handleUpdateName}
             onFocus={(e) => e.target.select()}
-            value={this.state.name}
+            value={this.props.details.name}
           />
         </form>
       )
     } else {
-      return <p onDoubleClick={this.toggleEditTable} className='handle'>{this.state.name}</p>
+      return <p onDoubleClick={this.toggleEditTable} className='handle'>{this.props.details.name}</p>
     }
   }
 
   handleDrag (e, data) {
-    this.props.actions.selectTable(this.props.details.id)
+    if (this.props.nav.selectedTableId !== this.props.details.id) {
+      this.props.actions.disableEditAndSave()
+      this.props.actions.selectTable(this.props.details.id)
+    }
     this.props.actions.updatePosition(this.props.details.id, data)
   }
 
   handleUpdateName (event) {
-    let newState = Object.assign({}, this.state, {name: event.target.value})
-    this.setState(newState)
+    let newState = Object.assign({}, this.props.details, {name: event.target.value})
+    this.props.actions.updateTable(newState)
   }
 
-  saveName () {
-    let newState = Object.assign({}, this.state, {edit: false})
-    this.setState(newState)
-    this.props.actions.updateTableName(newState.id, newState.name)
+  saveName (event) {
+    event.preventDefault()
+    let newState = Object.assign({}, this.props.details, {edit: false})
+    this.props.actions.updateTable(newState)
   }
 
   toggleEditTable () {
-    let newState = Object.assign({}, this.state, {edit: !this.state.edit})
-    this.setState(newState)
+    let newState = Object.assign({}, this.props.details, {edit: !this.props.details.edit})
+    console.log(newState)
+    this.props.actions.updateTable(newState)
   }
 
   render () {

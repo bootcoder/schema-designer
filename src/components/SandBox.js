@@ -9,15 +9,17 @@ import '../css/SandBox.css'
 class SandBox extends Component {
   constructor (props, context) {
     super(props, context)
+
     this.displayTable = this.displayTable.bind(this)
   }
 
   displayTable (table, index) {
     return (
       <Table
-        key={index}
-        details={table}
         actions={this.props.actions}
+        details={table}
+        key={index}
+        nav={this.props.nav}
       />
     )
   }

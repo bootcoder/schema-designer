@@ -87,12 +87,18 @@ export default function tableReducer (state = [], action) {
       return state.map((table) => {
         const rows = table.rows.map((row) => {
           if (table.id === action.tableId && row.id === action.rowId) {
-            return Object.assign({}, action.row, {edit: false})
+            return Object.assign({}, action.row)
           } else {
             return row
           }
         })
         return Object.assign({}, table, {rows: rows})
+      })
+
+    case types.UPDATE_TABLE:
+      return state.map(table => {
+        if (table.id !== action.table.id) { return table }
+        return Object.assign({}, action.table)
       })
 
     case types.UPDATE_TABLE_NAME:
