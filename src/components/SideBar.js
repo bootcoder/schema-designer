@@ -18,8 +18,7 @@ class SideBar extends Component {
   }
 
   handleCreateTable () {
-    let newTable = this.props.actions.createTable().table.id
-    this.props.actions.selectTable(newTable)
+    let newTable = this.props.actions.createTable()
   }
 
   handleEditRow () {

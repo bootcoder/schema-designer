@@ -53,7 +53,14 @@ export function addRow (tableId, row) {
 }
 
 export function createTable () {
-  return {type: types.CREATE_TABLE, table: generateNewTable()}
+  return dispatch => {
+    let table = generateNewTable()
+    dispatch({type: types.CREATE_TABLE, table})
+    dispatch(disableEditAndSave())
+    dispatch(deselectOtherRows(table.id))
+    dispatch(selectRow(table.id))
+    return table
+  }
 }
 
 export function deselectOtherRows (tableId) {

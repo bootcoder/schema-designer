@@ -27,12 +27,13 @@ class EditRow extends Component {
         <form onSubmit={this.handleSave} >
           <div>
             Name:
-            <input
+            <input autoFocus
               id='title'
               name='title'
+              onChange={this.handleChange}
+              onFocus={(e) => e.target.select()}
               type='text'
               value={details.title}
-              onChange={this.handleChange}
             />
           </div>
           <div>
