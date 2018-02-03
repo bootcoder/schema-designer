@@ -16,6 +16,9 @@ export default function navReducer (state = defaultState, action) {
         state,
         {selectedTableId: action.tableId, selectedRowId: action.rowId})
 
+    case types.CLEAR_TABLES:
+      return defaultState
+
     default:
       return state
   }

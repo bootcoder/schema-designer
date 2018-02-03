@@ -4,13 +4,14 @@ import '../css/SideBar.css'
 class SideBar extends Component {
   constructor (props, context) {
     super(props, context)
-    this.handleCreateTable = this.handleCreateTable.bind(this)
     this.handleAddRow = this.handleAddRow.bind(this)
+    this.handleCreateTable = this.handleCreateTable.bind(this)
+    this.handleClearTables = this.handleClearTables.bind(this)
     this.handleEditRow = this.handleEditRow.bind(this)
+    this.handleMoveDown = this.handleMoveDown.bind(this)
+    this.handleMoveUp = this.handleMoveUp.bind(this)
     this.handleRemoveRow = this.handleRemoveRow.bind(this)
     this.handleRemoveTable = this.handleRemoveTable.bind(this)
-    this.handleMoveUp = this.handleMoveUp.bind(this)
-    this.handleMoveDown = this.handleMoveDown.bind(this)
   }
 
   handleAddRow () {
@@ -18,7 +19,13 @@ class SideBar extends Component {
   }
 
   handleCreateTable () {
-    let newTable = this.props.actions.createTable()
+    this.props.actions.createTable()
+  }
+
+  handleClearTables () {
+    if (window.confirm('Clear All Tables?')) {
+      this.props.actions.clearTables()
+    }
   }
 
   handleEditRow () {
@@ -33,19 +40,20 @@ class SideBar extends Component {
     this.props.actions.moveUp(this.props.nav.selectedTableId, this.props.nav.selectedRowId)
   }
 
+  handleRemoveRow () {
+    this.props.actions.removeRow(this.props.nav.selectedTableId, this.props.nav.selectedRowId)
+  }
+
   handleRemoveTable () {
     if (window.confirm('Remove this table')) {
       this.props.actions.removeTable(this.props.nav.selectedTableId)
     }
   }
 
-  handleRemoveRow () {
-    this.props.actions.removeRow(this.props.nav.selectedTableId, this.props.nav.selectedRowId)
-  }
-
   render () {
     return (
       <div className='SideBar'>
+        <button onClick={this.handleClearTables}>CL Tables</button>
         <button onClick={this.handleCreateTable}>New Table</button>
         <button onClick={this.handleRemoveTable}>RM Table</button>
         <button onClick={this.handleAddRow}>Add Row</button>

@@ -22,6 +22,9 @@ export default function tableReducer (state = [], action) {
         return Object.assign({}, table, {rows})
       })
 
+    case types.CLEAR_TABLES:
+      return []
+
     case types.MOVE_UP:
       return state.map((table) => {
         if (table.id !== action.tableId) { return table }

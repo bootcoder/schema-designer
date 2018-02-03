@@ -63,6 +63,10 @@ export function createTable () {
   }
 }
 
+export function clearTables () {
+  return {type: types.CLEAR_TABLES}
+}
+
 export function deselectOtherRows (tableId) {
   return (dispatch, getState) => {
     let { tables } = getState()
