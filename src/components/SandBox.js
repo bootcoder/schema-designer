@@ -34,7 +34,8 @@ class SandBox extends Component {
             ${/* X,Y End */''}
             ${this.props.tables[1].position.x}
             ${this.props.tables[1].position.y}`}
-          stroke='black'
+          stroke='yellow'
+          stroke-width='2.5'
           fill='transparent' />
       )
     }
