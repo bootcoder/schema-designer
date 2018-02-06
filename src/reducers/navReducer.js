@@ -2,7 +2,9 @@ import * as types from '../actions/actionTypes'
 
 const defaultState = {
   selectedTableId: '',
-  selectedRowId: ''
+  selectedRowId: '',
+  windowWidth: 1000,
+  windowHeight: 1000
 }
 
 export default function navReducer (state = defaultState, action) {

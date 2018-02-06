@@ -3,7 +3,7 @@
 }
 
 .EditRow {
-  background-color: yellow; 
+  background-color: yellow;
   padding: 5px 10px 5px 10px;
 }
 
@@ -11,6 +11,7 @@
   position: absolute;
   display: inline-block;
   outline: 2px solid white;
+  z-index: 1;
 }
 
 .handle {

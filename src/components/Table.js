@@ -20,13 +20,13 @@ class Table extends Component {
       ? <EditRow
         actions={this.props.actions}
         details={row}
-        key={index}
+        key={row.id}
         table={this.props.details}
       />
       : <Row
         actions={this.props.actions}
         details={row}
-        key={index}
+        key={row.id}
         table={this.props.details}
       />
   }
@@ -81,7 +81,7 @@ class Table extends Component {
       <Draggable
         bounds='parent'
         position={{x: details.position.x, y: details.position.y}}
-        onStop={this.handleDrag}
+        onDrag={this.handleDrag}
         handle='.handle' >
         <div
           className={details.selected ? 'Table selected-table' : 'Table'}>

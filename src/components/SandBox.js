@@ -11,6 +11,33 @@ class SandBox extends Component {
     super(props, context)
 
     this.displayTable = this.displayTable.bind(this)
+    this.renderConnectionPaths = this.renderConnectionPaths.bind(this)
+  }
+
+  renderConnectionPaths () {
+    if (this.props.tables.length > 1) {
+      const xMidPoint = Math.abs(this.props.tables[0].position.x - this.props.tables[1].position.x) / 2
+      const yMidPoint = Math.abs(this.props.tables[0].position.y - this.props.tables[1].position.y) / 2
+      return (
+        <path
+          d={`M
+            ${/* X,Y Start */''}
+            ${this.props.tables[0].position.x}
+            ${this.props.tables[0].position.y}
+            C
+            ${/* X,Y from Start */''}
+            ${this.props.tables[0].position.x + (xMidPoint + xMidPoint * 0.10)}
+            ${this.props.tables[0].position.y + (yMidPoint + yMidPoint * 0.10)},
+            ${/* X,Y from End */''}
+            ${this.props.tables[1].position.x + (xMidPoint + xMidPoint * 0.10)}
+            ${this.props.tables[1].position.y + (yMidPoint + yMidPoint * 0.10)}
+            ${/* X,Y End */''}
+            ${this.props.tables[1].position.x}
+            ${this.props.tables[1].position.y}`}
+          stroke='black'
+          fill='transparent' />
+      )
+    }
   }
 
   displayTable (table, index) {
@@ -26,7 +53,7 @@ class SandBox extends Component {
 
   render () {
     return (
-      <div className='container'>
+      <div className='container app-container'>
         <input id='toggle-sidebar' type='checkbox' role='button' />
         <label htmlFor='toggle-sidebar'>
           <img
@@ -38,7 +65,10 @@ class SandBox extends Component {
           actions={this.props.actions}
           nav={this.props.nav}
         />
-        <div className='SandBox'>
+        <div className='SandBox' style={{width: this.props.nav.windowWidth, height: this.props.nav.windowHeight}} >
+          <svg id='svg-container' style={{width: this.props.nav.windowWidth, height: this.props.nav.windowHeight}} >
+            {this.renderConnectionPaths()}
+          </svg>
           <div className='grid'>
             {this.props.tables.map(this.displayTable)}
           </div>

@@ -12,7 +12,7 @@ function generateNewTable () {
       x: Math.floor(Math.random() * (800 - 50) + 50),
       y: Math.floor(Math.random() * (500 - 50) + 50) },
     rows: [{
-      id: 0,
+      id: `${newTableId}-${0}`,
       edit: false,
       tableId: newTableId,
       title: 'id',
@@ -22,10 +22,16 @@ function generateNewTable () {
 }
 
 function generateRow (table) {
-  let newId = 0
-  newId = table.rows.length > 0 && table.rows.reduce((max, b) => Math.max(max, b.id), table.rows[0].id)
+  // Strip away the table ID from the row ID
+  // Then find the next highest int
+  // Assign to new row ID concating the table ID
+  const findTrailingDigits = /-(\d+)/
+  const lastId = table.rows.length > 0 && table.rows.reduce((max, b) => {
+    const id = parseInt(findTrailingDigits.exec(b.id)[1], 10)
+    return Math.max(max, id)
+  }, parseInt(findTrailingDigits.exec(table.rows[0].id)[1], 10))
   return {
-    id: newId + 1,
+    id: `${table.id}-${lastId + 1}`,
     edit: false,
     tableId: table.id,
     title: 'new_field',
