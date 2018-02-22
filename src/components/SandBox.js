@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as tableActions from '../actions/tableActions'
 import SideBar from './SideBar'
+import ConnectionPath from './ConnectionPath'
 import Table from './Table'
 import '../css/SandBox.css'
 
@@ -15,30 +16,22 @@ class SandBox extends Component {
   }
 
   renderConnectionPaths () {
-    if (this.props.tables.length > 1) {
-      const xMidPoint = Math.abs(this.props.tables[0].position.x - this.props.tables[1].position.x) / 2
-      const yMidPoint = Math.abs(this.props.tables[0].position.y - this.props.tables[1].position.y) / 2
-      return (
-        <path
-          d={`M
-            ${/* X,Y Start */''}
-            ${this.props.tables[0].position.x}
-            ${this.props.tables[0].position.y}
-            C
-            ${/* X,Y from Start */''}
-            ${this.props.tables[0].position.x + (xMidPoint + xMidPoint * 0.10)}
-            ${this.props.tables[0].position.y + (yMidPoint + yMidPoint * 0.10)},
-            ${/* X,Y from End */''}
-            ${this.props.tables[1].position.x + (xMidPoint + xMidPoint * 0.10)}
-            ${this.props.tables[1].position.y + (yMidPoint + yMidPoint * 0.10)}
-            ${/* X,Y End */''}
-            ${this.props.tables[1].position.x}
-            ${this.props.tables[1].position.y}`}
-          stroke='yellow'
-          stroke-width='2.5'
-          fill='transparent' />
-      )
-    }
+    this.props.tables.map(table => {
+      table.rows.map(row => {
+        const color = 'red' // NOTE: comeback to make this dynorandomite.
+        row.connections.map(connection => {
+          const start = row.position // NOTE: need to build a function to attach this point to either the left or right side of the row box not the center as current.
+          const end = connection.position
+          return (
+            <ConnectionPath
+              start={start}
+              end={end}
+              color={color}
+            />
+          )
+        })
+      })
+    })
   }
 
   displayTable (table, index) {

@@ -1,44 +1,57 @@
 import * as types from './actionTypes'
 
+// //////////////////////
+// ///// HELPERS ////////
+// //////////////////////
+
+// NOTE: when modifing row be sure to mirror changes to both functions
+
 function generateNewTable () {
   const newTableId = Math.random().toString(36).substring(2, 5) + Math.random().toString(36).substring(2, 5)
-  return {
+  const newTable = {
     id: newTableId,
-    // NOTE: Remove this and reset to 'new table' for production
+    // NOTE: Remove name placeholder and reset to 'new table' for production
     name: newTableId,
     selected: false,
     edit: false,
     position: {
       x: Math.floor(Math.random() * (800 - 50) + 50),
-      y: Math.floor(Math.random() * (500 - 50) + 50) },
-    rows: [{
-      id: `${newTableId}-${0}`,
-      edit: false,
-      tableId: newTableId,
-      title: 'id',
-      selected: false,
-      color: 'gray' }]
+      y: Math.floor(Math.random() * (500 - 50) + 50) }
   }
+  newTable.rows = [generateRow(newTable)]
+  return newTable
 }
 
 function generateRow (table) {
-  // Strip away the table ID from the row ID
-  // Then find the next highest int
-  // Assign to new row ID concating the table ID
+  return {
+    color: 'gray',
+    connections: [],
+    edit: false,
+    id: generateRowId(table),
+    selected: false,
+    tableId: table.id,
+    title: 'new_field'
+  }
+}
+
+function generateRowId (table) {
+  // Strip away table ID from row ID
+  // Find next highest int within rows
+  // Assign new row ID concating table ID
+  if (!table.rows) {
+    return `${table.id}-${0}`
+  }
   const findTrailingDigits = /-(\d+)/
   const lastId = table.rows.length > 0 && table.rows.reduce((max, b) => {
     const id = parseInt(findTrailingDigits.exec(b.id)[1], 10)
     return Math.max(max, id)
   }, parseInt(findTrailingDigits.exec(table.rows[0].id)[1], 10))
-  return {
-    id: `${table.id}-${lastId + 1}`,
-    edit: false,
-    tableId: table.id,
-    title: 'new_field',
-    selected: false,
-    color: 'gray'
-  }
+  return `${table.id}-${lastId + 1}`
 }
+
+// //////////////////////
+// ///// ACTIONS ////////
+// //////////////////////
 
 export function addNewRow (tableId) {
   return (dispatch, getState) => {
