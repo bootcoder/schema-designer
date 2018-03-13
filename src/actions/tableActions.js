@@ -4,26 +4,34 @@ import * as types from './actionTypes'
 // ///// HELPERS ////////
 // //////////////////////
 
+// This is where default table lives.
 function generateNewTable () {
   const newTableId = Math.random().toString(36).substring(2, 5) + Math.random().toString(36).substring(2, 5)
+
   const newTable = {
+    edit: false,
+    connections: 0,
     id: newTableId,
     // NOTE: Remove name placeholder and reset to 'new table' for production
     name: newTableId,
-    selected: false,
-    edit: false,
     position: {
       x: Math.floor(Math.random() * (800 - 50) + 50),
-      y: Math.floor(Math.random() * (500 - 50) + 50) }
+      y: Math.floor(Math.random() * (500 - 50) + 50) },
+    selected: false
   }
+
   newTable.rows = [generateRow(newTable)]
   return newTable
 }
 
+// This is where default row lives.
 function generateRow (table) {
   return {
     color: 'gray',
-    connections: [],
+    connections: {
+      inbound: {},
+      outbound: {}
+    },
     edit: false,
     id: generateRowId(table),
     selected: false,
