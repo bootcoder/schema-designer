@@ -4,8 +4,6 @@ import * as types from './actionTypes'
 // ///// HELPERS ////////
 // //////////////////////
 
-// NOTE: when modifing row be sure to mirror changes to both functions
-
 function generateNewTable () {
   const newTableId = Math.random().toString(36).substring(2, 5) + Math.random().toString(36).substring(2, 5)
   const newTable = {

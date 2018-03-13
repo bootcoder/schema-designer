@@ -12,24 +12,29 @@ class SandBox extends Component {
     super(props, context)
 
     this.displayTable = this.displayTable.bind(this)
-    this.renderConnectionPaths = this.renderConnectionPaths.bind(this)
+    this.renderAllConnectionPaths = this.renderAllConnectionPaths.bind(this)
+    this.renderTableConnectionPath = this.renderTableConnectionPath.bind(this)
   }
 
-  renderConnectionPaths () {
+  renderAllConnectionPaths () {
     this.props.tables.map(table => {
-      table.rows.map(row => {
-        const color = 'red' // NOTE: comeback to make this dynorandomite.
-        row.connections.map(connection => {
-          const start = row.position // NOTE: need to build a function to attach this point to either the left or right side of the row box not the center as current.
-          const end = connection.position
-          return (
-            <ConnectionPath
-              start={start}
-              end={end}
-              color={color}
-            />
-          )
-        })
+      return this.renderTableConnectionPath(table)
+    })
+  }
+
+  renderTableConnectionPath (table) {
+    return table.rows.map(row => {
+      const color = 'red' // NOTE: comeback to make this dynorandomite.
+      row.connections.length && row.connections.map(connection => {
+        const start = row.position // NOTE: need to build a function to attach this point to either the left or right side of the row box not the center as current.
+        const end = connection.position
+        return (
+          <ConnectionPath
+            start={start}
+            end={end}
+            color={color}
+          />
+        )
       })
     })
   }
@@ -61,7 +66,7 @@ class SandBox extends Component {
         />
         <div className='SandBox' style={{width: this.props.nav.windowWidth, height: this.props.nav.windowHeight}} >
           <svg id='svg-container' style={{width: this.props.nav.windowWidth, height: this.props.nav.windowHeight}} >
-            {this.renderConnectionPaths()}
+            {this.renderAllConnectionPaths()}
           </svg>
           <div className='grid'>
             {this.props.tables.map(this.displayTable)}

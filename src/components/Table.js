@@ -10,6 +10,7 @@ class Table extends Component {
 
     this.displayRow = this.displayRow.bind(this)
     this.handleDrag = this.handleDrag.bind(this)
+    this.handleStop = this.handleStop.bind(this)
     this.handleUpdateName = this.handleUpdateName.bind(this)
     this.saveName = this.saveName.bind(this)
     this.toggleEditTable = this.toggleEditTable.bind(this)
@@ -54,6 +55,16 @@ class Table extends Component {
       this.props.actions.disableEditAndSave()
       this.props.actions.selectTable(this.props.details.id)
     }
+    if (this.props.details.rows) {
+      this.props.actions.updatePosition(this.props.details.id, data)
+    }
+  }
+
+  handleStop (e, data) {
+    if (this.props.nav.selectedTableId !== this.props.details.id) {
+      this.props.actions.disableEditAndSave()
+      this.props.actions.selectTable(this.props.details.id)
+    }
     this.props.actions.updatePosition(this.props.details.id, data)
   }
 
@@ -82,6 +93,7 @@ class Table extends Component {
         bounds='parent'
         position={{x: details.position.x, y: details.position.y}}
         onDrag={this.handleDrag}
+        onStop={this.handleStop}
         handle='.handle' >
         <div
           className={details.selected ? 'Table selected-table' : 'Table'}>
