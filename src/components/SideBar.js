@@ -17,12 +17,12 @@ class SideBar extends Component {
   }
 
   handleAddFK () {
-    console.log('here')
     // set a nav state to pending key placement
     // will need to store the origin data in nav state as well
     // now on select row have to check for nav state.
     // if pending key then write connection data to both points.
     // else continue on as the norm
+    this.props.actions.setForeignKeyOfOriginRow(this.props.nav.selectedRowId)
   }
 
   handleAddRow () {

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as tableActions from '../actions/tableActions'
+import * as navActions from '../actions/navActions'
 import SideBar from './SideBar'
 import ConnectionPath from './ConnectionPath'
 import Table from './Table'
@@ -86,7 +87,7 @@ function mapStateToProps (state, ownProps) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    actions: bindActionCreators(tableActions, dispatch)
+    actions: bindActionCreators(Object.assign({}, tableActions, navActions), dispatch)
   }
 }
 

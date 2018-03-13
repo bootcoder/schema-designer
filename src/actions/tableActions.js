@@ -101,6 +101,7 @@ export function deselectOtherRows (tableId) {
       table.rows.map(row => {
         if (row.selected || row.edit) {
           const newRow = Object.assign({}, row, {selected: false})
+          dispatch({type: types.DESELECT_NAV_ROW})
           dispatch(updateRow(newRow))
           return newRow
         }
