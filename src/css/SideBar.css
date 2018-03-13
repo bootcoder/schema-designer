@@ -14,3 +14,8 @@
   width: 50%;
 
 }
+
+.sidebar-break {
+  height: 10px;
+  background-color: orange;
+}

@@ -1,6 +1,7 @@
 import * as types from '../actions/actionTypes'
 
 const defaultState = {
+  fkOrigin: null,
   selectedTableId: '',
   selectedRowId: '',
   windowWidth: 10000,
