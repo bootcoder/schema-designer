@@ -66,37 +66,42 @@ function getTableIdFromRowId (rowId) {
 
 export function addFkConnection (tableId, rowId, originId) {
   return (dispatch, getState) => {
-    // remove fk from nav
-    // update first table row with connection data
-    // update second table row with connection data
-
-    // how to get the position is interesting
-    // cant pull direct from document because of sidebar offset.
-    // maybe pull x from table position state and y from document....
-    console.log('here')
-    console.log(tableId)
-    console.log(rowId)
-    console.log(originId)
     const { nav, tables } = getState()
-    //
+
+    // DESTINATION Calculations
     const tableState = tables.filter(table => table.id === tableId)[0]
     const rowState = tableState.rows.filter(row => row.id === rowId)[0]
-
     const tableElement = document.getElementById(tableId)
     const tableElementPos = tableElement.getBoundingClientRect()
-
     const rowElement = document.getElementsByClassName(rowId)[0]
     const rowPos = rowElement.getBoundingClientRect()
-
     const diff = {x: tableElementPos.x - tableState.position.x, y: tableElementPos.y - tableState.position.y}
-
     const adjRowPos = {x: rowPos.x - diff.x, y: rowPos.y - diff.y}
-
     const connections = JSON.parse(JSON.stringify(rowState.connections))
-    // debugger
-    connections.inbound[originId] = adjRowPos
+
+    // ORIGIN Calculations
+    const originTableId = getTableIdFromRowId(originId)
+    const originRowElement = document.getElementsByClassName(originId)[0]
+    const originRowPos = originRowElement.getBoundingClientRect()
+    const originTableState = tables.filter(table => table.id === originTableId)[0]
+    const originRowState = originTableState.rows.filter(row => row.id === originId)[0]
+    const originAdjRowPos = {x: originRowPos.x - diff.x, y: originRowPos.y - diff.y}
+
+    const newDestRow = Object.assign({}, originRowState)
+    let originConnections = JSON.parse(JSON.stringify(newDestRow.connections))
+    originConnections.outbound[rowId] = adjRowPos
+    let cleanDestRows = [...originTableState.rows]
+    const newDestRows = cleanDestRows.map(row => {
+      if (row.id === originId) {
+        return Object.assign({}, newDestRow, {connections: originConnections})
+      } else {
+        return row
+      }
+    })
+
+    connections.inbound[originId] = originAdjRowPos
     const newRow = Object.assign({}, rowState, { connections })
-    //
+
     let cleanRows = [...tableState.rows]
     const newRows = cleanRows.map(row => {
       if (row.id === newRow.id) {
@@ -106,35 +111,11 @@ export function addFkConnection (tableId, rowId, originId) {
       }
     })
 
-    const newTable = Object.assign({}, tableState, {rows: newRows, connectionCount: tableState.connectionCount + 1})
+    const newTable = Object.assign({}, tableState, { rows: newRows, connectionCount: Object.keys(connections.inbound).length + Object.keys(connections.outbound).length })
+    const originTable = Object.assign({}, originTableState, { rows: newDestRows, connectionCount: Object.keys(originConnections.inbound).length + Object.keys(originConnections.outbound).length })
 
-
-
-    const destTableId = getTableIdFromRowId(originId)
-    const destTableElement = document.getElementById(destTableId)
-    const destRowElement = document.getElementsByClassName(originId)[0]
-    const destRowPos = destRowElement.getBoundingClientRect()
-    const destTableState = tables.filter(table => table.id === destTableId)[0]
-    const destRowState = destTableState.rows.filter(row => row.id === originId)[0]
-    const destAdjRowPos = {x: destRowPos.x - diff.x, y: destRowPos.y - diff.y}
-
-    const newDestRow = Object.assign({}, destRowState)
-    let destConnections = JSON.parse(JSON.stringify(newDestRow.connections))
-    destConnections.outbound[rowId] = destAdjRowPos
-    let cleanDestRows = [...destTableState.rows]
-    const newDestRows = cleanDestRows.map(row => {
-      if (row.id === originId) {
-        return Object.assign({}, newDestRow, {connections: destConnections})
-      } else {
-        return row
-      }
-    })
-    const destTable = Object.assign({}, destTableState, { rows: newDestRows, connectionCount: destTableState.connectionCount + 1 })
-
-    // debugger
-    dispatch(updateTable(destTable))
     dispatch(updateTable(newTable))
-
+    dispatch(updateTable(originTable))
     return dispatch({type: types.REMOVE_FK_OF_ORIGIN_ROW})
   }
 }

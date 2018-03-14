@@ -18,7 +18,7 @@ class SandBox extends Component {
   }
 
   renderAllConnectionPaths () {
-    this.props.tables.map(table => {
+    return this.props.tables.map(table => {
       return this.renderTableConnectionPath(table)
     })
   }
@@ -26,11 +26,20 @@ class SandBox extends Component {
   renderTableConnectionPath (table) {
     return table.rows.map(row => {
       const color = 'red' // NOTE: comeback to make this dynorandomite.
-      row.connections.length && row.connections.map(connection => {
-        const start = row.position // NOTE: need to build a function to attach this point to either the left or right side of the row box not the center as current.
-        const end = connection.position
+      if (Object.keys(row.connections.outbound).length < 1) { return }
+      return Object.keys(row.connections.outbound).map(connection => {
+        const rowElement = document.getElementsByClassName(row.id)[0]
+        const rowPos = rowElement.getBoundingClientRect()
+        const tableElement = document.getElementById(table.id)
+        const tablePos = tableElement.getBoundingClientRect()
+        const diff = {x: tablePos.x - table.position.x, y: tablePos.y - table.position.y}
+
+        const start = {x: rowPos.x - diff.x, y: rowPos.y - diff.y} // NOTE: need to build a function to attach this point to either the left or right side of the row box not the center as current.
+        const end = row.connections.outbound[connection]
+
         return (
           <ConnectionPath
+            key={connection}
             start={start}
             end={end}
             color={color}
