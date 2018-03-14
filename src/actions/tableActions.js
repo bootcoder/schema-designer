@@ -265,6 +265,25 @@ export function toggleEditRow (tableId, rowId) {
   return { type: types.TOGGLE_EDIT_ROW, tableId, rowId }
 }
 
+export function updateOutboundConnection (connectionRowId, rowId, data) {
+  return (dispatch, getState) => {
+    const { tables } = getState()
+    const tableId = getTableIdFromRowId(connectionRowId)
+    const table = tables.filter(table => table.id === tableId)[0]
+    let cleanTable = JSON.parse(JSON.stringify(table))
+    cleanTable.rows.map(row => {
+      if (row.id === connectionRowId) {
+        // NOTE: BAD CODE FOR DEMO, must make and hit dynamic row position helper method
+        row.connections.outbound[rowId] = {x: data.lastX, y: data.lastY}
+        return row
+      }
+      return row
+    })
+    console.log(cleanTable)
+    return dispatch(updateTable(cleanTable))
+  }
+}
+
 export function updatePosition (tableId, data) {
   return {type: types.UPDATE_POSITION, tableId, position: {x: data.lastX, y: data.lastY}}
 }

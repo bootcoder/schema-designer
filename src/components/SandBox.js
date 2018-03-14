@@ -19,11 +19,14 @@ class SandBox extends Component {
 
   renderAllConnectionPaths () {
     return this.props.tables.map(table => {
-      return this.renderTableConnectionPath(table)
+      if (table.connectionCount > 0) {
+        return this.renderTableConnectionPath(table)
+      }
     })
   }
 
   renderTableConnectionPath (table) {
+    // console.table(table)
     return table.rows.map(row => {
       const color = 'red' // NOTE: comeback to make this dynorandomite.
       if (Object.keys(row.connections.outbound).length < 1) { return }

@@ -55,7 +55,13 @@ class Table extends Component {
       this.props.actions.disableEditAndSave()
       this.props.actions.selectTable(this.props.details.id)
     }
-    if (this.props.details.rows) {
+    if (this.props.details.connectionCount > 0) {
+      this.props.details.rows.map(row => {
+        Object.keys(row.connections.inbound).map(connection => {
+          console.log(connection)
+          this.props.actions.updateOutboundConnection(connection, row.id, data)
+        })
+      })
       this.props.actions.updatePosition(this.props.details.id, data)
     }
   }
