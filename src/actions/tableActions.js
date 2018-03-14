@@ -10,7 +10,7 @@ function generateNewTable () {
 
   const newTable = {
     edit: false,
-    connections: 0,
+    connectionCount: 0,
     id: newTableId,
     // NOTE: Remove name placeholder and reset to 'new table' for production
     name: newTableId,
@@ -55,9 +55,89 @@ function generateRowId (table) {
   return `${table.id}-${lastId + 1}`
 }
 
+function getTableIdFromRowId (rowId) {
+  const regEx = /.+?(?=-\d+)/
+  return regEx.exec(rowId)[0]
+}
+
 // //////////////////////
 // ///// ACTIONS ////////
 // //////////////////////
+
+export function addFkConnection (tableId, rowId, originId) {
+  return (dispatch, getState) => {
+    // remove fk from nav
+    // update first table row with connection data
+    // update second table row with connection data
+
+    // how to get the position is interesting
+    // cant pull direct from document because of sidebar offset.
+    // maybe pull x from table position state and y from document....
+    console.log('here')
+    console.log(tableId)
+    console.log(rowId)
+    console.log(originId)
+    const { nav, tables } = getState()
+    //
+    const tableState = tables.filter(table => table.id === tableId)[0]
+    const rowState = tableState.rows.filter(row => row.id === rowId)[0]
+
+    const tableElement = document.getElementById(tableId)
+    const tableElementPos = tableElement.getBoundingClientRect()
+
+    const rowElement = document.getElementsByClassName(rowId)[0]
+    const rowPos = rowElement.getBoundingClientRect()
+
+    const diff = {x: tableElementPos.x - tableState.position.x, y: tableElementPos.y - tableState.position.y}
+
+    const adjRowPos = {x: rowPos.x - diff.x, y: rowPos.y - diff.y}
+
+    const connections = JSON.parse(JSON.stringify(rowState.connections))
+    // debugger
+    connections.inbound[originId] = adjRowPos
+    const newRow = Object.assign({}, rowState, { connections })
+    //
+    let cleanRows = [...tableState.rows]
+    const newRows = cleanRows.map(row => {
+      if (row.id === newRow.id) {
+        return newRow
+      } else {
+        return row
+      }
+    })
+
+    const newTable = Object.assign({}, tableState, {rows: newRows, connectionCount: tableState.connectionCount + 1})
+
+
+
+    const destTableId = getTableIdFromRowId(originId)
+    const destTableElement = document.getElementById(destTableId)
+    const destRowElement = document.getElementsByClassName(originId)[0]
+    const destRowPos = destRowElement.getBoundingClientRect()
+    const destTableState = tables.filter(table => table.id === destTableId)[0]
+    const destRowState = destTableState.rows.filter(row => row.id === originId)[0]
+    const destAdjRowPos = {x: destRowPos.x - diff.x, y: destRowPos.y - diff.y}
+
+    const newDestRow = Object.assign({}, destRowState)
+    let destConnections = JSON.parse(JSON.stringify(newDestRow.connections))
+    destConnections.outbound[rowId] = destAdjRowPos
+    let cleanDestRows = [...destTableState.rows]
+    const newDestRows = cleanDestRows.map(row => {
+      if (row.id === originId) {
+        return Object.assign({}, newDestRow, {connections: destConnections})
+      } else {
+        return row
+      }
+    })
+    const destTable = Object.assign({}, destTableState, { rows: newDestRows, connectionCount: destTableState.connectionCount + 1 })
+
+    // debugger
+    dispatch(updateTable(destTable))
+    dispatch(updateTable(newTable))
+
+    return dispatch({type: types.REMOVE_FK_OF_ORIGIN_ROW})
+  }
+}
 
 export function addNewRow (tableId) {
   return (dispatch, getState) => {
@@ -170,9 +250,19 @@ export function selectRow (tableId, rowId = null) {
   return (dispatch, getState) => {
     let { tables, nav } = getState()
 
+    if (nav.fkOrigin !== null && nav.fkOrigin !== rowId) {
+      new Promise((resolve, reject) => {
+        dispatch(addFkConnection(tableId, rowId, nav.fkOrigin))
+        resolve(tableId)
+      }).then(tableId => {
+        return dispatch(selectRow(tableId, rowId))
+      })
+    }
+
     if (rowId !== null && (tableId !== nav.selectedTableId || rowId !== nav.selectedRowId)) {
       dispatch(disableEditAndSave())
     }
+
     if (rowId === null) {
       let rows = tables.filter(table => table.id === tableId)[0].rows
       rowId = rows.length > 0 && rows[rows.length - 1].id
@@ -210,6 +300,7 @@ export function updateRow (row) {
 }
 
 export function updateTable (table) {
+  console.log('updating table')
   return {type: types.UPDATE_TABLE, table}
 }
 

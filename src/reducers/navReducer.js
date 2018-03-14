@@ -13,6 +13,9 @@ export default function navReducer (state = defaultState, action) {
     case types.DESELECT_NAV_ROW:
       return Object.assign({}, state, {selectedRowId: ''})
 
+    case types.REMOVE_FK_OF_ORIGIN_ROW:
+      return Object.assign({}, state, {fkOrigin: null})
+
     case types.SET_FOREIGN_KEY_OF_ORIGIN_ROW:
       return Object.assign({}, state, {fkOrigin: action.rowId})
 

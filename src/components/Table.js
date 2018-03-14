@@ -96,6 +96,7 @@ class Table extends Component {
         onStop={this.handleStop}
         handle='.handle' >
         <div
+          id={details.id}
           className={details.selected ? 'Table selected-table' : 'Table'}>
           {this.displayTableName()}
           {details.rows.map(this.displayRow)}
