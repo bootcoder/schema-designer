@@ -15,6 +15,7 @@ class Row extends Component {
     const details = this.props.details
     return (
       <div
+        id={details.id}
         className={this.constructClassName()}
         style={{backgroundColor: `${details.color}`}}
         onClick={() => this.props.actions.selectRow(this.props.table.id, details.id)}
