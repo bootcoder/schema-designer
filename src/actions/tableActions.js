@@ -23,7 +23,12 @@ function setRowPosition (rowID) {
     const diff = {x: Math.abs(table.position.x - tablePosition.x), y: Math.abs(table.position.y - tablePosition.y)}
 
     // Subtract initial position from diff
-    const updatedPosition = Object.assign({}, rowPosition, {x: rowPosition.x - diff.x, y: rowPosition.y - diff.y})
+    const updatedPosition = Object.assign({}, {
+      x: rowPosition.x - diff.x,
+      y: rowPosition.y - diff.y,
+      width: Math.floor(rowPosition.width),
+      height: Math.floor(rowPosition.height)
+    })
 
     // Update row with new position data - need x, y, height, width
     row.position = updatedPosition
@@ -289,17 +294,13 @@ export function toggleEditRow (tableID, rowID) {
 export function updateOutboundConnection (connectionRowID, rowID, data) {
   return (dispatch, getState) => {
     const { tables } = getState()
-    const { cleanTable } = findRowWithID(tables, connectionRowID)
 
-    cleanTable.rows.map(row => {
-      if (row.id === connectionRowID) {
-        // NOTE: BAD CODE FOR DEMO, must make and hit dynamic row position helper method
-        row.connections.outbound[rowID] = {x: data.lastX, y: data.lastY}
-        return row
-      }
-      return row
-    })
-    return dispatch(updateTable(cleanTable))
+    // Find table of connection
+    const { cleanRow } = findRowWithID(tables, connectionRowID)
+    // NOTE: BAD CODE FOR DEMO, must make and hit dynamic row position helper method
+    cleanRow.connections.outbound[rowID] = {x: data.lastX, y: data.lastY}
+
+    return dispatch(updateRow(cleanRow))
   }
 }
 
