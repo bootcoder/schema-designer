@@ -7,6 +7,7 @@ import * as types from './actionTypes'
 function setRowPosition (rowID) {
   return (dispatch, getState) => {
     const { tables } = getState()
+
     // Find tableID, table and row from rowID
     let {cleanRow: row, cleanTable: table} = findRowWithID(tables, rowID)
 
@@ -19,7 +20,7 @@ function setRowPosition (rowID) {
     const rowPosition = rowElement.getBoundingClientRect()
 
     // Calculate diff between table state and table DOM position
-    const diff = {x: table.position.x - tablePosition.x, y: table.position.y - tablePosition.y}
+    const diff = {x: Math.abs(table.position.x - tablePosition.x), y: Math.abs(table.position.y - tablePosition.y)}
 
     // Subtract initial position from diff
     const updatedPosition = Object.assign({}, rowPosition, {x: rowPosition.x - diff.x, y: rowPosition.y - diff.y})
@@ -32,7 +33,7 @@ function setRowPosition (rowID) {
   }
 }
 
-// This is where default table lives.
+// DEFAULT table lives here.
 function generateNewTable () {
   const newTableID = Math.random().toString(36).substring(2, 5) + Math.random().toString(36).substring(2, 5)
 
@@ -52,7 +53,7 @@ function generateNewTable () {
   return newTable
 }
 
-// This is where default row lives.
+// DEFAULT row lives here.
 function generateRow (table) {
   return {
     color: 'gray',
