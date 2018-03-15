@@ -88,14 +88,17 @@ export default function tableReducer (state = [], action) {
 
     case types.UPDATE_ROW:
       return state.map((table) => {
+        let connectionCount = 0
         const rows = table.rows.map((row) => {
+          connectionCount += Object.keys(row.connections.inbound).length + Object.keys(row.connections.outbound).length
           if (table.id === action.tableId && row.id === action.rowId) {
             return Object.assign({}, action.row)
           } else {
             return row
           }
         })
-        return Object.assign({}, table, {rows: rows})
+
+        return Object.assign({}, table, {rows: rows, connectionCount})
       })
 
     case types.UPDATE_TABLE:
