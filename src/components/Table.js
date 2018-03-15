@@ -57,9 +57,9 @@ class Table extends Component {
     }
     if (this.props.details.connectionCount > 0) {
       this.props.details.rows.map(row => {
-        Object.keys(row.connections.inbound).map(connection => {
-          console.log(connection)
-          this.props.actions.updateOutboundConnection(connection, row.id, data)
+        Object.keys(row.connections.inbound).map(connectionRowId => {
+          console.log(connectionRowId)
+          // this.props.actions.updateOutboundConnection(connectionRowId, row.id, data)
         })
       })
       this.props.actions.updatePosition(this.props.details.id, data)

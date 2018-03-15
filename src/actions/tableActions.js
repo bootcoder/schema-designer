@@ -4,6 +4,39 @@ import * as types from './actionTypes'
 // ///// HELPERS ////////
 // //////////////////////
 
+function setRowPosition (rowId) {
+  return (dispatch, getState) => {
+    // Get find tableId, table and row from rowId
+    const { tables } = getState()
+    const tableId = findTableIdFromRowId(rowId)
+    const table = tables.filter(table => table.id === tableId)[0]
+    let row = table.rows.filter(row => row.id === rowId)[0]
+
+    // Deep clone row
+    let updatedRow = JSON.parse(JSON.stringify(row))
+
+    // Find table element / set initial position
+    const tableElement = document.getElementById(tableId)
+    const tablePosition = tableElement.getBoundingClientRect()
+
+    // Find row element / set initial position
+    const rowElement = document.getElementById(rowId)
+    const rowPosition = rowElement.getBoundingClientRect()
+
+    // Calculate diff between table state and table DOM position
+    const diff = {x: table.position.x - tablePosition.x, y: table.position.y - tablePosition.y}
+
+    // Subtract initial position from diff
+    const updatedPosition = Object.assign({}, rowPosition, {x: rowPosition.x - diff.x, y: rowPosition.y - diff.y})
+
+    // Update row with new position data - need x, y, height, width
+    updatedRow.position = updatedPosition
+
+    // Dispatch updateRow action
+    return dispatch(updateRow(updatedRow))
+  }
+}
+
 // This is where default table lives.
 function generateNewTable () {
   const newTableId = Math.random().toString(36).substring(2, 5) + Math.random().toString(36).substring(2, 5)
@@ -55,67 +88,68 @@ function generateRowId (table) {
   return `${table.id}-${lastId + 1}`
 }
 
-function getTableIdFromRowId (rowId) {
+function findTableIdFromRowId (rowId) {
   const regEx = /.+?(?=-\d+)/
   return regEx.exec(rowId)[0]
+}
+
+function findTableWithId (tables, tableId) {
+  return JSON.parse(JSON.stringify(tables.filter(table => table.id === tableId)[0]))
+}
+
+function findRowWithId (tables, rowId) {
+  const tableId = findTableIdFromRowId(rowId)
+  const table = tables.filter(table => table.id === tableId)[0]
+  const row = table.rows.filter(row => row.id === rowId)[0]
+  const cleanTable = JSON.parse(JSON.stringify(table))
+  const cleanRow = JSON.parse(JSON.stringify(row))
+  return { cleanRow, cleanTable }
 }
 
 // //////////////////////
 // ///// ACTIONS ////////
 // //////////////////////
 
-export function addFkConnection (tableId, rowId, originId) {
+export function addFkConnection (destRowId, orgRowId) {
+  // org means ORIGIN
+  // dest means DESTINATION
   return (dispatch, getState) => {
+    dispatch(setRowPosition(destRowId))
+    dispatch(setRowPosition(orgRowId))
+
     const { nav, tables } = getState()
+    //
+    // Find destinationRowState
+    const {cleanRow: destRow, cleanTable: destTable} = findRowWithId(tables, destRowId)
 
-    // DESTINATION Calculations
-    const tableState = tables.filter(table => table.id === tableId)[0]
-    const rowState = tableState.rows.filter(row => row.id === rowId)[0]
-    const tableElement = document.getElementById(tableId)
-    const tableElementPos = tableElement.getBoundingClientRect()
-    const rowElement = document.getElementsByClassName(rowId)[0]
-    const rowPos = rowElement.getBoundingClientRect()
-    const diff = {x: tableElementPos.x - tableState.position.x, y: tableElementPos.y - tableState.position.y}
-    const adjRowPos = {x: rowPos.x - diff.x, y: rowPos.y - diff.y}
-    const connections = JSON.parse(JSON.stringify(rowState.connections))
+    // Find orgRowState
+    const {cleanRow: orgRow, cleanTable: orgTable} = findRowWithId(tables, orgRowId)
 
-    // ORIGIN Calculations
-    const originTableId = getTableIdFromRowId(originId)
-    const originRowElement = document.getElementsByClassName(originId)[0]
-    const originRowPos = originRowElement.getBoundingClientRect()
-    const originTableState = tables.filter(table => table.id === originTableId)[0]
-    const originRowState = originTableState.rows.filter(row => row.id === originId)[0]
-    const originAdjRowPos = {x: originRowPos.x - diff.x, y: originRowPos.y - diff.y}
+    // Set dest row inbound connection key org Id to org position
+    destRow.connections.inbound[orgRowId] = orgRow.position
 
-    const newDestRow = Object.assign({}, originRowState)
-    let originConnections = JSON.parse(JSON.stringify(newDestRow.connections))
-    originConnections.outbound[rowId] = adjRowPos
-    let cleanDestRows = [...originTableState.rows]
-    const newDestRows = cleanDestRows.map(row => {
-      if (row.id === originId) {
-        return Object.assign({}, newDestRow, {connections: originConnections})
-      } else {
-        return row
-      }
-    })
+    // Set org row outbound connection key dest Id to dest position
+    orgRow.connections.outbound[destRowId] = destRow.position
 
-    connections.inbound[originId] = originAdjRowPos
-    const newRow = Object.assign({}, rowState, { connections })
+    // Calc connection count for both rows
+    // const destConnectionCount = Object.keys(destRow.connections.inbound).length + Object.keys(destRow.connections.outbound).length
+    // const orgConnectionCount = Object.keys(orgRow.connections.inbound).length + Object.keys(orgRow.connections.outbound).length
 
-    let cleanRows = [...tableState.rows]
-    const newRows = cleanRows.map(row => {
-      if (row.id === newRow.id) {
-        return newRow
-      } else {
-        return row
-      }
-    })
+    // Set both tables connectionCount to connections total length
+    // destTable.connectionCount = destConnectionCount
+    // orgTable.connectionCount = orgConnectionCount
 
-    const newTable = Object.assign({}, tableState, { rows: newRows, connectionCount: Object.keys(connections.inbound).length + Object.keys(connections.outbound).length })
-    const originTable = Object.assign({}, originTableState, { rows: newDestRows, connectionCount: Object.keys(originConnections.inbound).length + Object.keys(originConnections.outbound).length })
+    // Dispatch updateRow for both
+    dispatch(updateRow(orgRow))
+    dispatch(updateRow(destRow))
+    // new Promise((resolve, reject) => {
+    //   dispatch(updateTable(orgTable))
+    //   dispatch(updateTable(destTable))
+    //   resolve()
+    // }).then(() => {
+    // })
 
-    dispatch(updateTable(newTable))
-    dispatch(updateTable(originTable))
+    // Return dispatch to remove fk flag from nav state
     return dispatch({type: types.REMOVE_FK_OF_ORIGIN_ROW})
   }
 }
@@ -233,7 +267,7 @@ export function selectRow (tableId, rowId = null) {
 
     if (nav.fkOrigin !== null && nav.fkOrigin !== rowId) {
       new Promise((resolve, reject) => {
-        dispatch(addFkConnection(tableId, rowId, nav.fkOrigin))
+        dispatch(addFkConnection(rowId, nav.fkOrigin))
         resolve(tableId)
       }).then(tableId => {
         return dispatch(selectRow(tableId, rowId))
@@ -268,7 +302,7 @@ export function toggleEditRow (tableId, rowId) {
 export function updateOutboundConnection (connectionRowId, rowId, data) {
   return (dispatch, getState) => {
     const { tables } = getState()
-    const tableId = getTableIdFromRowId(connectionRowId)
+    const tableId = findTableIdFromRowId(connectionRowId)
     const table = tables.filter(table => table.id === tableId)[0]
     let cleanTable = JSON.parse(JSON.stringify(table))
     cleanTable.rows.map(row => {
@@ -289,14 +323,7 @@ export function updatePosition (tableId, data) {
 }
 
 export function updateRow (row) {
-  return (dispatch, getState) => {
-    return dispatch({
-      type: types.UPDATE_ROW,
-      tableId: row.tableId,
-      rowId: row.id,
-      row
-    })
-  }
+  return {type: types.UPDATE_ROW, tableId: row.tableId, rowId: row.id, row}
 }
 
 export function updateTable (table) {
