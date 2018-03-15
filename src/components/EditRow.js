@@ -28,7 +28,7 @@ class EditRow extends Component {
           <div>
             Name:
             <input autoFocus
-              id='title'
+              id={details.id}
               name='title'
               onChange={this.handleChange}
               onFocus={(e) => e.target.select()}

@@ -4,38 +4,37 @@ import * as types from './actionTypes'
 // ///// HELPERS ////////
 // //////////////////////
 
-function setRowPosition (rowID) {
-  return (dispatch, getState) => {
-    const { tables } = getState()
+function setRowPosition (tables, row) {
+  // Find table from rowID
+  let { cleanTable: table } = findRowWithID(tables, row.id)
 
-    // Find tableID, table and row from rowID
-    let {cleanRow: row, cleanTable: table} = findRowWithID(tables, rowID)
+  // Clone row
+  let cleanRow = JSON.parse(JSON.stringify(row))
+  // debugger
+  // Find table element / set initial position
+  const tableElement = document.getElementById(table.id)
+  const tablePosition = tableElement.getBoundingClientRect()
 
-    // Find table element / set initial position
-    const tableElement = document.getElementById(table.id)
-    const tablePosition = tableElement.getBoundingClientRect()
+  // Find row element / set initial position
+  const rowElement = document.getElementById(row.id)
+  const rowPosition = rowElement.getBoundingClientRect()
 
-    // Find row element / set initial position
-    const rowElement = document.getElementById(rowID)
-    const rowPosition = rowElement.getBoundingClientRect()
+  // Calculate diff between table state and table DOM position
+  const diff = {x: Math.abs(table.position.x - tablePosition.x), y: Math.abs(table.position.y - tablePosition.y)}
 
-    // Calculate diff between table state and table DOM position
-    const diff = {x: Math.abs(table.position.x - tablePosition.x), y: Math.abs(table.position.y - tablePosition.y)}
+  // Subtract initial position from diff
+  const updatedPosition = Object.assign({}, {
+    x: rowPosition.x - diff.x,
+    y: rowPosition.y - diff.y,
+    width: Math.floor(rowPosition.width),
+    height: Math.floor(rowPosition.height)
+  })
 
-    // Subtract initial position from diff
-    const updatedPosition = Object.assign({}, {
-      x: rowPosition.x - diff.x,
-      y: rowPosition.y - diff.y,
-      width: Math.floor(rowPosition.width),
-      height: Math.floor(rowPosition.height)
-    })
+  // Update row with new position data - need x, y, height, width
+  cleanRow.position = updatedPosition
 
-    // Update row with new position data - need x, y, height, width
-    row.position = updatedPosition
-
-    // Dispatch updateRow action
-    return dispatch(updateRow(row))
-  }
+  // Return the cleanRow
+  return cleanRow
 }
 
 // DEFAULT table lives here.
@@ -117,26 +116,28 @@ export function addForeignKeyConnection (destRowID, orgRowID) {
   // dest means DESTINATION
   //
   return (dispatch, getState) => {
-    dispatch(setRowPosition(destRowID))
-    dispatch(setRowPosition(orgRowID))
+    // dispatch(setRowPosition(destRowID))
+    // dispatch(setRowPosition(orgRowID))
 
     const { tables } = getState()
 
     // Find destRow State
-    const {cleanRow: destRow} = findRowWithID(tables, destRowID)
+    let {cleanRow: destRow} = findRowWithID(tables, destRowID)
+    let destRowWithPosition = setRowPosition(tables, destRow)
 
     // Find orgRow State
-    const {cleanRow: orgRow} = findRowWithID(tables, orgRowID)
+    let {cleanRow: orgRow} = findRowWithID(tables, orgRowID)
+    let orgRowWithPosition = setRowPosition(tables, orgRow)
 
     // Set destRow inbound connection key org ID to org position
-    destRow.connections.inbound[orgRowID] = orgRow.position
+    destRowWithPosition.connections.inbound[orgRowID] = orgRowWithPosition.position
 
     // Set org row outbound connection key dest ID to dest position
-    orgRow.connections.outbound[destRowID] = destRow.position
+    orgRowWithPosition.connections.outbound[destRowID] = destRowWithPosition.position
 
     // Dispatch updateRow for both
-    dispatch(updateRow(orgRow))
-    dispatch(updateRow(destRow))
+    dispatch(updateRow(orgRowWithPosition))
+    dispatch(updateRow(destRowWithPosition))
 
     // Return dispatch to remove fk flag from nav state
     return dispatch({type: types.REMOVE_FK_OF_ORIGIN_ROW})
@@ -291,16 +292,17 @@ export function toggleEditRow (tableID, rowID) {
   return { type: types.TOGGLE_EDIT_ROW, tableID, rowID }
 }
 
-export function updateOutboundConnection (connectionRowID, rowID, data) {
+export function updateInboundConnectionOrigin (remoteRowID, currentRowID, data) {
   return (dispatch, getState) => {
     const { tables } = getState()
 
     // Find table of connection
-    const { cleanRow } = findRowWithID(tables, connectionRowID)
-    // NOTE: BAD CODE FOR DEMO, must make and hit dynamic row position helper method
-    cleanRow.connections.outbound[rowID] = {x: data.lastX, y: data.lastY}
+    const { cleanRow: remoteRow } = findRowWithID(tables, remoteRowID)
+    const { cleanRow: currentRow } = findRowWithID(tables, currentRowID)
+    const currentRowPosition = setRowPosition(tables, currentRow).position
+    remoteRow.connections.outbound[currentRowID] = currentRowPosition
 
-    return dispatch(updateRow(cleanRow))
+    return dispatch(updateRow(remoteRow))
   }
 }
 
@@ -309,7 +311,11 @@ export function updatePosition (tableID, data) {
 }
 
 export function updateRow (row) {
-  return {type: types.UPDATE_ROW, tableID: row.tableID, rowID: row.id, row}
+  return (dispatch, getState) => {
+    const { tables } = getState()
+    const updatedRowPosition = setRowPosition(tables, row)
+    return dispatch({type: types.UPDATE_ROW, tableID: row.tableID, rowID: row.id, row: updatedRowPosition})
+  }
 }
 
 export function updateTable (table) {

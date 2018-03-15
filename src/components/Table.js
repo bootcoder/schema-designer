@@ -51,14 +51,21 @@ class Table extends Component {
   }
 
   handleDrag (e, data) {
+    // IF not the currently selected table
+    // Disable edit, save and select this table.
     if (this.props.nav.selectedTableID !== this.props.details.id) {
       this.props.actions.disableEditAndSave()
       this.props.actions.selectTable(this.props.details.id)
     }
+    // IF table has connections
+    // Iterate over each row and each connection
     if (this.props.details.connectionCount > 0) {
       this.props.details.rows.map(row => {
         Object.keys(row.connections.inbound).map(connectionRowID => {
-          this.props.actions.updateOutboundConnection(connectionRowID, row.id, data)
+          this.props.actions.updateInboundConnectionOrigin(connectionRowID, row.id, data)
+        })
+        Object.keys(row.connections.outbound).map(connectionRowID => {
+          this.props.actions.updateRow(row)
         })
       })
       this.props.actions.updatePosition(this.props.details.id, data)

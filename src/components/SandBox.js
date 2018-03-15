@@ -26,18 +26,18 @@ class SandBox extends Component {
   }
 
   renderTableConnectionPath (table) {
-    // console.table(table)
     return table.rows.map(row => {
       const color = 'red' // NOTE: comeback to make this dynorandomite.
       if (Object.keys(row.connections.outbound).length < 1) { return }
       return Object.keys(row.connections.outbound).map(connection => {
-        const rowElement = document.getElementsByClassName(row.id)[0]
-        const rowPos = rowElement.getBoundingClientRect()
-        const tableElement = document.getElementById(table.id)
-        const tablePos = tableElement.getBoundingClientRect()
-        const diff = {x: tablePos.x - table.position.x, y: tablePos.y - table.position.y}
-
-        const start = {x: rowPos.x - diff.x, y: rowPos.y - diff.y} // NOTE: need to build a function to attach this point to either the left or right side of the row box not the center as current.
+        // const rowElement = document.getElementsByClassName(row.id)[0]
+        // const rowPos = rowElement.getBoundingClientRect()
+        // const tableElement = document.getElementById(table.id)
+        // const tablePos = tableElement.getBoundingClientRect()
+        // const diff = {x: tablePos.x - table.position.x, y: tablePos.y - table.position.y}
+        // NOTE: need to build a function to attach this point to either the left or right side of the row box not the center as current.
+        const start = row.position
+        // const start = {x: position.x, y: position.y}
         const end = row.connections.outbound[connection]
 
         return (
