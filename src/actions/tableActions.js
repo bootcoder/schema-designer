@@ -4,18 +4,18 @@ import * as types from './actionTypes'
 // ///// HELPERS ////////
 // //////////////////////
 
-function setRowPosition (rowId) {
+function setRowPosition (rowID) {
   return (dispatch, getState) => {
     const { tables } = getState()
-    // Find tableId, table and row from rowId
-    let {cleanRow: row, cleanTable: table} = findRowWithId(tables, rowId)
+    // Find tableID, table and row from rowID
+    let {cleanRow: row, cleanTable: table} = findRowWithID(tables, rowID)
 
     // Find table element / set initial position
     const tableElement = document.getElementById(table.id)
     const tablePosition = tableElement.getBoundingClientRect()
 
     // Find row element / set initial position
-    const rowElement = document.getElementById(rowId)
+    const rowElement = document.getElementById(rowID)
     const rowPosition = rowElement.getBoundingClientRect()
 
     // Calculate diff between table state and table DOM position
@@ -34,14 +34,14 @@ function setRowPosition (rowId) {
 
 // This is where default table lives.
 function generateNewTable () {
-  const newTableId = Math.random().toString(36).substring(2, 5) + Math.random().toString(36).substring(2, 5)
+  const newTableID = Math.random().toString(36).substring(2, 5) + Math.random().toString(36).substring(2, 5)
 
   const newTable = {
     edit: false,
     connectionCount: 0,
-    id: newTableId,
+    id: newTableID,
     // NOTE: Remove name placeholder and reset to 'new table' for production
-    name: newTableId,
+    name: newTableID,
     position: {
       x: Math.floor(Math.random() * (800 - 50) + 50),
       y: Math.floor(Math.random() * (500 - 50) + 50) },
@@ -61,14 +61,14 @@ function generateRow (table) {
       outbound: {}
     },
     edit: false,
-    id: generateRowId(table),
+    id: generateRowID(table),
     selected: false,
-    tableId: table.id,
+    tableID: table.id,
     title: 'new_field'
   }
 }
 
-function generateRowId (table) {
+function generateRowID (table) {
   // Strip away table ID from row ID
   // Find next highest int within rows
   // Assign new row ID concating table ID
@@ -76,26 +76,26 @@ function generateRowId (table) {
     return `${table.id}-${0}`
   }
   const findTrailingDigits = /-(\d+)/
-  const lastId = table.rows.length > 0 && table.rows.reduce((max, b) => {
+  const lastID = table.rows.length > 0 && table.rows.reduce((max, b) => {
     const id = parseInt(findTrailingDigits.exec(b.id)[1], 10)
     return Math.max(max, id)
   }, parseInt(findTrailingDigits.exec(table.rows[0].id)[1], 10))
-  return `${table.id}-${lastId + 1}`
+  return `${table.id}-${lastID + 1}`
 }
 
-function findTableIdFromRowId (rowId) {
+function findTableIDFromRowID (rowID) {
   const regEx = /.+?(?=-\d+)/
-  return regEx.exec(rowId)[0]
+  return regEx.exec(rowID)[0]
 }
 
-function findTableWithId (tables, tableId) {
-  return JSON.parse(JSON.stringify(tables.filter(table => table.id === tableId)[0]))
+function findTableWithID (tables, tableID) {
+  return JSON.parse(JSON.stringify(tables.filter(table => table.id === tableID)[0]))
 }
 
-function findRowWithId (tables, rowId) {
-  const tableId = findTableIdFromRowId(rowId)
-  const table = tables.filter(table => table.id === tableId)[0]
-  const row = table.rows.filter(row => row.id === rowId)[0]
+function findRowWithID (tables, rowID) {
+  const tableID = findTableIDFromRowID(rowID)
+  const table = tables.filter(table => table.id === tableID)[0]
+  const row = table.rows.filter(row => row.id === rowID)[0]
   const cleanTable = JSON.parse(JSON.stringify(table))
   const cleanRow = JSON.parse(JSON.stringify(row))
   return { cleanRow, cleanTable }
@@ -105,28 +105,28 @@ function findRowWithId (tables, rowId) {
 // ///// ACTIONS ////////
 // //////////////////////
 
-export function addForeignKeyConnection (destRowId, orgRowId) {
+export function addForeignKeyConnection (destRowID, orgRowID) {
   //
   // org means ORIGIN
   // dest means DESTINATION
   //
   return (dispatch, getState) => {
-    dispatch(setRowPosition(destRowId))
-    dispatch(setRowPosition(orgRowId))
+    dispatch(setRowPosition(destRowID))
+    dispatch(setRowPosition(orgRowID))
 
     const { tables } = getState()
 
     // Find destRow State
-    const {cleanRow: destRow} = findRowWithId(tables, destRowId)
+    const {cleanRow: destRow} = findRowWithID(tables, destRowID)
 
     // Find orgRow State
-    const {cleanRow: orgRow} = findRowWithId(tables, orgRowId)
+    const {cleanRow: orgRow} = findRowWithID(tables, orgRowID)
 
-    // Set destRow inbound connection key org Id to org position
-    destRow.connections.inbound[orgRowId] = orgRow.position
+    // Set destRow inbound connection key org ID to org position
+    destRow.connections.inbound[orgRowID] = orgRow.position
 
-    // Set org row outbound connection key dest Id to dest position
-    orgRow.connections.outbound[destRowId] = destRow.position
+    // Set org row outbound connection key dest ID to dest position
+    orgRow.connections.outbound[destRowID] = destRow.position
 
     // Dispatch updateRow for both
     dispatch(updateRow(orgRow))
@@ -137,22 +137,22 @@ export function addForeignKeyConnection (destRowId, orgRowId) {
   }
 }
 
-export function addNewRow (tableId) {
+export function addNewRow (tableID) {
   return (dispatch, getState) => {
     new Promise((resolve, reject) => {
       let { tables } = getState()
-      let cleanTable = findTableWithId(tables, tableId)
+      let cleanTable = findTableWithID(tables, tableID)
       let newRow = generateRow(cleanTable)
-      dispatch(addRow(tableId, newRow))
+      dispatch(addRow(tableID, newRow))
       resolve(newRow)
     }).then((row) => {
-      return dispatch(selectRow(tableId, row.id))
+      return dispatch(selectRow(tableID, row.id))
     })
   }
 }
 
-export function addRow (tableId, row) {
-  return {type: types.ADD_ROW, tableId, row}
+export function addRow (tableID, row) {
+  return {type: types.ADD_ROW, tableID, row}
 }
 
 export function createTable () {
@@ -170,12 +170,12 @@ export function clearTables () {
   return {type: types.CLEAR_TABLES}
 }
 
-export function deselectOtherRows (tableId) {
+export function deselectOtherRows (tableID) {
   return (dispatch, getState) => {
     let { tables } = getState()
     let newTables = [...tables]
     newTables.map(table => {
-      if (table.id === tableId) { return table }
+      if (table.id === tableID) { return table }
       table.rows.map(row => {
         if (row.selected || row.edit) {
           const newRow = Object.assign({}, row, {selected: false})
@@ -194,11 +194,11 @@ export function disableEditAndSave () {
   return (dispatch, getState) => {
     let { nav, tables } = getState()
     tables.map(table => {
-      if (table.id !== nav.selectedTableId) { return table }
+      if (table.id !== nav.selectedTableID) { return table }
       let newTable = Object.assign({}, table, {edit: false})
       dispatch(updateTable(newTable))
       newTable.rows.map(row => {
-        if (row.id !== nav.selectedRowId) { return row }
+        if (row.id !== nav.selectedRowID) { return row }
         let newRow = Object.assign({}, row, {edit: false})
         dispatch(updateRow(newRow))
         return newRow
@@ -209,91 +209,91 @@ export function disableEditAndSave () {
   }
 }
 
-export function moveDown (tableId, rowId) {
-  return {type: types.MOVE_DOWN, tableId, rowId}
+export function moveDown (tableID, rowID) {
+  return {type: types.MOVE_DOWN, tableID, rowID}
 }
 
-export function moveUp (tableId, rowId) {
-  return {type: types.MOVE_UP, tableId, rowId}
+export function moveUp (tableID, rowID) {
+  return {type: types.MOVE_UP, tableID, rowID}
 }
 
-export function removeRow (tableId, rowId) {
+export function removeRow (tableID, rowID) {
   return (dispatch, getState) => {
     let { tables } = getState()
-    let {cleanRow: row, cleanTable: table} = findRowWithId(tables, rowId)
+    let {cleanRow: row, cleanTable: table} = findRowWithID(tables, rowID)
     let rows = table.rows
-    let newRowId = null
+    let newRowID = null
 
     // Find the next index to select
     if (rows.length === 1) {
-      // No action here, newRowId remains null, but the conditional is needed to catch
+      // No action here, newRowID remains null, but the conditional is needed to catch
     } else if (rows[rows.indexOf(row) + 1] !== undefined) {
-      newRowId = rows[rows.indexOf(row) + 1].id
+      newRowID = rows[rows.indexOf(row) + 1].id
     } else if (rows[rows.indexOf(row) - 1] !== undefined) {
-      newRowId = rows[rows.indexOf(row) - 1].id
+      newRowID = rows[rows.indexOf(row) - 1].id
     }
-    dispatch({type: types.REMOVE_ROW, tableId, rowId})
-    return dispatch(selectRow(tableId, newRowId))
+    dispatch({type: types.REMOVE_ROW, tableID, rowID})
+    return dispatch(selectRow(tableID, newRowID))
   }
 }
 
-export function removeTable (tableId) {
+export function removeTable (tableID) {
   return (dispatch, getState) => {
     let { tables } = getState()
-    let newTable = tables.filter(table => table.id !== tableId)[0]
+    let newTable = tables.filter(table => table.id !== tableID)[0]
     // NOTE: not sure why I dispatched selectTable here. Investigate.
     newTable && dispatch(selectTable(newTable.id))
-    return dispatch({type: types.REMOVE_TABLE, tableId})
+    return dispatch({type: types.REMOVE_TABLE, tableID})
   }
 }
 
-export function selectRow (tableId, rowId = null) {
+export function selectRow (tableID, rowID = null) {
   return (dispatch, getState) => {
     let { tables, nav } = getState()
 
-    if (nav.fkOrigin !== null && nav.fkOrigin !== rowId) {
+    if (nav.fkOrigin !== null && nav.fkOrigin !== rowID) {
       new Promise((resolve, reject) => {
-        dispatch(addForeignKeyConnection(rowId, nav.fkOrigin))
-        resolve(tableId)
-      }).then(tableId => {
-        return dispatch(selectRow(tableId, rowId))
+        dispatch(addForeignKeyConnection(rowID, nav.fkOrigin))
+        resolve(tableID)
+      }).then(tableID => {
+        return dispatch(selectRow(tableID, rowID))
       })
     }
 
-    if (rowId !== null && (tableId !== nav.selectedTableId || rowId !== nav.selectedRowId)) {
+    if (rowID !== null && (tableID !== nav.selectedTableID || rowID !== nav.selectedRowID)) {
       dispatch(disableEditAndSave())
     }
 
-    if (rowId === null) {
-      let rows = tables.filter(table => table.id === tableId)[0].rows
-      rowId = rows.length > 0 && rows[rows.length - 1].id
+    if (rowID === null) {
+      let rows = tables.filter(table => table.id === tableID)[0].rows
+      rowID = rows.length > 0 && rows[rows.length - 1].id
     }
 
-    dispatch(selectTable(tableId))
-    return dispatch({type: types.SELECT_ROW, rowId, tableId})
+    dispatch(selectTable(tableID))
+    return dispatch({type: types.SELECT_ROW, rowID, tableID})
   }
 }
 
-export function selectTable (tableId) {
+export function selectTable (tableID) {
   return dispatch => {
-    dispatch(deselectOtherRows(tableId))
-    return dispatch({type: types.SELECT_TABLE, tableId})
+    dispatch(deselectOtherRows(tableID))
+    return dispatch({type: types.SELECT_TABLE, tableID})
   }
 }
 
-export function toggleEditRow (tableId, rowId) {
-  return { type: types.TOGGLE_EDIT_ROW, tableId, rowId }
+export function toggleEditRow (tableID, rowID) {
+  return { type: types.TOGGLE_EDIT_ROW, tableID, rowID }
 }
 
-export function updateOutboundConnection (connectionRowId, rowId, data) {
+export function updateOutboundConnection (connectionRowID, rowID, data) {
   return (dispatch, getState) => {
     const { tables } = getState()
-    const { cleanTable } = findRowWithId(tables, connectionRowId)
+    const { cleanTable } = findRowWithID(tables, connectionRowID)
 
     cleanTable.rows.map(row => {
-      if (row.id === connectionRowId) {
+      if (row.id === connectionRowID) {
         // NOTE: BAD CODE FOR DEMO, must make and hit dynamic row position helper method
-        row.connections.outbound[rowId] = {x: data.lastX, y: data.lastY}
+        row.connections.outbound[rowID] = {x: data.lastX, y: data.lastY}
         return row
       }
       return row
@@ -302,12 +302,12 @@ export function updateOutboundConnection (connectionRowId, rowId, data) {
   }
 }
 
-export function updatePosition (tableId, data) {
-  return {type: types.UPDATE_POSITION, tableId, position: {x: data.lastX, y: data.lastY}}
+export function updatePosition (tableID, data) {
+  return {type: types.UPDATE_POSITION, tableID, position: {x: data.lastX, y: data.lastY}}
 }
 
 export function updateRow (row) {
-  return {type: types.UPDATE_ROW, tableId: row.tableId, rowId: row.id, row}
+  return {type: types.UPDATE_ROW, tableID: row.tableID, rowID: row.id, row}
 }
 
 export function updateTable (table) {
@@ -315,6 +315,6 @@ export function updateTable (table) {
   return {type: types.UPDATE_TABLE, table}
 }
 
-export function updateTableName (tableId, name) {
-  return {type: types.UPDATE_TABLE_NAME, tableId, name}
+export function updateTableName (tableID, name) {
+  return {type: types.UPDATE_TABLE_NAME, tableID, name}
 }

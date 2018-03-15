@@ -51,14 +51,14 @@ class Table extends Component {
   }
 
   handleDrag (e, data) {
-    if (this.props.nav.selectedTableId !== this.props.details.id) {
+    if (this.props.nav.selectedTableID !== this.props.details.id) {
       this.props.actions.disableEditAndSave()
       this.props.actions.selectTable(this.props.details.id)
     }
     if (this.props.details.connectionCount > 0) {
       this.props.details.rows.map(row => {
-        Object.keys(row.connections.inbound).map(connectionRowId => {
-          this.props.actions.updateOutboundConnection(connectionRowId, row.id, data)
+        Object.keys(row.connections.inbound).map(connectionRowID => {
+          this.props.actions.updateOutboundConnection(connectionRowID, row.id, data)
         })
       })
       this.props.actions.updatePosition(this.props.details.id, data)
@@ -66,7 +66,7 @@ class Table extends Component {
   }
 
   handleStop (e, data) {
-    if (this.props.nav.selectedTableId !== this.props.details.id) {
+    if (this.props.nav.selectedTableID !== this.props.details.id) {
       this.props.actions.disableEditAndSave()
       this.props.actions.selectTable(this.props.details.id)
     }

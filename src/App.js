@@ -16,7 +16,7 @@ class App extends Component {
           <div className='App'>
             <Header />
             <Route exact path='/' component={SandBox} />
-            <Route path='/schemas/:schemaId' component={SandBox} />
+            <Route path='/schemas/:schemaID' component={SandBox} />
           </div>
         </Router>
       </Provider>

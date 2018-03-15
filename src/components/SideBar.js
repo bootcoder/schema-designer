@@ -22,11 +22,11 @@ class SideBar extends Component {
     // now on select row have to check for nav state.
     // if pending key then write connection data to both points.
     // else continue on as the norm
-    this.props.actions.setForeignKeyOfOriginRow(this.props.nav.selectedRowId)
+    this.props.actions.setForeignKeyOfOriginRow(this.props.nav.selectedRowID)
   }
 
   handleAddRow () {
-    this.props.actions.addNewRow(this.props.nav.selectedTableId)
+    this.props.actions.addNewRow(this.props.nav.selectedTableID)
   }
 
   handleCreateTable () {
@@ -40,28 +40,28 @@ class SideBar extends Component {
   }
 
   handleEditRow () {
-    this.props.actions.toggleEditRow(this.props.nav.selectedTableId, this.props.nav.selectedRowId)
+    this.props.actions.toggleEditRow(this.props.nav.selectedTableID, this.props.nav.selectedRowID)
   }
 
   handleMoveDown () {
-    this.props.actions.moveDown(this.props.nav.selectedTableId, this.props.nav.selectedRowId)
+    this.props.actions.moveDown(this.props.nav.selectedTableID, this.props.nav.selectedRowID)
   }
 
   handleMoveUp () {
-    this.props.actions.moveUp(this.props.nav.selectedTableId, this.props.nav.selectedRowId)
+    this.props.actions.moveUp(this.props.nav.selectedTableID, this.props.nav.selectedRowID)
   }
 
   handleRemoveFK () {
-    this.props.actions.removeKey(this.props.nav.selectedTableId, this.props.nav.selectedRowId)
+    this.props.actions.removeKey(this.props.nav.selectedTableID, this.props.nav.selectedRowID)
   }
 
   handleRemoveRow () {
-    this.props.actions.removeRow(this.props.nav.selectedTableId, this.props.nav.selectedRowId)
+    this.props.actions.removeRow(this.props.nav.selectedTableID, this.props.nav.selectedRowID)
   }
 
   handleRemoveTable () {
     if (window.confirm('Remove this table')) {
-      this.props.actions.removeTable(this.props.nav.selectedTableId)
+      this.props.actions.removeTable(this.props.nav.selectedTableID)
     }
   }
 

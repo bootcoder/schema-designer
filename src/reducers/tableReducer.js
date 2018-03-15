@@ -4,7 +4,7 @@ export default function tableReducer (state = [], action) {
   switch (action.type) {
     case types.ADD_ROW:
       return state.map((table) => {
-        if (table.id !== action.tableId) { return table }
+        if (table.id !== action.tableID) { return table }
         return Object.assign({}, table, {rows: [...table.rows, action.row]})
       })
 
@@ -13,9 +13,9 @@ export default function tableReducer (state = [], action) {
 
     case types.MOVE_DOWN:
       return state.map((table) => {
-        if (table.id !== action.tableId) { return table }
+        if (table.id !== action.tableID) { return table }
         const rows = [...table.rows]
-        const targetIndex = rows.findIndex((row) => row.id === action.rowId)
+        const targetIndex = rows.findIndex((row) => row.id === action.rowID)
         if (targetIndex === rows.length - 1) { return table }
         const row = rows.splice(targetIndex, 1)[0]
         rows.splice(targetIndex + 1, 0, row)
@@ -27,9 +27,9 @@ export default function tableReducer (state = [], action) {
 
     case types.MOVE_UP:
       return state.map((table) => {
-        if (table.id !== action.tableId) { return table }
+        if (table.id !== action.tableID) { return table }
         const rows = [...table.rows]
-        const targetIndex = rows.findIndex((row) => row.id === action.rowId)
+        const targetIndex = rows.findIndex((row) => row.id === action.rowID)
         if (targetIndex === 0) { return table }
         const row = rows.splice(targetIndex, 1)[0]
         rows.splice(targetIndex - 1, 0, row)
@@ -37,19 +37,19 @@ export default function tableReducer (state = [], action) {
       })
 
     case types.REMOVE_TABLE:
-      return state.filter((table) => table.id !== action.tableId)
+      return state.filter((table) => table.id !== action.tableID)
 
     case types.REMOVE_ROW:
       return state.map((table) => {
-        if (table.id !== action.tableId) { return table }
-        const rows = table.rows.filter(e => e.id !== action.rowId)
+        if (table.id !== action.tableID) { return table }
+        const rows = table.rows.filter(e => e.id !== action.rowID)
         return Object.assign({}, table, {rows})
       })
 
     case types.SELECT_ROW:
       return state.map((table) => {
         const rows = table.rows.map((row) => {
-          if (table.id === action.tableId && row.id === action.rowId) {
+          if (table.id === action.tableID && row.id === action.rowID) {
             return Object.assign({}, row, {selected: true})
           }
           return Object.assign({}, row, {selected: false})
@@ -59,7 +59,7 @@ export default function tableReducer (state = [], action) {
 
     case types.SELECT_TABLE:
       return state.map((table) => {
-        if (table.id !== action.tableId) {
+        if (table.id !== action.tableID) {
           return Object.assign({}, table, {selected: false})
         }
         return Object.assign({}, table, {selected: true})
@@ -68,7 +68,7 @@ export default function tableReducer (state = [], action) {
     case types.TOGGLE_EDIT_ROW:
       return state.map((table) => {
         const rows = table.rows.map((row) => {
-          if (table.id === action.tableId && row.id === action.rowId && row.edit !== true) {
+          if (table.id === action.tableID && row.id === action.rowID && row.edit !== true) {
             return Object.assign({}, row, {edit: true})
           } else {
             return Object.assign({}, row, {edit: false})
@@ -79,7 +79,7 @@ export default function tableReducer (state = [], action) {
 
     case types.UPDATE_POSITION:
       return state.map((table) => {
-        if (table.id !== action.tableId) { return table }
+        if (table.id !== action.tableID) { return table }
         return Object.assign(
           {},
           table,
@@ -91,7 +91,7 @@ export default function tableReducer (state = [], action) {
         let connectionCount = 0
         const rows = table.rows.map((row) => {
           connectionCount += Object.keys(row.connections.inbound).length + Object.keys(row.connections.outbound).length
-          if (table.id === action.tableId && row.id === action.rowId) {
+          if (table.id === action.tableID && row.id === action.rowID) {
             return Object.assign({}, action.row)
           } else {
             return row
@@ -109,7 +109,7 @@ export default function tableReducer (state = [], action) {
 
     case types.UPDATE_TABLE_NAME:
       return state.map(table => {
-        if (table.id !== action.tableId) { return table }
+        if (table.id !== action.tableID) { return table }
         return Object.assign({}, table, {name: action.name})
       })
 

@@ -2,8 +2,8 @@ import * as types from '../actions/actionTypes'
 
 const defaultState = {
   fkOrigin: null,
-  selectedTableId: '',
-  selectedRowId: '',
+  selectedTableID: '',
+  selectedRowID: '',
   windowWidth: 10000,
   windowHeight: 10000
 }
@@ -11,22 +11,22 @@ const defaultState = {
 export default function navReducer (state = defaultState, action) {
   switch (action.type) {
     case types.DESELECT_NAV_ROW:
-      return Object.assign({}, state, {selectedRowId: ''})
+      return Object.assign({}, state, {selectedRowID: ''})
 
     case types.REMOVE_FK_OF_ORIGIN_ROW:
       return Object.assign({}, state, {fkOrigin: null})
 
     case types.SET_FOREIGN_KEY_OF_ORIGIN_ROW:
-      return Object.assign({}, state, {fkOrigin: action.rowId})
+      return Object.assign({}, state, {fkOrigin: action.rowID})
 
     case types.SELECT_TABLE:
-      return Object.assign({}, state, {selectedTableId: action.tableId})
+      return Object.assign({}, state, {selectedTableID: action.tableID})
 
     case types.SELECT_ROW:
       return Object.assign(
         {},
         state,
-        {selectedTableId: action.tableId, selectedRowId: action.rowId})
+        {selectedTableID: action.tableID, selectedRowID: action.rowID})
 
     case types.CLEAR_TABLES:
       return defaultState
