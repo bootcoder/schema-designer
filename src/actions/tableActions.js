@@ -6,17 +6,12 @@ import * as types from './actionTypes'
 
 function setRowPosition (rowId) {
   return (dispatch, getState) => {
-    // Get find tableId, table and row from rowId
     const { tables } = getState()
-    const tableId = findTableIdFromRowId(rowId)
-    const table = tables.filter(table => table.id === tableId)[0]
-    let row = table.rows.filter(row => row.id === rowId)[0]
-
-    // Deep clone row
-    let updatedRow = JSON.parse(JSON.stringify(row))
+    // Find tableId, table and row from rowId
+    let {cleanRow: row, cleanTable: table} = findRowWithId(tables, rowId)
 
     // Find table element / set initial position
-    const tableElement = document.getElementById(tableId)
+    const tableElement = document.getElementById(table.id)
     const tablePosition = tableElement.getBoundingClientRect()
 
     // Find row element / set initial position
@@ -30,10 +25,10 @@ function setRowPosition (rowId) {
     const updatedPosition = Object.assign({}, rowPosition, {x: rowPosition.x - diff.x, y: rowPosition.y - diff.y})
 
     // Update row with new position data - need x, y, height, width
-    updatedRow.position = updatedPosition
+    row.position = updatedPosition
 
     // Dispatch updateRow action
-    return dispatch(updateRow(updatedRow))
+    return dispatch(updateRow(row))
   }
 }
 
@@ -110,44 +105,32 @@ function findRowWithId (tables, rowId) {
 // ///// ACTIONS ////////
 // //////////////////////
 
-export function addFkConnection (destRowId, orgRowId) {
+export function addForeignKeyConnection (destRowId, orgRowId) {
+  //
   // org means ORIGIN
   // dest means DESTINATION
+  //
   return (dispatch, getState) => {
     dispatch(setRowPosition(destRowId))
     dispatch(setRowPosition(orgRowId))
 
-    const { nav, tables } = getState()
-    //
-    // Find destinationRowState
-    const {cleanRow: destRow, cleanTable: destTable} = findRowWithId(tables, destRowId)
+    const { tables } = getState()
 
-    // Find orgRowState
-    const {cleanRow: orgRow, cleanTable: orgTable} = findRowWithId(tables, orgRowId)
+    // Find destRow State
+    const {cleanRow: destRow} = findRowWithId(tables, destRowId)
 
-    // Set dest row inbound connection key org Id to org position
+    // Find orgRow State
+    const {cleanRow: orgRow} = findRowWithId(tables, orgRowId)
+
+    // Set destRow inbound connection key org Id to org position
     destRow.connections.inbound[orgRowId] = orgRow.position
 
     // Set org row outbound connection key dest Id to dest position
     orgRow.connections.outbound[destRowId] = destRow.position
 
-    // Calc connection count for both rows
-    // const destConnectionCount = Object.keys(destRow.connections.inbound).length + Object.keys(destRow.connections.outbound).length
-    // const orgConnectionCount = Object.keys(orgRow.connections.inbound).length + Object.keys(orgRow.connections.outbound).length
-
-    // Set both tables connectionCount to connections total length
-    // destTable.connectionCount = destConnectionCount
-    // orgTable.connectionCount = orgConnectionCount
-
     // Dispatch updateRow for both
     dispatch(updateRow(orgRow))
     dispatch(updateRow(destRow))
-    // new Promise((resolve, reject) => {
-    //   dispatch(updateTable(orgTable))
-    //   dispatch(updateTable(destTable))
-    //   resolve()
-    // }).then(() => {
-    // })
 
     // Return dispatch to remove fk flag from nav state
     return dispatch({type: types.REMOVE_FK_OF_ORIGIN_ROW})
@@ -158,8 +141,8 @@ export function addNewRow (tableId) {
   return (dispatch, getState) => {
     new Promise((resolve, reject) => {
       let { tables } = getState()
-      let table = tables.filter(table => table.id === tableId)[0]
-      let newRow = generateRow(table)
+      let cleanTable = findTableWithId(tables, tableId)
+      let newRow = generateRow(cleanTable)
       dispatch(addRow(tableId, newRow))
       resolve(newRow)
     }).then((row) => {
@@ -237,11 +220,13 @@ export function moveUp (tableId, rowId) {
 export function removeRow (tableId, rowId) {
   return (dispatch, getState) => {
     let { tables } = getState()
-    let rows = tables.filter(table => table.id === tableId)[0].rows
-    let row = rows.filter(row => row.id === rowId)[0]
+    let {cleanRow: row, cleanTable: table} = findRowWithId(tables, rowId)
+    let rows = table.rows
     let newRowId = null
+
+    // Find the next index to select
     if (rows.length === 1) {
-      // no action here, but the conditional is needed to catch
+      // No action here, newRowId remains null, but the conditional is needed to catch
     } else if (rows[rows.indexOf(row) + 1] !== undefined) {
       newRowId = rows[rows.indexOf(row) + 1].id
     } else if (rows[rows.indexOf(row) - 1] !== undefined) {
@@ -256,6 +241,7 @@ export function removeTable (tableId) {
   return (dispatch, getState) => {
     let { tables } = getState()
     let newTable = tables.filter(table => table.id !== tableId)[0]
+    // NOTE: not sure why I dispatched selectTable here. Investigate.
     newTable && dispatch(selectTable(newTable.id))
     return dispatch({type: types.REMOVE_TABLE, tableId})
   }
@@ -267,7 +253,7 @@ export function selectRow (tableId, rowId = null) {
 
     if (nav.fkOrigin !== null && nav.fkOrigin !== rowId) {
       new Promise((resolve, reject) => {
-        dispatch(addFkConnection(rowId, nav.fkOrigin))
+        dispatch(addForeignKeyConnection(rowId, nav.fkOrigin))
         resolve(tableId)
       }).then(tableId => {
         return dispatch(selectRow(tableId, rowId))
@@ -302,9 +288,8 @@ export function toggleEditRow (tableId, rowId) {
 export function updateOutboundConnection (connectionRowId, rowId, data) {
   return (dispatch, getState) => {
     const { tables } = getState()
-    const tableId = findTableIdFromRowId(connectionRowId)
-    const table = tables.filter(table => table.id === tableId)[0]
-    let cleanTable = JSON.parse(JSON.stringify(table))
+    const { cleanTable } = findRowWithId(tables, connectionRowId)
+
     cleanTable.rows.map(row => {
       if (row.id === connectionRowId) {
         // NOTE: BAD CODE FOR DEMO, must make and hit dynamic row position helper method
@@ -313,7 +298,6 @@ export function updateOutboundConnection (connectionRowId, rowId, data) {
       }
       return row
     })
-    console.log(cleanTable)
     return dispatch(updateTable(cleanTable))
   }
 }
