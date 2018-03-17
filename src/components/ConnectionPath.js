@@ -10,25 +10,29 @@ class ConnectionPath extends Component {
       const yMidPoint = Math.abs(start.y - end.y) / 2
       // console.log(`xMid: ${xMidPoint}`)
       // console.log(`yMid: ${yMidPoint}`)
+
+      var pathString = `M
+        ${/* X,Y Start */''}
+        ${start.x}
+        ${start.y}
+
+        C
+        ${/* X,Y from Start */''}
+        ${(start.x + xMidPoint)}
+        ${start.y}
+
+        ${(end.x - yMidPoint)}
+        ${end.y}
+
+        ${end.x}
+        ${end.y}`
       return (
         <path
-          d={`M
-            ${/* X,Y Start */''}
-            ${start.x}
-            ${start.y}
-            C
-            ${/* X,Y from Start */''}
-            ${start.x + (xMidPoint + xMidPoint * 0.10)}
-            ${start.y + (yMidPoint + yMidPoint * 0.10)},
-            ${/* X,Y from End */''}
-            ${end.x + (xMidPoint + xMidPoint * 0.10)}
-            ${end.y + (yMidPoint + yMidPoint * 0.10)}
-            ${/* X,Y End */''}
-            ${end.x}
-            ${end.y}`}
+          d={pathString}
           stroke={color}
           strokeWidth='2.5'
-          fill='transparent' />
+          fill='transparent'
+        />
       )
     }
   }
