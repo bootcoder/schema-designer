@@ -9,6 +9,8 @@ class Table extends Component {
     super(props, context)
 
     this.displayRow = this.displayRow.bind(this)
+    this.displayTableName = this.displayTableName.bind(this)
+    this.displayTableOptions = this.displayTableOptions.bind(this)
     this.handleDrag = this.handleDrag.bind(this)
     this.handleStop = this.handleStop.bind(this)
     this.handleUpdateName = this.handleUpdateName.bind(this)
@@ -48,6 +50,14 @@ class Table extends Component {
     } else {
       return <p onDoubleClick={this.toggleEditTable} className='handle'>{this.props.details.name}</p>
     }
+  }
+
+  displayTableOptions () {
+    return (
+      <div className='table-options'>
+        <span onClick={() => console.log('twas clicked')}>+</span>
+      </div>
+    )
   }
 
   handleDrag (e, data) {
@@ -111,6 +121,7 @@ class Table extends Component {
           id={details.id}
           className={details.selected ? 'Table selected-table' : 'Table'}>
           {this.displayTableName()}
+          {this.displayTableOptions()}
           {details.rows.map(this.displayRow)}
         </div>
       </Draggable>

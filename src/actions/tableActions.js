@@ -4,12 +4,16 @@ import * as types from './actionTypes'
 // ///// HELPERS ////////
 // //////////////////////
 
+function cloneObject (obj) {
+  return JSON.parse(JSON.stringify(obj))
+}
+
 function setRowPosition (tables, row) {
   // Find table from rowID
   let { cleanTable: table } = findRowWithID(tables, row.id)
 
   // Clone input row - DO NOT get row from state
-  let cleanRow = JSON.parse(JSON.stringify(row))
+  let cleanRow = cloneObject(row)
 
   // Find table element / set initial position
   const tableElement = document.getElementById(table.id)
@@ -97,15 +101,15 @@ function findTableIDFromRowID (rowID) {
 }
 
 function findTableWithID (tables, tableID) {
-  return JSON.parse(JSON.stringify(tables.filter(table => table.id === tableID)[0]))
+  return cloneObject(tables.filter(table => table.id === tableID)[0])
 }
 
 function findRowWithID (tables, rowID) {
   const tableID = findTableIDFromRowID(rowID)
   const table = tables.filter(table => table.id === tableID)[0]
   const row = table.rows.filter(row => row.id === rowID)[0]
-  const cleanTable = JSON.parse(JSON.stringify(table))
-  const cleanRow = JSON.parse(JSON.stringify(row))
+  const cleanTable = cloneObject(table)
+  const cleanRow = cloneObject(row)
   return { cleanRow, cleanTable }
 }
 
@@ -119,7 +123,6 @@ export function addForeignKeyConnection (destRowID, orgRowID) {
   // dest means DESTINATION
   //
   return (dispatch, getState) => {
-
     const { tables } = getState()
 
     // Find destRow State
@@ -320,7 +323,7 @@ export function updateRow (row) {
 }
 
 export function updateTable (table) {
-  console.log('updating table')
+  // console.log('updating table')
   return {type: types.UPDATE_TABLE, table}
 }
 
