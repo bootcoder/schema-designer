@@ -8,9 +8,9 @@ function setRowPosition (tables, row) {
   // Find table from rowID
   let { cleanTable: table } = findRowWithID(tables, row.id)
 
-  // Clone row
+  // Clone input row - DO NOT get row from state
   let cleanRow = JSON.parse(JSON.stringify(row))
-  // debugger
+
   // Find table element / set initial position
   const tableElement = document.getElementById(table.id)
   const tablePosition = tableElement.getBoundingClientRect()
@@ -20,7 +20,10 @@ function setRowPosition (tables, row) {
   const rowPosition = rowElement.getBoundingClientRect()
 
   // Calculate diff between table state and table DOM position
-  const diff = {x: Math.abs(table.position.x - tablePosition.x), y: Math.abs(table.position.y - tablePosition.y)}
+  const diff = {
+    x: Math.abs(table.position.x - tablePosition.x),
+    y: Math.abs(table.position.y - tablePosition.y)
+  }
 
   // Subtract initial position from diff
   const updatedPosition = Object.assign({}, {
@@ -116,8 +119,6 @@ export function addForeignKeyConnection (destRowID, orgRowID) {
   // dest means DESTINATION
   //
   return (dispatch, getState) => {
-    // dispatch(setRowPosition(destRowID))
-    // dispatch(setRowPosition(orgRowID))
 
     const { tables } = getState()
 
