@@ -53,8 +53,8 @@ export function generateNewTable () {
     // NOTE: Remove name placeholder and reset to 'new table' for production
     name: newTableID,
     position: {
-      x: Math.floor(Math.random() * (800 - 50) + 50),
-      y: Math.floor(Math.random() * (500 - 50) + 50) },
+      x: Math.floor(Math.random() * (700 - 50) + 200),
+      y: Math.floor(Math.random() * (600 - 50) + 50) },
     selected: false
   }
 
