@@ -95,7 +95,7 @@ function generateRowID (table) {
   return `${table.id}-${lastID + 1}`
 }
 
-function findTableIDFromRowID (rowID) {
+function tableIDFromRowID (rowID) {
   const regEx = /.+?(?=-\d+)/
   return regEx.exec(rowID)[0]
 }
@@ -105,7 +105,7 @@ function findTableWithID (tables, tableID) {
 }
 
 function findRowWithID (tables, rowID) {
-  const tableID = findTableIDFromRowID(rowID)
+  const tableID = tableIDFromRowID(rowID)
   const table = tables.filter(table => table.id === tableID)[0]
   const row = table.rows.filter(row => row.id === rowID)[0]
   const cleanTable = cloneObject(table)
@@ -173,7 +173,30 @@ export function createTable () {
     dispatch(disableEditAndSave())
     dispatch(deselectOtherRows(table.id))
     dispatch(selectRow(table.id))
+    // dispatch(checkSetRowSelection(table.id))
     return table
+  }
+}
+
+export function checkSetRowSelection (tableID) {
+  return (dispatch, getState) => {
+    // Get state
+    const { nav, tables } = getState()
+
+    // IF no selectedRow in nav state selectRow from table.
+    if (nav.selectedRowID === '') { return dispatch(selectRow(tableID)) }
+
+    // Strip nav row id to get table id
+    const navTableID = tableIDFromRowID(nav.selectedRowID)
+
+    // IF nav table id does not equal the tableID input
+    if (navTableID !== tableID) {
+      const table = findTableWithID(tables, tableID)
+      // Dispatch select row for tables first row.
+      return dispatch(selectRow(tableID, table.rows[0]))
+    }
+    // CATCH: Reselect row from nav state.
+    return dispatch(selectRow(tableID, nav.selectedRowID))
   }
 }
 
@@ -191,6 +214,7 @@ export function deselectOtherRows (tableID) {
         if (row.selected || row.edit) {
           const newRow = Object.assign({}, row, {selected: false})
           dispatch({type: types.DESELECT_NAV_ROW})
+          dispatch({type: types.SELECT_ROW, tableID, rowID: table.rows[0].id})
           dispatch(updateRow(newRow))
           return newRow
         }
@@ -277,6 +301,7 @@ export function selectRow (tableID, rowID = null) {
 
     if (rowID === null) {
       let rows = tables.filter(table => table.id === tableID)[0].rows
+      console.log(rows)
       rowID = rows.length > 0 && rows[rows.length - 1].id
     }
 
@@ -288,6 +313,7 @@ export function selectRow (tableID, rowID = null) {
 export function selectTable (tableID) {
   return dispatch => {
     dispatch(deselectOtherRows(tableID))
+    dispatch(checkSetRowSelection(tableID))
     return dispatch({type: types.SELECT_TABLE, tableID})
   }
 }

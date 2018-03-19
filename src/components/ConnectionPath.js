@@ -21,9 +21,11 @@ class ConnectionPath extends Component {
         ${(start.x + xMidPoint)}
         ${start.y}
 
+        ${/* X,Y from End */''}
         ${(end.x - yMidPoint)}
         ${end.y}
 
+        ${/* X,Y End */''}
         ${end.x}
         ${end.y}`
       return (
