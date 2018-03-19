@@ -31,9 +31,8 @@ padding: 0; }
 text-decoration: none;
 font-size: 2em;
 color: rgba(0, 0, 0, 0.61);
--webkit-transition: all 0.15s ease-out 0;
--moz-transition: all 0.15s ease-out 0;
-transition: all 0.45s ease-out 0;
+-moz-transition: left 0.9s ease;
+transition: left 0.9s ease;
 position: fixed;
 top: 200px;
 left: 160px;
@@ -46,9 +45,8 @@ position: fixed;
 top: 0;
 bottom: 0;
 left: 0;
--webkit-transition: all 0.15s ease-out 0;
--moz-transition: all 0.15s ease-out 0;
-transition: all 0.15s ease-out 0;
+-moz-transition: left 1.0s ease;
+transition: left 1.0s ease;
 width: auto;
 padding: 1.5em;
 background: #19C4BC;
@@ -83,7 +81,6 @@ left: 10px;
 -webkit-transform: scaleX(-1);
 transform: scaleX(-1);
  }
-
 
 #slide {
 display: none;
