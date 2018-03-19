@@ -68,22 +68,33 @@ class SideBar extends Component {
   render () {
     return (
       <div className='Sidebar'>
-        <ul>
-          <div className='sidebar-break' />
-          <li><a onClick={this.handleClearTables}>CL Tables</a></li>
-          <li><a onClick={this.handleCreateTable}>New Table</a></li>
-          <li><a onClick={this.handleRemoveTable}>RM Table</a></li>
-          <div className='sidebar-break' />
-          <li><a onClick={this.handleAddRow}>Add Row</a></li>
-          <li><a onClick={this.handleEditRow}>Edit Row</a></li>
-          <li><a onClick={this.handleRemoveRow}>RM Row</a></li>
-          <div className='sidebar-break' />
-          <li><a onClick={this.handleMoveUp}>Row UP</a></li>
-          <li><a onClick={this.handleMoveDown}>Row DN</a></li>
-          <div className='sidebar-break' />
-          <li><a onClick={this.handleAddFK}>+ fn Key</a></li>
-          <li><a onClick={this.handleRemoveFK}>- fn Key</a></li>
-        </ul>
+        <input id='slide' type='checkbox' role='button' />
+        <div className='container'>
+          <label htmlFor='slide' className='toggle'>
+            <img
+              className='toggle-img'
+              src={require('../images/arrow.png')}
+              alt='slide' />
+          </label>
+          <div className='sidebar-content'>
+            <ul>
+              <div className='sidebar-break' />
+              <li><a onClick={this.handleClearTables}>CL Tables</a></li>
+              <li><a onClick={this.handleCreateTable}>New Table</a></li>
+              <li><a onClick={this.handleRemoveTable}>RM Table</a></li>
+              <div className='sidebar-break' />
+              <li><a onClick={this.handleAddRow}>Add Row</a></li>
+              <li><a onClick={this.handleEditRow}>Edit Row</a></li>
+              <li><a onClick={this.handleRemoveRow}>RM Row</a></li>
+              <div className='sidebar-break' />
+              <li><a onClick={this.handleMoveUp}>Row UP</a></li>
+              <li><a onClick={this.handleMoveDown}>Row DN</a></li>
+              <div className='sidebar-break' />
+              <li><a onClick={this.handleAddFK}>+ fn Key</a></li>
+              <li><a onClick={this.handleRemoveFK}>- fn Key</a></li>
+            </ul>
+          </div>
+        </div>
       </div>
     )
   }

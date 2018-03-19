@@ -60,19 +60,7 @@ class SandBox extends Component {
   render () {
     return (
       <div className='app-container'>
-        <input id='slide' type='checkbox' role='button' />
-        <div className='container'>
-          <label htmlFor='slide' className='toggle'>
-            <img
-              className='toggle-img'
-              src={require('../images/arrow.png')}
-              alt='slide' />
-          </label>
-          <SideBar
-            actions={this.props.actions}
-            nav={this.props.nav}
-          />
-        </div>
+        <SideBar actions={this.props.actions} nav={this.props.nav} />
         <div className='SandBox' style={{width: this.props.nav.windowWidth, height: this.props.nav.windowHeight}} >
           <svg id='svg-container' style={{width: this.props.nav.windowWidth, height: this.props.nav.windowHeight}} >
             {this.renderAllConnectionPaths()}
