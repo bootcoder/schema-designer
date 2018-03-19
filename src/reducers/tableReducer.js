@@ -54,7 +54,11 @@ export default function tableReducer (state = [], action) {
           }
           return Object.assign({}, row, {selected: false})
         })
-        return Object.assign({}, table, {rows: rows})
+        if (table.id === action.tableID) {
+          return Object.assign({}, table, {rows: rows, selected: true})
+        } else {
+          return Object.assign({}, table, {rows: rows, selected: false})
+        }
       })
 
     case types.SELECT_TABLE:

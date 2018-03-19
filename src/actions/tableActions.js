@@ -170,10 +170,10 @@ export function createTable () {
   return dispatch => {
     let table = generateNewTable()
     dispatch({type: types.CREATE_TABLE, table})
+
     dispatch(disableEditAndSave())
     dispatch(deselectOtherRows(table.id))
-    dispatch(selectRow(table.id))
-    // dispatch(checkSetRowSelection(table.id))
+    dispatch(checkSetRowSelection(table.id))
     return table
   }
 }
@@ -186,10 +186,10 @@ export function checkSetRowSelection (tableID) {
     // IF no selectedRow in nav state selectRow from table.
     if (nav.selectedRowID === '') { return dispatch(selectRow(tableID)) }
 
-    // Strip nav row id to get table id
+    // Strip nav row ID to get table ID
     const navTableID = tableIDFromRowID(nav.selectedRowID)
 
-    // IF nav table id does not equal the tableID input
+    // IF nav table ID does not equal the tableID input
     if (navTableID !== tableID) {
       const table = findTableWithID(tables, tableID)
       // Dispatch select row for tables first row.
@@ -206,15 +206,31 @@ export function clearTables () {
 
 export function deselectOtherRows (tableID) {
   return (dispatch, getState) => {
-    let { tables } = getState()
+    // Get the state for tables
+    let { nav, tables } = getState()
+
+    // Clone tables
     let newTables = [...tables]
+
+    // Iterate over clone
     newTables.map(table => {
+      // We don't need this table, return it
       if (table.id === tableID) { return table }
+
+      // Iterate over all other tables
       table.rows.map(row => {
+        // IF the row is selected or editable clone and modify
         if (row.selected || row.edit) {
+          // NOTE: seems like I should be handling edit: false here as well... Need to check out
           const newRow = Object.assign({}, row, {selected: false})
-          dispatch({type: types.DESELECT_NAV_ROW})
-          dispatch({type: types.SELECT_ROW, tableID, rowID: table.rows[0].id})
+
+          // IF nav row ID equals row.id
+          if (nav.selectedRowID === row.id) {
+            // Clear the row from the nav
+            dispatch({type: types.DESELECT_NAV_ROW})
+          }
+
+          // Update the row
           dispatch(updateRow(newRow))
           return newRow
         }
@@ -283,6 +299,7 @@ export function removeTable (tableID) {
 }
 
 export function selectRow (tableID, rowID = null) {
+  console.log(`top rowID: ${rowID}`)
   return (dispatch, getState) => {
     let { tables, nav } = getState()
 
@@ -303,9 +320,9 @@ export function selectRow (tableID, rowID = null) {
       let rows = tables.filter(table => table.id === tableID)[0].rows
       console.log(rows)
       rowID = rows.length > 0 && rows[rows.length - 1].id
+      console.log(rowID)
     }
 
-    dispatch(selectTable(tableID))
     return dispatch({type: types.SELECT_ROW, rowID, tableID})
   }
 }
@@ -349,7 +366,6 @@ export function updateRow (row) {
 }
 
 export function updateTable (table) {
-  // console.log('updating table')
   return {type: types.UPDATE_TABLE, table}
 }
 
