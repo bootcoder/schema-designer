@@ -1,20 +1,3 @@
-.SideBar {
-  background-color: oliveDrab;
-  width: 150px;
-  height: auto;
-  position: absolute;
-  top: 10%;
-  left: 0;
-  bottom: 0;
-}
-
-.SideBar button {
-  display: block;
-  margin: 2% auto 2% auto;
-  width: 50%;
-
-}
-
 .sidebar-break {
   height: 10px;
   background-color: orange;

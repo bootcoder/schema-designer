@@ -67,21 +67,23 @@ class SideBar extends Component {
 
   render () {
     return (
-      <div className='SideBar'>
-        <div className='sidebar-break' />
-        <button onClick={this.handleClearTables}>CL Tables</button>
-        <button onClick={this.handleCreateTable}>New Table</button>
-        <button onClick={this.handleRemoveTable}>RM Table</button>
-        <div className='sidebar-break' />
-        <button onClick={this.handleAddRow}>Add Row</button>
-        <button onClick={this.handleEditRow}>Edit Row</button>
-        <button onClick={this.handleRemoveRow}>RM Row</button>
-        <div className='sidebar-break' />
-        <button onClick={this.handleMoveUp}>Row UP</button>
-        <button onClick={this.handleMoveDown}>Row DN</button>
-        <div className='sidebar-break' />
-        <button onClick={this.handleAddFK}>+ fn Key</button>
-        <button onClick={this.handleRemoveFK}>- fn Key</button>
+      <div className='Sidebar'>
+        <ul>
+          <div className='sidebar-break' />
+          <li><a onClick={this.handleClearTables}>CL Tables</a></li>
+          <li><a onClick={this.handleCreateTable}>New Table</a></li>
+          <li><a onClick={this.handleRemoveTable}>RM Table</a></li>
+          <div className='sidebar-break' />
+          <li><a onClick={this.handleAddRow}>Add Row</a></li>
+          <li><a onClick={this.handleEditRow}>Edit Row</a></li>
+          <li><a onClick={this.handleRemoveRow}>RM Row</a></li>
+          <div className='sidebar-break' />
+          <li><a onClick={this.handleMoveUp}>Row UP</a></li>
+          <li><a onClick={this.handleMoveDown}>Row DN</a></li>
+          <div className='sidebar-break' />
+          <li><a onClick={this.handleAddFK}>+ fn Key</a></li>
+          <li><a onClick={this.handleRemoveFK}>- fn Key</a></li>
+        </ul>
       </div>
     )
   }

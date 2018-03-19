@@ -1,3 +1,7 @@
+html, body {
+margin: 0;
+padding: 0; }
+
 .app-container {
   position: relative;
 }
@@ -6,42 +10,9 @@
   position: absolute;
 }
 
- input[type=checkbox] {
-  display: none;
-}
-
-input:checked ~ .SandBox {
-  left: 0;
-}
-
- input:checked ~  label {
-  left: 0;
-  -webkit-transform: scaleX(-1);
-  transform: scaleX(-1);
-}
-
- label {
-  z-index: 2;
-  position: absolute;
-  top: 25%;
-  left: 150px;
-
-  -moz-transition: left 0.5s ease;
-  transition: left 0.5s ease;
-}
-
 .SandBox {
   background-color: #434343;
-  position: absolute;
-  left: 150px;
-  right: 0;
   background-image: linear-gradient(#434343, #282828);
-  margin: 0;
-  outline: 2px solid black;
-  padding: 0;
-
-  -moz-transition: left 1.0s ease;
-  transition: left 1.0s ease;
 }
 
 .grid {
@@ -54,4 +25,64 @@ input:checked ~ .SandBox {
 .toggle-img {
   height: 35px;
   width: 35px;
+}
+
+.toggle {
+text-decoration: none;
+font-size: 2em;
+color: rgba(0, 0, 0, 0.61);
+-webkit-transition: all 0.15s ease-out 0;
+-moz-transition: all 0.15s ease-out 0;
+transition: all 0.45s ease-out 0;
+position: fixed;
+top: 200px;
+left: 160px;
+z-index: 1;
+cursor: pointer;
+}
+
+.Sidebar {
+position: fixed;
+top: 0;
+bottom: 0;
+left: 0;
+-webkit-transition: all 0.15s ease-out 0;
+-moz-transition: all 0.15s ease-out 0;
+transition: all 0.15s ease-out 0;
+width: auto;
+padding: 1.5em;
+background: #19C4BC;
+z-index: 10;
+}
+
+.Sidebar ul {
+list-style: none;
+margin: 0;
+padding: 0;
+}
+
+.Sidebar li a {
+font-size: 1.2em;
+margin: 0;
+margin-bottom: 16px;
+cursor: pointer;
+text-decoration: none;
+line-height: 200%;
+}
+
+.Sidebar a:hover {
+  color: rgba(0, 0, 0, 0.61);
+}
+
+#slide:checked + .container .Sidebar {
+left: -190px;
+ }
+
+#slide:checked + .container .toggle {
+left: 10px;
+ }
+
+
+#slide {
+display: none;
 }
