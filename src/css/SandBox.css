@@ -80,6 +80,8 @@ left: -190px;
 
 #slide:checked + .container .toggle {
 left: 10px;
+-webkit-transform: scaleX(-1);
+transform: scaleX(-1);
  }
 
 
