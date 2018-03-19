@@ -1,5 +1,6 @@
 import * as types from './actionTypes'
 import * as helpers from './actionHelpers'
+
 // //////////////////////
 // ///// ACTIONS ////////
 // //////////////////////
@@ -105,19 +106,16 @@ export function deselectOtherRows (tableID) {
       if (table.id === tableID) { return table }
 
       // Iterate over all other tables
+      // IF row selected / editable, clone and modify
       table.rows.map(row => {
-        // IF the row is selected or editable clone and modify
         if (row.selected || row.edit) {
           // NOTE: seems like I should be handling edit: false here as well... Need to check out
           const newRow = Object.assign({}, row, {selected: false})
 
-          // IF nav row ID equals row.id
           if (nav.selectedRowID === row.id) {
-            // Clear the row from the nav
             dispatch({type: types.DESELECT_NAV_ROW})
           }
 
-          // Update the row
           dispatch(updateRow(newRow))
           return newRow
         }
@@ -179,14 +177,12 @@ export function removeTable (tableID) {
   return (dispatch, getState) => {
     let { tables } = getState()
     let newTable = tables.filter(table => table.id !== tableID)[0]
-    // NOTE: not sure why I dispatched selectTable here. Investigate.
     newTable && dispatch(selectTable(newTable.id))
     return dispatch({type: types.REMOVE_TABLE, tableID})
   }
 }
 
 export function selectRow (tableID, rowID = null) {
-  console.log(`top rowID: ${rowID}`)
   return (dispatch, getState) => {
     let { tables, nav } = getState()
 
@@ -205,9 +201,7 @@ export function selectRow (tableID, rowID = null) {
 
     if (rowID === null) {
       let rows = tables.filter(table => table.id === tableID)[0].rows
-      console.log(rows)
       rowID = rows.length > 0 && rows[rows.length - 1].id
-      console.log(rowID)
     }
 
     return dispatch({type: types.SELECT_ROW, rowID, tableID})
