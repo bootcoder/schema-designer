@@ -56,6 +56,7 @@ class SideBar extends Component {
   }
 
   handleRemoveRow () {
+    console.log(this.props.nav.selectedRowID)
     this.props.actions.removeRow(this.props.nav.selectedTableID, this.props.nav.selectedRowID)
   }
 

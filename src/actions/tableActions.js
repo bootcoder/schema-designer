@@ -155,21 +155,12 @@ export function moveUp (tableID, rowID) {
 
 export function removeRow (tableID, rowID) {
   return (dispatch, getState) => {
-    let { tables } = getState()
-    let {cleanRow: row, cleanTable: table} = helpers.findRowWithID(tables, rowID)
-    let rows = table.rows
-    let newRowID = null
-
-    // Find the next index to select
-    if (rows.length === 1) {
-      // No action here, newRowID remains null, but the conditional is needed to catch
-    } else if (rows[rows.indexOf(row) + 1] !== undefined) {
-      newRowID = rows[rows.indexOf(row) + 1].id
-    } else if (rows[rows.indexOf(row) - 1] !== undefined) {
-      newRowID = rows[rows.indexOf(row) - 1].id
-    }
-    dispatch({type: types.REMOVE_ROW, tableID, rowID})
-    return dispatch(selectRow(tableID, newRowID))
+    new Promise((resolve, reject) => {
+      dispatch(selectNextRow(tableID, rowID))
+      resolve()
+    }).then(() => {
+      return dispatch({type: types.REMOVE_ROW, tableID, rowID})
+    })
   }
 }
 
@@ -182,7 +173,36 @@ export function removeTable (tableID) {
   }
 }
 
+function selectNextRow (tableID, rowID) {
+  return (dispatch, getState) => {
+    let { tables } = getState()
+    let table = helpers.findTableWithID(tables, tableID)
+    let rows = table.rows
+    let newRowID = null
+
+    if (rowID === null) {
+      return dispatch({type: types.DESELECT_NAV_ROW})
+    }
+
+    // There is no next row, we're done.
+    if (rows.length < 2) { return }
+
+    // Clone current row & get its index
+    let {cleanRow: row} = helpers.findRowWithID(tables, rowID)
+    let rowIndex = rows.indexOf(row)
+
+    // Find the next index to select
+    if (rows[rowIndex + 1] !== undefined) {
+      newRowID = rows[rowIndex + 1].id
+    } else if (rows[rowIndex - 1] !== undefined) {
+      newRowID = rows[rowIndex - 1].id
+    }
+    dispatch(selectRow(tableID, newRowID))
+  }
+}
+
 export function selectRow (tableID, rowID = null) {
+  console.log(rowID)
   return (dispatch, getState) => {
     let { tables, nav } = getState()
 
