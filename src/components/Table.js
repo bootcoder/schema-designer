@@ -71,12 +71,12 @@ class Table extends Component {
     // Iterate over each row and each connection
     if (this.props.details.connectionCount > 0) {
       this.props.details.rows.map(row => {
+        // Updates remote connections
         Object.keys(row.connections.inbound).map(connectionRowID => {
           this.props.actions.updateInboundConnectionOrigin(connectionRowID, row.id, data)
         })
-        Object.keys(row.connections.outbound).map(connectionRowID => {
-          this.props.actions.updateRow(row)
-        })
+        // Updates local row position
+        this.props.actions.updateRow(row)
       })
       this.props.actions.updatePosition(this.props.details.id, data)
     }
@@ -121,7 +121,7 @@ class Table extends Component {
           id={details.id}
           className={details.selected ? 'Table selected-table' : 'Table'}>
           {this.displayTableName()}
-          {this.displayTableOptions()}
+          {/* {this.displayTableOptions()} */}
           {details.rows.map(this.displayRow)}
         </div>
       </Draggable>

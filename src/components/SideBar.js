@@ -4,6 +4,7 @@ import '../css/SideBar.css'
 class SideBar extends Component {
   constructor (props, context) {
     super(props, context)
+
     this.handleAddFK = this.handleAddFK.bind(this)
     this.handleAddRow = this.handleAddRow.bind(this)
     this.handleCreateTable = this.handleCreateTable.bind(this)
@@ -17,11 +18,6 @@ class SideBar extends Component {
   }
 
   handleAddFK () {
-    // set a nav state to pending key placement
-    // will need to store the origin data in nav state as well
-    // now on select row have to check for nav state.
-    // if pending key then write connection data to both points.
-    // else continue on as the norm
     this.props.actions.setForeignKeyOfOriginRow(this.props.nav.selectedRowID)
   }
 
@@ -56,7 +52,6 @@ class SideBar extends Component {
   }
 
   handleRemoveRow () {
-    console.log(this.props.nav.selectedRowID)
     this.props.actions.removeRow(this.props.nav.selectedTableID, this.props.nav.selectedRowID)
   }
 
