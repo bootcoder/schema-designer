@@ -31,9 +31,7 @@ class SandBox extends Component {
       if (Object.keys(row.connections.outbound).length < 1) { return }
       return Object.keys(row.connections.outbound).map(connection => {
         // NOTE: need to build a function to attach this point to either the left or right side of the row box not the center as current.
-        const start = row.position
-        const end = row.connections.outbound[connection]
-
+        const {start, end} = this.setAnchors(row.position, row.connections.outbound[connection])
         return (
           <ConnectionPath
             key={connection}
@@ -55,6 +53,33 @@ class SandBox extends Component {
         nav={this.props.nav}
       />
     )
+  }
+
+  setAnchors (start, end) {
+    // debugger
+    let clnStart = Object.assign({}, start)
+    let clnEnd = Object.assign({}, end)
+    let startLeft = clnStart.x
+    let startRight = clnStart.x + clnStart.width
+    let endLeft = clnEnd.x
+    let endRight = endLeft + clnEnd.width
+    let leftDiff = Math.abs(startLeft - endLeft)
+    let rightDiff = Math.abs(startRight - endLeft)
+
+    // add or equals somewhere
+    if (startLeft < endLeft && startRight < endLeft) {
+      clnStart.x += clnStart.width
+    } else if (startLeft > endLeft && startRight > endLeft && leftDiff < clnEnd.width) {
+      clnStart.x += clnStart.width
+    }
+
+    if (endLeft < clnStart.x && endRight < clnStart.x) {
+      clnEnd.x += clnEnd.width
+    }
+
+    clnStart.y += (clnStart.height / 2)
+    clnEnd.y += (clnEnd.height / 2)
+    return { start: clnStart, end: clnEnd }
   }
 
   render () {
