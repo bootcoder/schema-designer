@@ -56,13 +56,12 @@ class SandBox extends Component {
   }
 
   setAnchors (start, end) {
-    // debugger
     let clnStart = Object.assign({}, start)
     let clnEnd = Object.assign({}, end)
-    let startLeft = clnStart.x
-    let startRight = clnStart.x + clnStart.width
-    let endLeft = clnEnd.x
-    let endRight = endLeft + clnEnd.width
+    let startLeft = Math.floor(clnStart.x)
+    let startRight = Math.floor(clnStart.x + clnStart.width)
+    let endLeft = Math.floor(clnEnd.x)
+    let endRight = Math.floor(endLeft + clnEnd.width)
     let leftDiff = Math.abs(startLeft - endLeft)
     let rightDiff = Math.abs(startRight - endLeft)
 

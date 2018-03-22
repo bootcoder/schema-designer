@@ -6,8 +6,7 @@ class ConnectionPath extends Component {
     // console.log(start)
     // console.log(end)
     if (Object.keys(start).length > 1) {
-      const xMidPoint = Math.abs(start.x - end.x) / 2
-      const yMidPoint = Math.abs(start.y - end.y) / 2
+      const half = Math.floor((end.x - start.x) / 2)
       // console.log(`xMid: ${xMidPoint}`)
       // console.log(`yMid: ${yMidPoint}`)
 
@@ -17,17 +16,19 @@ class ConnectionPath extends Component {
         ${start.y}
 
         C
-        ${/* X,Y from Start */''}
-        ${(start.x + xMidPoint)}
+        ${/* Curve X,Y from Start */''}
+        ${(start.x + half)}
         ${start.y}
 
-        ${/* X,Y from End */''}
-        ${(end.x - yMidPoint)}
+        ${/* Curve X,Y from End */''}
+        ${(end.x - half)}
         ${end.y}
 
         ${/* X,Y End */''}
         ${end.x}
         ${end.y}`
+        console.log(pathString)
+
       return (
         <path
           d={pathString}
