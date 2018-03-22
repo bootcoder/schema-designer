@@ -6,7 +6,7 @@ class Header extends Component {
   render () {
     return (
       <header className='Header'>
-        <Link to='/'>Schemalator 5000</Link>
+        <Link to='/'>Schema Designer</Link>
       </header>
     )
   }
