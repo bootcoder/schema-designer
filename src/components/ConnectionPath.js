@@ -3,12 +3,9 @@ import React, { Component } from 'react'
 class ConnectionPath extends Component {
   render () {
     const { start, end, color } = this.props
-    // console.log(start)
-    // console.log(end)
     if (Object.keys(start).length > 1) {
       const half = Math.floor((end.x - start.x) / 2)
-      // console.log(`xMid: ${xMidPoint}`)
-      // console.log(`yMid: ${yMidPoint}`)
+      const startHalf = start.under === true ? start.x - (half * 2) : start.x + half
 
       var pathString = `M
         ${/* X,Y Start */''}
@@ -17,7 +14,7 @@ class ConnectionPath extends Component {
 
         C
         ${/* Curve X,Y from Start */''}
-        ${(start.x + half)}
+        ${startHalf}
         ${start.y}
 
         ${/* Curve X,Y from End */''}
@@ -27,7 +24,7 @@ class ConnectionPath extends Component {
         ${/* X,Y End */''}
         ${end.x}
         ${end.y}`
-        console.log(pathString)
+      // console.log(pathString)
 
       return (
         <path

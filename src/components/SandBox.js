@@ -30,7 +30,6 @@ class SandBox extends Component {
       const color = 'red' // NOTE: comeback to make this dynorandomite.
       if (Object.keys(row.connections.outbound).length < 1) { return }
       return Object.keys(row.connections.outbound).map(connection => {
-        // NOTE: need to build a function to attach this point to either the left or right side of the row box not the center as current.
         const {start, end} = this.setAnchors(row.position, row.connections.outbound[connection])
         return (
           <ConnectionPath
@@ -62,17 +61,29 @@ class SandBox extends Component {
     let startRight = Math.floor(clnStart.x + clnStart.width)
     let endLeft = Math.floor(clnEnd.x)
     let endRight = Math.floor(endLeft + clnEnd.width)
-    let leftDiff = Math.abs(startLeft - endLeft)
-    let rightDiff = Math.abs(startRight - endLeft)
+    // Reset under flag value - it is only used here and ConnectionPath
+    clnStart.under = false
 
-    // add or equals somewhere
+    // Full Left - Set start anchor left
     if (startLeft < endLeft && startRight < endLeft) {
+      // console.log('full left')
       clnStart.x += clnStart.width
-    } else if (startLeft > endLeft && startRight > endLeft && leftDiff < clnEnd.width) {
-      clnStart.x += clnStart.width
-    }
 
-    if (endLeft < clnStart.x && endRight < clnStart.x) {
+    // Mid Left - Set under flag true
+    } else if (startLeft < endLeft && startRight > endLeft) {
+      // console.log('mid left')
+      clnStart.under = true
+
+    // Mid Right - Set under flag true - Set both anchors right
+    } else if (startLeft < endRight && startRight > endRight) {
+      // console.log('mid right')
+      clnStart.under = true
+      clnStart.x += clnStart.width
+      clnEnd.x += clnEnd.width
+
+    // Full Right - Set end anchor right
+    } else if (startLeft > endRight) {
+      // console.log('full right')
       clnEnd.x += clnEnd.width
     }
 
