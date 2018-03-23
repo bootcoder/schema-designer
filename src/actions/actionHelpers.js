@@ -1,3 +1,5 @@
+import genRowColor from './rowColors.js'
+
 // //////////////////////
 // ///// HELPERS ////////
 // //////////////////////
@@ -50,8 +52,9 @@ export function generateNewTable () {
     edit: false,
     connectionCount: 0,
     id: newTableID,
-    // NOTE: Remove name placeholder and reset to 'new table' for production
-    name: newTableID,
+    // NOTE: DEVELOPMENT DEBUGGER ONLY:
+    // name: newTableID,
+    name: 'new table',
     position: {
       x: Math.floor(Math.random() * (700 - 50) + 200),
       y: Math.floor(Math.random() * (600 - 50) + 50) },
@@ -64,8 +67,7 @@ export function generateNewTable () {
 
 // DEFAULT row lives here.
 export function generateRow (table) {
-  const colors = ['DarkGreen', 'DarkBlue', 'Coral', 'Crimson', 'DeepPink', 'PaleGreen', 'Sienna', 'Aqua', 'Chartreuse', 'DodgerBlue', 'Gold', 'GreenYellow', 'DarkOrange', 'MediumSeaGreen', 'Lime', 'Olive', 'OliveDrab', 'Salmon']
-  const connectionColor = colors[Math.floor(Math.random() * colors.length)]
+  const connectionColor = genRowColor()
   const title = table.rows ? 'new_field' : 'id'
   return {
     color: 'gray',
