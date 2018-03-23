@@ -203,7 +203,6 @@ function selectNextRow (tableID, rowID) {
 }
 
 export function selectRow (tableID, rowID = null) {
-  console.log(rowID)
   return (dispatch, getState) => {
     let { tables, nav } = getState()
 
