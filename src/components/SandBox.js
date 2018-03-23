@@ -27,8 +27,8 @@ class SandBox extends Component {
 
   renderTableConnectionPath (table) {
     return table.rows.map(row => {
-      const color = 'red' // NOTE: comeback to make this dynorandomite.
       if (Object.keys(row.connections.outbound).length < 1) { return }
+
       return Object.keys(row.connections.outbound).map(connection => {
         const {start, end} = this.setAnchors(row.position, row.connections.outbound[connection])
         return (
@@ -36,7 +36,7 @@ class SandBox extends Component {
             key={connection}
             start={start}
             end={end}
-            color={color}
+            color={row.connectionColor}
           />
         )
       })

@@ -64,12 +64,15 @@ export function generateNewTable () {
 
 // DEFAULT row lives here.
 export function generateRow (table) {
+  const colors = ['DarkGreen', 'DarkBlue', 'Coral', 'Crimson', 'DeepPink', 'PaleGreen', 'Sienna', 'Aqua', 'Chartreuse', 'DodgerBlue', 'Gold', 'GreenYellow', 'DarkOrange', 'MediumSeaGreen', 'Lime', 'Olive', 'OliveDrab', 'Salmon']
+  const connectionColor = colors[Math.floor(Math.random() * colors.length)]
   return {
     color: 'gray',
     connections: {
       inbound: {},
       outbound: {}
     },
+    connectionColor,
     edit: false,
     id: generateRowID(table),
     selected: false,
