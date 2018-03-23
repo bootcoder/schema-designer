@@ -66,6 +66,7 @@ export function generateNewTable () {
 export function generateRow (table) {
   const colors = ['DarkGreen', 'DarkBlue', 'Coral', 'Crimson', 'DeepPink', 'PaleGreen', 'Sienna', 'Aqua', 'Chartreuse', 'DodgerBlue', 'Gold', 'GreenYellow', 'DarkOrange', 'MediumSeaGreen', 'Lime', 'Olive', 'OliveDrab', 'Salmon']
   const connectionColor = colors[Math.floor(Math.random() * colors.length)]
+  const title = table.rows ? 'new_field' : 'id'
   return {
     color: 'gray',
     connections: {
@@ -77,7 +78,7 @@ export function generateRow (table) {
     id: generateRowID(table),
     selected: false,
     tableID: table.id,
-    title: 'new_field'
+    title
   }
 }
 
