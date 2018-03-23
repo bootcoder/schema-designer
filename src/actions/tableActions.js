@@ -15,11 +15,11 @@ export function addForeignKeyConnection (destRowID, orgRowID) {
 
     // Find destRow State
     let {cleanRow: destRow} = helpers.findRowWithID(tables, destRowID)
-    let destRowWithPosition = helpers.setRowPosition(tables, destRow)
+    let destRowWithPosition = helpers.setRowPositionFromTable(tables, destRow)
 
     // Find orgRow State
     let {cleanRow: orgRow} = helpers.findRowWithID(tables, orgRowID)
-    let orgRowWithPosition = helpers.setRowPosition(tables, orgRow)
+    let orgRowWithPosition = helpers.setRowPositionFromTable(tables, orgRow)
 
     // Set destRow inbound connection key org ID to org position
     destRowWithPosition.connections.inbound[orgRowID] = orgRowWithPosition.position
@@ -45,6 +45,7 @@ export function addNewRow (tableID) {
       dispatch(addRow(tableID, newRow))
       resolve(newRow)
     }).then((row) => {
+      dispatch(updateRow(helpers.setRowPositionFromDOM(row)))
       return dispatch(selectRow(tableID, row.id))
     })
   }
@@ -58,7 +59,7 @@ export function createTable () {
   return dispatch => {
     let table = helpers.generateNewTable()
     dispatch({type: types.CREATE_TABLE, table})
-
+    dispatch(addNewRow(table.id))
     dispatch(disableEditAndSave())
     dispatch(deselectOtherRows(table.id))
     dispatch(checkSetRowSelection(table.id))
@@ -247,10 +248,10 @@ export function updateInboundConnectionOrigin (remoteRowID, currentRowID, data) 
     // Find table of connection
     const { cleanRow: remoteRow } = helpers.findRowWithID(tables, remoteRowID)
     const { cleanRow: currentRow } = helpers.findRowWithID(tables, currentRowID)
-    const currentRowPosition = helpers.setRowPosition(tables, currentRow).position
+    const currentRowPosition = helpers.setRowPositionFromTable(tables, currentRow).position
     remoteRow.connections.outbound[currentRowID] = currentRowPosition
 
-    return dispatch(updateRow(remoteRow))
+    return dispatch({type: types.UPDATE_ROW, tableID: remoteRow.tableID, rowID: remoteRow.id, row: remoteRow})
   }
 }
 
@@ -261,7 +262,7 @@ export function updatePosition (tableID, data) {
 export function updateRow (row) {
   return (dispatch, getState) => {
     const { tables } = getState()
-    const updatedRowPosition = helpers.setRowPosition(tables, row)
+    const updatedRowPosition = helpers.setRowPositionFromTable(tables, row)
     return dispatch({type: types.UPDATE_ROW, tableID: row.tableID, rowID: row.id, row: updatedRowPosition})
   }
 }

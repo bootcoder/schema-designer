@@ -72,7 +72,7 @@ class Table extends Component {
     if (this.props.details.connectionCount > 0) {
       this.props.details.rows.map(row => {
         // Update all remote connections
-        Object.keys(row.connections.inbound).map(connectionRowID => {
+        row.connections.inbound.length && Object.keys(row.connections.inbound).map(connectionRowID => {
           this.props.actions.updateInboundConnectionOrigin(connectionRowID, row.id, data)
         })
         // Update current row position

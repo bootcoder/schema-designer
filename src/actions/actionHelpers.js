@@ -8,42 +8,6 @@ export function cloneObject (obj) {
   return JSON.parse(JSON.stringify(obj))
 }
 
-export function setRowPosition (tables, row) {
-  // Find table from rowID
-  let { cleanTable: table } = findRowWithID(tables, row.id)
-
-  // Clone input row - DO NOT get row from state
-  let cleanRow = cloneObject(row)
-
-  // Find table element / set initial position
-  const tableElement = document.getElementById(table.id)
-  const tablePosition = tableElement.getBoundingClientRect()
-
-  // Find row element / set initial position
-  const rowElement = document.getElementById(row.id)
-  const rowPosition = rowElement.getBoundingClientRect()
-
-  // Calculate diff between table state and table DOM position
-  const diff = {
-    x: Math.abs(table.position.x - tablePosition.x),
-    y: Math.abs(table.position.y - tablePosition.y)
-  }
-
-  // Subtract initial position from diff
-  const updatedPosition = Object.assign({}, {
-    x: rowPosition.x - diff.x,
-    y: rowPosition.y - diff.y,
-    width: Math.floor(rowPosition.width),
-    height: Math.floor(rowPosition.height)
-  })
-
-  // Update row with new position data - need x, y, height, width
-  cleanRow.position = updatedPosition
-
-  // Return the cleanRow
-  return cleanRow
-}
-
 // DEFAULT table lives here.
 export function generateNewTable () {
   const newTableID = Math.random().toString(36).substring(2, 5) + Math.random().toString(36).substring(2, 5)
@@ -58,18 +22,18 @@ export function generateNewTable () {
     position: {
       x: Math.floor(Math.random() * (700 - 50) + 200),
       y: Math.floor(Math.random() * (600 - 50) + 50) },
+    rows: [],
     selected: false
   }
 
-  newTable.rows = [generateRow(newTable)]
   return newTable
 }
 
 // DEFAULT row lives here.
 export function generateRow (table) {
   const connectionColor = genRowColor()
-  const title = table.rows ? 'new_field' : 'id'
-  return {
+  const title = table.rows.length ? 'new_field' : 'id'
+  const row = {
     color: 'gray',
     connections: {
       inbound: {},
@@ -82,6 +46,7 @@ export function generateRow (table) {
     tableID: table.id,
     title
   }
+  return row
 }
 
 export function generateRowID (table) {
@@ -115,4 +80,38 @@ export function findRowWithID (tables, rowID) {
   const cleanTable = cloneObject(table)
   const cleanRow = cloneObject(row)
   return { cleanRow, cleanTable }
+}
+
+export function setRowPositionFromDOM (row) {
+  // Clone input row - DO NOT get row from state
+  let cleanRow = cloneObject(row)
+
+  // Find row element / set initial position
+  const rowElement = document.getElementById(row.id)
+  const rowPosition = rowElement.getBoundingClientRect()
+
+  const updatedPosition = Object.assign({}, {
+    x: Math.floor(rowPosition.x),
+    y: Math.floor(rowPosition.y),
+    width: Math.floor(rowPosition.width),
+    height: Math.floor(rowPosition.height)
+  })
+
+  // Update row with new position data - need x, y, height, width
+  cleanRow.position = updatedPosition
+
+  // Return the cleanRow
+  return cleanRow
+}
+
+export function setRowPositionFromTable (tables, row) {
+  const table = findTableWithID(tables, row.tableID)
+  let cleanRow = cloneObject(row)
+  let rowIndex = table.rows.map((el, idx) => {
+    if (el.id === row.id) { return idx }
+  })
+  let height = (rowIndex + 1) * row.position.height
+  cleanRow.position.x = table.position.x
+  cleanRow.position.y = table.position.y + height
+  return cleanRow
 }
