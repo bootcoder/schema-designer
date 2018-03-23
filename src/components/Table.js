@@ -71,9 +71,11 @@ class Table extends Component {
     // Iterate over each row and each connection
     if (this.props.details.connectionCount > 0) {
       this.props.details.rows.map(row => {
+
         // Update all remote connections
-        row.connections.inbound.length && Object.keys(row.connections.inbound).map(connectionRowID => {
-          this.props.actions.updateInboundConnectionOrigin(connectionRowID, row.id, data)
+        Object.keys(row.connections.inbound).map(connectionRowID => {
+          console.log('handleDrag')
+          this.props.actions.updateInboundConnectionOrigin(connectionRowID, row, data)
         })
         // Update current row position
         this.props.actions.updateRow(row)

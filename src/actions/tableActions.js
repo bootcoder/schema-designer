@@ -241,15 +241,14 @@ export function toggleEditRow (tableID, rowID) {
   return { type: types.TOGGLE_EDIT_ROW, tableID, rowID }
 }
 
-export function updateInboundConnectionOrigin (remoteRowID, currentRowID, data) {
+export function updateInboundConnectionOrigin (remoteRowID, currentRow, data) {
   return (dispatch, getState) => {
     const { tables } = getState()
 
     // Find table of connection
     const { cleanRow: remoteRow } = helpers.findRowWithID(tables, remoteRowID)
-    const { cleanRow: currentRow } = helpers.findRowWithID(tables, currentRowID)
     const currentRowPosition = helpers.setRowPositionFromTable(tables, currentRow).position
-    remoteRow.connections.outbound[currentRowID] = currentRowPosition
+    remoteRow.connections.outbound[currentRow.id] = currentRowPosition
 
     return dispatch({type: types.UPDATE_ROW, tableID: remoteRow.tableID, rowID: remoteRow.id, row: remoteRow})
   }
