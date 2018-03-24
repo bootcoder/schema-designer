@@ -1,11 +1,23 @@
 import React, { Component } from 'react'
+import Select from 'react-select'
+import 'react-select/dist/react-select.css'
 
 class EditRow extends Component {
   constructor (props) {
     super(props)
-
+    console.log(props)
+    this.optionsFromDataTypes = this.optionsFromDataTypes.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.handleSelectChange = this.handleSelectChange.bind(this)
     this.handleSave = this.handleSave.bind(this)
+  }
+
+  optionsFromDataTypes () {
+    let options = []
+    Object.keys(this.props.dataTypes).map((dataType, idx) => {
+      options.push({value: dataType, label: dataType})
+    })
+    return options
   }
 
   handleChange (event) {
@@ -18,6 +30,12 @@ class EditRow extends Component {
     event.preventDefault()
     const newRow = Object.assign({}, this.props.details, {edit: false})
     this.props.actions.updateRow(newRow)
+  }
+
+  handleSelectChange (selectedOption) {
+    let newState = Object.assign({}, this.props.details)
+    newState.dataType = selectedOption.value
+    this.props.actions.updateRow(newState)
   }
 
   render () {
@@ -38,10 +56,12 @@ class EditRow extends Component {
           </div>
           <div>
             DataType:
-            <select>
-              <option value='text'>Text</option>
-              <option value='string'>String</option>
-            </select>
+            <Select
+              name='dataType'
+              value={details.dataType}
+              onChange={this.handleSelectChange}
+              options={this.optionsFromDataTypes()}
+            />
           </div>
           <input type='submit' />
         </form>
