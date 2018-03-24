@@ -61,6 +61,7 @@ class EditRow extends Component {
               value={details.dataType}
               onChange={this.handleSelectChange}
               options={this.optionsFromDataTypes()}
+              clearable={false}
             />
           </div>
           <input type='submit' />

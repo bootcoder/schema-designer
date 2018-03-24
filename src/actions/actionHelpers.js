@@ -40,6 +40,7 @@ export function generateRow (table) {
       outbound: {}
     },
     connectionColor,
+    dataType: 'int',
     edit: false,
     id: generateRowID(table),
     selected: false,
