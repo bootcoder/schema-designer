@@ -1,11 +1,11 @@
 .EditRow {
   width: 150px;
-    padding: 10px;
+    padding: 5px;
     font: 13px Arial, Helvetica, sans-serif;
 }
 
 .Select {
-  max-width: 90%;
+  max-width: 100%;
 }
 
 .EditRow label {
@@ -19,12 +19,16 @@
     padding-top: 8px;
 }
 
+.EditRow .checkbox {
+  margin: 2px;
+}
+
 .EditRow span.required {
     color:red;
 }
 
 .EditRow input.input-field {
-    width: 90%;
+    width: 100%;
 }
 
 .EditRow input.input-field {

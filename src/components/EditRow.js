@@ -84,7 +84,7 @@ class EditRow extends Component {
               value={details.default}
             />
           </label>
-          <div>
+          <div className='checkbox'>
             <input
               defaultChecked={details.autoincrement}
               name='autoincrement'
@@ -94,7 +94,7 @@ class EditRow extends Component {
             />
             <span>Auto Increment</span>
           </div>
-          <div>
+          <div className='checkbox'>
             <input
               defaultChecked={details.allow_null}
               name='allow_null'
@@ -105,7 +105,7 @@ class EditRow extends Component {
             <span>Allow NULL</span>
           </div>
 
-          <label><span>&nbsp;</span><input type='submit' value='Save Row' /></label>
+          <label><input type='submit' value='Save Row' /></label>
         </form>
       </div>
     )
