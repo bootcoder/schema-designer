@@ -44,7 +44,7 @@ class EditRow extends Component {
   render () {
     const details = this.props.details
     return (
-      <div className='EditRow'>
+      <div className='EditRow' style={{backgroundColor: `${this.props.dataTypes[details.dataType].color}`}}>
         <form onSubmit={this.handleSave} >
           <Select
             name='dataType'
