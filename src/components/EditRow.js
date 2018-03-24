@@ -21,8 +21,10 @@ class EditRow extends Component {
   }
 
   handleChange (event) {
+    const target = event.target
+    const value = target.type === 'checkbox' ? target.checked : target.value
     let newState = Object.assign({}, this.props.details)
-    newState[event.target.name] = event.target.value
+    newState[target.name] = value
     this.props.actions.updateRow(newState)
   }
 
@@ -43,16 +45,13 @@ class EditRow extends Component {
     return (
       <div className='EditRow'>
         <form onSubmit={this.handleSave} >
-          <div>
-            DataType:
-            <Select
-              name='dataType'
-              value={details.dataType}
-              onChange={this.handleSelectChange}
-              options={this.optionsFromDataTypes()}
-              clearable={false}
-            />
-          </div>
+          <Select
+            name='dataType'
+            value={details.dataType}
+            onChange={this.handleSelectChange}
+            options={this.optionsFromDataTypes()}
+            clearable={false}
+          />
           <div>
             Name:
             <input autoFocus
@@ -71,6 +70,25 @@ class EditRow extends Component {
               onChange={this.handleChange}
               type='number'
               value={details.size}
+            />
+          </div>
+          <div>
+            Default:
+            <input
+              name='default'
+              onChange={this.handleChange}
+              type='text'
+              value={details.default}
+            />
+          </div>
+          <div>
+            <label htmlFor='autoincrement'>Auto Increment:</label>
+            <input
+              defaultChecked={details.autoincrement}
+              name='autoincrement'
+              onChange={this.handleChange}
+              type='checkbox'
+              value={details.autoincrement}
             />
           </div>
           <input type='submit' />
