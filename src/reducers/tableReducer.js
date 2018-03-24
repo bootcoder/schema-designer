@@ -1,6 +1,7 @@
 import * as types from '../actions/actionTypes'
+import * as defaults from './defaults'
 
-export default function tableReducer (state = [], action) {
+export default function tableReducer (state = defaults.tables, action) {
   switch (action.type) {
     case types.ADD_ROW:
       return state.map((table) => {
