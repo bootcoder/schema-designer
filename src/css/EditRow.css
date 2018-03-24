@@ -1,71 +1,62 @@
 .EditRow {
   width: 150px;
-    padding: 5px;
-    font: 13px Arial, Helvetica, sans-serif;
-}
-
-.Select {
-  max-width: 100%;
-}
-
-.EditRow label {
-    display: block;
+  padding: 5px;
+  font: 13px Arial, Helvetica, sans-serif;
 }
 
 .EditRow label > span {
-    width: 48%;
-    font-weight: bold;
-    float: left;
-    padding-top: 8px;
+  width: 50%;
+  font-weight: bold;
+  float: left;
+  padding-top: 8px;
 }
 
 .EditRow .checkbox {
-  margin: 2px;
+  padding: 2px 0px 2px 0px;
 }
+
+.EditRow .checkbox span {
+  padding: 0px 0px 0px 5px;
+}
+
 
 .EditRow span.required {
-    color:red;
+  color:red;
 }
 
 .EditRow input.input-field {
-    width: 100%;
-}
-
-.EditRow input.input-field {
-    box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    border: 1px solid #C2C2C2;
-    box-shadow: 1px 1px 4px #EBEBEB;
-    -moz-box-shadow: 1px 1px 4px #EBEBEB;
-    -webkit-box-shadow: 1px 1px 4px #EBEBEB;
-    border-radius: 3px;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    padding: 7px;
-    outline: none;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  border: 1px solid #C2C2C2;
+  box-shadow: 1px 1px 4px #EBEBEB;
+  -moz-box-shadow: 1px 1px 4px #EBEBEB;
+  -webkit-box-shadow: 1px 1px 4px #EBEBEB;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  padding: 7px;
+  outline: none;
 }
 
 .EditRow .input-field:focus {
-    border: 1px solid #0C0;
+  border: 1px solid #0C0;
 }
 
-.EditRow input[type=submit],
-.EditRow input[type=button]{
-    border: none;
-    padding: 8px 15px 8px 15px;
-    background: #FF8500;
-    color: #fff;
-    box-shadow: 1px 1px 4px #DADADA;
-    -moz-box-shadow: 1px 1px 4px #DADADA;
-    -webkit-box-shadow: 1px 1px 4px #DADADA;
-    border-radius: 3px;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
+.EditRow input[type=submit] {
+  border: none;
+  padding: 8px 15px 8px 15px;
+  background: #FF8500;
+  color: #fff;
+  box-shadow: 1px 1px 4px #DADADA;
+  -moz-box-shadow: 1px 1px 4px #DADADA;
+  -webkit-box-shadow: 1px 1px 4px #DADADA;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
 }
 
-.EditRow input[type=submit]:hover,
-.EditRow input[type=button]:hover{
-    background: #EA7B00;
-    color: #fff;
+.EditRow input[type=submit]:hover {
+  background: #EA7B00;
+  color: #fff;
 }
