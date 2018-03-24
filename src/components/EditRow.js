@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Select from 'react-select'
 import 'react-select/dist/react-select.css'
+import '../css/EditRow.css'
 
 class EditRow extends Component {
   constructor (props) {
@@ -52,37 +53,38 @@ class EditRow extends Component {
             options={this.optionsFromDataTypes()}
             clearable={false}
           />
-          <div>
-            Name:
+
+          <label htmlFor='name'><span>Name:<span className='required'>*</span></span>
             <input autoFocus
               id={details.id}
+              className='input-field'
               name='title'
               onChange={this.handleChange}
               onFocus={(e) => e.target.select()}
               type='text'
               value={details.title}
             />
-          </div>
-          <div>
-            Size:
+          </label>
+
+          <label htmlFor='size'><span>Size:</span>
             <input
+              className='input-field'
               name='size'
               onChange={this.handleChange}
               type='number'
               value={details.size}
             />
-          </div>
-          <div>
-            Default:
+          </label>
+          <label htmlFor='default'><span>Default:</span>
             <input
+              className='input-field'
               name='default'
               onChange={this.handleChange}
               type='text'
               value={details.default}
             />
-          </div>
+          </label>
           <div>
-            <label htmlFor='autoincrement'>Auto Increment:</label>
             <input
               defaultChecked={details.autoincrement}
               name='autoincrement'
@@ -90,8 +92,20 @@ class EditRow extends Component {
               type='checkbox'
               value={details.autoincrement}
             />
+            <span>Auto Increment</span>
           </div>
-          <input type='submit' />
+          <div>
+            <input
+              defaultChecked={details.allow_null}
+              name='allow_null'
+              onChange={this.handleChange}
+              type='checkbox'
+              value={details.allow_null}
+            />
+            <span>Allow NULL</span>
+          </div>
+
+          <label><span>&nbsp;</span><input type='submit' value='Save Row' /></label>
         </form>
       </div>
     )
