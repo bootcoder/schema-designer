@@ -44,6 +44,16 @@ class EditRow extends Component {
       <div className='EditRow'>
         <form onSubmit={this.handleSave} >
           <div>
+            DataType:
+            <Select
+              name='dataType'
+              value={details.dataType}
+              onChange={this.handleSelectChange}
+              options={this.optionsFromDataTypes()}
+              clearable={false}
+            />
+          </div>
+          <div>
             Name:
             <input autoFocus
               id={details.id}
@@ -55,13 +65,12 @@ class EditRow extends Component {
             />
           </div>
           <div>
-            DataType:
-            <Select
-              name='dataType'
-              value={details.dataType}
-              onChange={this.handleSelectChange}
-              options={this.optionsFromDataTypes()}
-              clearable={false}
+            Size:
+            <input
+              name='size'
+              onChange={this.handleChange}
+              type='number'
+              value={details.size}
             />
           </div>
           <input type='submit' />
