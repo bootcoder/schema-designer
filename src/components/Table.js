@@ -79,10 +79,10 @@ class Table extends Component {
         // Update all remote connections
         Object.keys(row.connections.inbound).map(connectionRowID => {
           // console.log('update inbound')
-          this.props.actions.updateInboundConnectionOrigin(connectionRowID, row, data)
+          return this.props.actions.updateInboundConnectionOrigin(connectionRowID, row, data)
         })
         // Update current row position
-        this.props.actions.updateRow(row)
+        return this.props.actions.updateRow(row)
       })
     }
   }

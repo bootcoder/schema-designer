@@ -21,13 +21,13 @@ class SandBox extends Component {
     return this.props.tables.map(table => {
       if (table.connectionCount > 0) {
         return this.renderTableConnectionPath(table)
-      }
+      } else { return table }
     })
   }
 
   renderTableConnectionPath (table) {
     return table.rows.map(row => {
-      if (Object.keys(row.connections.outbound).length < 1) { return }
+      if (Object.keys(row.connections.outbound).length < 1) { return null }
 
       return Object.keys(row.connections.outbound).map(connection => {
         const {start, end} = this.setAnchors(row.position, row.connections.outbound[connection])
