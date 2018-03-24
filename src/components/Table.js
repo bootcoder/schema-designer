@@ -29,6 +29,7 @@ class Table extends Component {
       />
       : <Row
         actions={this.props.actions}
+        dataTypes={this.props.nav.dataType}
         details={row}
         key={row.id}
         table={this.props.details}

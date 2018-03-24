@@ -17,7 +17,7 @@ class Row extends Component {
       <div
         id={details.id}
         className={this.constructClassName()}
-        style={{backgroundColor: `${details.color}`}}
+        style={{backgroundColor: `${this.props.dataTypes[details.dataType].color}`}}
         onClick={() => this.props.actions.selectRow(this.props.table.id, details.id)}
         onDoubleClick={() => this.props.actions.toggleEditRow(this.props.table.id, details.id)} >
         {details.title}
