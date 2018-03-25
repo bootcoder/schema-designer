@@ -36,6 +36,31 @@ export function addForeignKeyConnection (destRowID, orgRowID) {
   }
 }
 
+function removeForeignKeyConnection (destRowID, orgRowID) {
+  return (dispatch, getState) => {
+    const { tables } = getState()
+
+    // Find destRow State
+    let {cleanRow: destRow} = helpers.findRowWithID(tables, destRowID)
+
+    // Find orgRow State
+    let {cleanRow: orgRow} = helpers.findRowWithID(tables, orgRowID)
+
+    // Remove destRow inbound connection key
+    delete destRow.connections.outbound[orgRowID]
+
+    // Remove org row outbound connection key
+    delete orgRow.connections.inbound[destRowID]
+
+    // Dispatch updateRow for both
+    dispatch(updateRow(destRow))
+    dispatch(updateRow(orgRow))
+
+    // Return dispatch to remove fk flag from nav state
+    return dispatch({type: types.REMOVE_FK_OF_ORIGIN_ROW})
+  }
+}
+
 export function addNewRow (tableID) {
   return (dispatch, getState) => {
     new Promise((resolve, reject) => {
@@ -203,16 +228,27 @@ function selectNextRow (tableID, rowID) {
 }
 
 export function selectRow (tableID, rowID = null) {
+  console.log('=> selectRow')
   return (dispatch, getState) => {
     let { tables, nav } = getState()
 
-    if (nav.fkOrigin !== null && nav.fkOrigin !== rowID) {
+    // Handles when adding a new foreign key
+    if (nav.addFKOrigin !== null && nav.addFKOrigin !== rowID) {
       new Promise((resolve, reject) => {
-        dispatch(addForeignKeyConnection(rowID, nav.fkOrigin))
+        dispatch(addForeignKeyConnection(rowID, nav.addFKOrigin))
         resolve(tableID)
       }).then(tableID => {
         return dispatch(selectRow(tableID, rowID))
       })
+    }
+
+    // Handles when removing a foreign key
+    if (nav.rmFKOrigin !== null && nav.rmFKOrigin !== rowID) {
+      // Just had to use the new hotness!
+      (async () => {
+        await dispatch(removeForeignKeyConnection(rowID, nav.rmFKOrigin))
+        return dispatch(selectRow(tableID, rowID))
+      })()
     }
 
     if (rowID !== null && (tableID !== nav.selectedTableID || rowID !== nav.selectedRowID)) {

@@ -47,14 +47,7 @@ export const tables = [
         'color': 'gray',
         'connections': {
           'inbound': {},
-          'outbound': {
-            '2be8p0-2': {
-              'x': 583,
-              'y': 129,
-              'width': 90,
-              'height': 28
-            }
-          }
+          'outbound': {}
         },
         'connectionColor': 'Lime',
         'dataType': 'int',
@@ -73,14 +66,7 @@ export const tables = [
       {
         'color': 'gray',
         'connections': {
-          'inbound': {
-            '2be8p0-3': {
-              'x': 409,
-              'y': 264,
-              'width': 90,
-              'height': 28
-            }
-          },
+          'inbound': {},
           'outbound': {}
         },
         'connectionColor': 'HoneyDew',

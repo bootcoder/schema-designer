@@ -21,7 +21,7 @@ class SandBox extends Component {
     return this.props.tables.map(table => {
       if (table.connectionCount > 0) {
         return this.renderTableConnectionPath(table)
-      } else { return table }
+      }
     })
   }
 

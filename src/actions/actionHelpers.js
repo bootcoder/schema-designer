@@ -89,6 +89,7 @@ export function setRowPositionFromDOM (row) {
 
   // Find row element / set initial position
   const rowElement = document.getElementById(row.id)
+  if (rowElement === null) { return row }
   const rowPosition = rowElement.getBoundingClientRect()
 
   const updatedPosition = Object.assign({}, {

@@ -8,6 +8,10 @@ export function setDataType (dataType) {
   return {type: types.SET_DATA_TYPE, dataType}
 }
 
-export function setForeignKeyOfOriginRow (rowID) {
-  return {type: types.SET_FOREIGN_KEY_OF_ORIGIN_ROW, rowID}
+export function setIDAddFK (rowID) {
+  return {type: types.SET_ID_ADD_FK, rowID}
+}
+
+export function setIDRemoveFK (rowID) {
+  return {type: types.SET_ID_REMOVE_FK, rowID}
 }

@@ -18,7 +18,7 @@ class SideBar extends Component {
   }
 
   handleAddFK () {
-    this.props.actions.setForeignKeyOfOriginRow(this.props.nav.selectedRowID)
+    this.props.actions.setIDAddFK(this.props.nav.selectedRowID)
   }
 
   handleAddRow () {
@@ -48,7 +48,7 @@ class SideBar extends Component {
   }
 
   handleRemoveFK () {
-    this.props.actions.removeKey(this.props.nav.selectedTableID, this.props.nav.selectedRowID)
+    this.props.actions.setIDRemoveFK(this.props.nav.selectedRowID)
   }
 
   handleRemoveRow () {

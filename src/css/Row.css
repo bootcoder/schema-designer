@@ -1,3 +1,9 @@
 .Row {
-  outline: 1px solid gray;
+  padding: 5px 10px 5px 10px;
+}
+
+.selected-row {
+  border-width: 3px 0 3px 0;
+  border-style: solid;
+  border-color: white;
 }
