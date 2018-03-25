@@ -1,9 +1,9 @@
 .Table {
   position: absolute;
   display: inline-block;
-  border-color: goldenRod;
-  border-width: 2px;
-  border-style: solid;
+  outline-color: white;
+  outline-width: 2px;
+  outline-style: solid;
   z-index: 1;
   min-width: 90px;
 }
@@ -17,7 +17,7 @@
 
 .selected-table {
   z-index: 1000;
-  border-color: white;
-  border-width: 3px 3px 0px 3px;
-  border-style: solid;
+  outline-color: lime;
+  outline-width: 3px;
+  outline-style: solid;
 }
