@@ -110,7 +110,7 @@ export function setRowPositionFromTable (tables, row) {
   const table = findTableWithID(tables, row.tableID)
   let cleanRow = cloneObject(row)
   let rowIndex = table.rows.findIndex(el => el.id === row.id)
-  let height = (rowIndex + 1) * row.position.height
+  let height = ((rowIndex + 1) * row.position.height) + 5
 
   cleanRow.position.x = table.position.x
   cleanRow.position.y = table.position.y + height

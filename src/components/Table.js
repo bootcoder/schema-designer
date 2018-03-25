@@ -8,7 +8,7 @@ class Table extends Component {
   constructor (props, context) {
     super(props, context)
 
-    this.displayRow = this.displayRow.bind(this)
+    this.displayRows = this.displayRows.bind(this)
     this.displayTableName = this.displayTableName.bind(this)
     this.displayTableOptions = this.displayTableOptions.bind(this)
     this.handleDrag = this.handleDrag.bind(this)
@@ -18,7 +18,7 @@ class Table extends Component {
     this.toggleEditTable = this.toggleEditTable.bind(this)
   }
 
-  displayRow (row, index) {
+  displayRows (row, index) {
     return row.edit
       ? <EditRow
         actions={this.props.actions}
@@ -90,6 +90,7 @@ class Table extends Component {
   handleStop (e, data) {
     if (this.props.nav.selectedTableID !== this.props.details.id) {
       this.props.actions.disableEditAndSave()
+      // this.props.actions.updateRow(row)
       this.props.actions.selectTable(this.props.details.id)
     }
     this.props.actions.updatePosition(this.props.details.id, data)
@@ -127,7 +128,7 @@ class Table extends Component {
           className={details.selected ? 'Table selected-table' : 'Table'}>
           {this.displayTableName()}
           {/* {this.displayTableOptions()} */}
-          {details.rows.map(this.displayRow)}
+          {details.rows.map(this.displayRows)}
         </div>
       </Draggable>
     )

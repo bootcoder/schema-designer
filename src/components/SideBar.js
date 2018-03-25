@@ -74,20 +74,21 @@ class SideBar extends Component {
           </label>
           <div className='sidebar-content'>
             <ul>
+              <div className='sidebar-break' />
               <p className='sidebar-title'>Tables:</p>
               <li><a onClick={this.handleCreateTable}>New</a></li>
               <li><a onClick={this.handleClearTables}>Clear</a></li>
               <li><a onClick={this.handleRemoveTable}>Remove</a></li>
+              <div className='sidebar-break' />
               <p className='sidebar-title'>Rows:</p>
               <li><a onClick={this.handleAddRow}>Add</a></li>
               <li><a onClick={this.handleEditRow}>Edit</a></li>
               <li><a onClick={this.handleRemoveRow}>Remove</a></li>
-              <div className='sidebar-break' />
               <li><a onClick={this.handleMoveUp}>Up</a></li>
               <li><a onClick={this.handleMoveDown}>Down</a></li>
-              <div className='sidebar-break' />
               <li><a onClick={this.handleAddFK}>+ FK</a></li>
               <li><a onClick={this.handleRemoveFK}>- FK</a></li>
+              <div className='sidebar-break' />
             </ul>
           </div>
         </div>

@@ -8,6 +8,11 @@
   min-width: 90px;
 }
 
+.row-break {
+  height: 1px;
+  background-color: gray
+}
+
 .handle {
   text-align: center;
   background-color: goldenRod;

@@ -1,6 +1,6 @@
 .Row {
-  padding: 3px 10px 3px 10px;
-  border-bottom: 0.15em solid gray;
+  padding: 5px 10px 5px 10px;
+  box-shadow: 0 -1px 0 #000;
 }
 
 .selected-row{
