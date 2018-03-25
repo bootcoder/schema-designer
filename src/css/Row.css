@@ -1,9 +1,10 @@
 .Row {
   padding: 5px 10px 5px 10px;
+  border-bottom: 0.15em solid gray;
 }
 
 .selected-row{
-  text-align: center;
+  padding: 5px 0px 5px 0px;
 }
 
 .selected-title-right {

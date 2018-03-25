@@ -1,5 +1,5 @@
 export const pg = {
-  boolean: {color: 'lightpink', toolTip: 'BOOLEAN data type can hold one of three possible values: true, false or null. You use boolean or bool keyword to declare a column with the Boolean data type.'},
+  boolean: {color: 'mistyrose', toolTip: 'BOOLEAN data type can hold one of three possible values: true, false or null. You use boolean or bool keyword to declare a column with the Boolean data type.'},
   char: {color: 'lightblue', toolTip: 'CHAR(n) is the fixed-length character with space padded. If you insert a string that is shorter than the length of the column, PostgreSQL pads spaces. If you insert a string that is longer than the length of the column, PostgreSQL will issue an error.'},
   varchar: {color: 'lightblue', toolTip: 'VARCHAR(n) is the variable-length character string.  With VARCHAR(N),  you can store up to n characters. PostgreSQL does not pad spaces when the stored string is shorter than the length of the column.'},
   text: {color: 'lightblue', toolTip: 'TEXT is variable-length character string. Theoretically, text data is a character string with unlimited length.'},
