@@ -4,6 +4,11 @@
   width: 100%;
 }
 
+.sidebar-title {
+  font-size: 1.5em;
+  color: white;
+  margin-bottom: 0;
+}
 
 .toggle-img {
   height: 35px;
@@ -31,6 +36,7 @@ left: 0;
 -moz-transition: left 1.0s ease;
 transition: left 1.0s ease;
 width: auto;
+text-align: center;
 padding: 1.5em;
 background: #19C4BC;
 z-index: 10;
