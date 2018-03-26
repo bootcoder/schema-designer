@@ -13,6 +13,7 @@
 }
 
 .selected-title-left {
+  margin-right: 1px;
   float: left;
   color: red;
 }

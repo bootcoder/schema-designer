@@ -19,7 +19,7 @@ class Row extends Component {
         <span><span className='selected-title-left'>{'>'}</span>{this.props.details.title}<span className='selected-title-right'>{'<'}</span></span>
       )
     } else {
-      return (<span> {this.props.details.title}</span>)
+      return (<span>{this.props.details.title}</span>)
     }
   }
 
