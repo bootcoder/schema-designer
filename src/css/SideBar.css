@@ -1,6 +1,14 @@
+.sidebar-content * {
+  outline: 1px solid gray;
+}
+
+.sidebar-content .sidebar-title {
+  outline: 0;
+}
+
 .sidebar-break {
   height: 5px;
-  background-color: orange;
+  background-color: black;
   width: 100%;
 }
 
@@ -30,7 +38,7 @@ cursor: pointer;
 
 .sidebar-content {
 position: fixed;
-top: 0;
+top: 10px;
 bottom: 0;
 left: 0;
 -moz-transition: left 1.0s ease;
@@ -49,7 +57,7 @@ padding: 0;
 width: 100%;
 }
 
-.sidebar-content li a {
+.sidebar-content a li{
 font-size: 1.2em;
 margin: 0;
 margin-bottom: 16px;
