@@ -1,7 +1,21 @@
 .Header {
-  padding: 10px 0 10px 0;
+  padding: 2px 0 2px 0;
   text-align: center;
   background-color: #19C4BC;
+}
+
+.nav-items {
+  display: inline;
+}
+
+.construction-img {
+  display: inline;
+  max-height: 25px;
+}
+
+.nav-item {
+  display: inline;
+  padding: 2px 5px 2px 5px;
 }
 
 .Header a {
