@@ -22,7 +22,7 @@
 }
 
 .selected-table {
-  z-index: 1000;
+  z-index: 10;
   outline-color: lime;
   outline-width: 3px;
   outline-style: solid;

@@ -47,7 +47,7 @@ width: auto;
 text-align: center;
 padding: 1.5em;
 background: #19C4BC;
-z-index: 10;
+z-index: 100;
 }
 
 .sidebar-content ul {
