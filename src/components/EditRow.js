@@ -6,7 +6,6 @@ import '../css/EditRow.css'
 class EditRow extends Component {
   constructor (props) {
     super(props)
-    console.log(props)
     this.optionsFromDataTypes = this.optionsFromDataTypes.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleSelectChange = this.handleSelectChange.bind(this)
@@ -36,6 +35,7 @@ class EditRow extends Component {
   }
 
   handleSelectChange (selectedOption) {
+    if (selectedOption === null) { return }
     let newState = Object.assign({}, this.props.details)
     newState.dataType = selectedOption.value
     this.props.actions.updateRow(newState)
