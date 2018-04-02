@@ -94,7 +94,12 @@ export default function tableReducer (state = defaults.tables, action) {
         return Object.assign(
           {},
           table,
-          {position: {x: action.position.x, y: action.position.y}})
+          { position: {
+            ...table.position,
+            x: action.position.x,
+            y: action.position.y
+          }}
+        )
       })
 
     case types.UPDATE_ROW:
@@ -116,12 +121,6 @@ export default function tableReducer (state = defaults.tables, action) {
       return state.map(table => {
         if (table.id !== action.table.id) { return table }
         return Object.assign({}, action.table)
-      })
-
-    case types.UPDATE_TABLE_NAME:
-      return state.map(table => {
-        if (table.id !== action.tableID) { return table }
-        return Object.assign({}, table, {name: action.name})
       })
 
     default:

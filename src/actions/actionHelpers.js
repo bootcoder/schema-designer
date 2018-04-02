@@ -114,6 +114,16 @@ export function setRowPositionFromTable (tables, row) {
 
   cleanRow.position.x = cleanTable.position.x
   cleanRow.position.y = cleanTable.position.y + height
+  cleanRow.position.height = row.position.height
+  cleanRow.position.width = cleanTable.position.width
 
   return cleanRow
+}
+
+export function setTableWidthFromDOM (tables, table) {
+  const cleanTable = cloneObject(table)
+  const tableElement = document.getElementById(table.id)
+  const position = tableElement.getBoundingClientRect()
+  cleanTable.position.width = Math.floor(position.width)
+  return cleanTable
 }

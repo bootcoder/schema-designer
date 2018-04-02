@@ -277,9 +277,16 @@ export function toggleEditRow (tableID, rowID) {
 }
 
 export function toggleEditTable (tableID) {
-  return { type: types.TOGGLE_EDIT_TABLE, tableID }
+  return (dispatch, getState) => {
+    (async () => {
+      await dispatch({ type: types.TOGGLE_EDIT_TABLE, tableID })
+      const { tables } = getState()
+      const cleanTable = helpers.findTableWithID(tables, tableID)
+      const updatedTablePosition = helpers.setTableWidthFromDOM(tables, cleanTable)
+      return dispatch(updateTable(updatedTablePosition))
+    })()
+  }
 }
-
 
 export function updateInboundConnectionOrigin (remoteRowID, currentRow, data) {
   return (dispatch, getState) => {
@@ -308,8 +315,4 @@ export function updateRow (row) {
 
 export function updateTable (table) {
   return {type: types.UPDATE_TABLE, table}
-}
-
-export function updateTableName (tableID, name) {
-  return {type: types.UPDATE_TABLE_NAME, tableID, name}
 }
