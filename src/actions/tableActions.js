@@ -276,10 +276,7 @@ export function toggleEditRow (tableID, rowID) {
   return (dispatch, getState) => {
     (async () => {
       await dispatch({ type: types.TOGGLE_EDIT_ROW, tableID, rowID })
-      const { tables } = getState()
-      const cleanTable = helpers.findTableWithID(tables, tableID)
-      const updatedTablePosition = helpers.setTableWidthFromDOM(tables, cleanTable)
-      return dispatch(updateTable(updatedTablePosition))
+      return dispatch(updateTableWidth(tableID))
     })()
   }
 }
@@ -288,10 +285,7 @@ export function toggleEditTable (tableID) {
   return (dispatch, getState) => {
     (async () => {
       await dispatch({ type: types.TOGGLE_EDIT_TABLE, tableID })
-      const { tables } = getState()
-      const cleanTable = helpers.findTableWithID(tables, tableID)
-      const updatedTablePosition = helpers.setTableWidthFromDOM(tables, cleanTable)
-      return dispatch(updateTable(updatedTablePosition))
+      return dispatch(updateTableWidth(tableID))
     })()
   }
 }
@@ -323,4 +317,13 @@ export function updateRow (row) {
 
 export function updateTable (table) {
   return {type: types.UPDATE_TABLE, table}
+}
+
+function updateTableWidth (tableID) {
+  return (dispatch, getState) => {
+    const { tables } = getState()
+    const cleanTable = helpers.findTableWithID(tables, tableID)
+    const updatedTablePosition = helpers.setTableWidthFromDOM(tables, cleanTable)
+    return dispatch(updateTable(updatedTablePosition))
+  }
 }
