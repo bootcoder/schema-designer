@@ -103,8 +103,7 @@ class Table extends Component {
 
   saveName (event) {
     event.preventDefault()
-    let newState = Object.assign({}, this.props.details, {edit: false})
-    this.props.actions.updateTable(newState)
+    this.props.actions.toggleEditTable(this.props.details.id)
   }
 
   toggleEditTable () {
