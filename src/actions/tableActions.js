@@ -276,6 +276,11 @@ export function toggleEditRow (tableID, rowID) {
   return { type: types.TOGGLE_EDIT_ROW, tableID, rowID }
 }
 
+export function toggleEditTable (tableID) {
+  return { type: types.TOGGLE_EDIT_TABLE, tableID }
+}
+
+
 export function updateInboundConnectionOrigin (remoteRowID, currentRow, data) {
   return (dispatch, getState) => {
     const { tables } = getState()

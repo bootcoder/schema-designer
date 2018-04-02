@@ -82,6 +82,12 @@ export default function tableReducer (state = defaults.tables, action) {
         return Object.assign({}, table, {rows: rows})
       })
 
+    case types.TOGGLE_EDIT_TABLE:
+      return state.map((table) => {
+        if (table.id !== action.tableID) { return table }
+        return Object.assign({}, table, {edit: !table.edit})
+      })
+
     case types.UPDATE_POSITION:
       return state.map((table) => {
         if (table.id !== action.tableID) { return table }

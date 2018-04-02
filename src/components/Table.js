@@ -108,9 +108,7 @@ class Table extends Component {
   }
 
   toggleEditTable () {
-    let newState = Object.assign({}, this.props.details, {edit: !this.props.details.edit})
-    console.log(newState)
-    this.props.actions.updateTable(newState)
+    this.props.actions.toggleEditTable(this.props.details.id)
   }
 
   render () {
