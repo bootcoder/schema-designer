@@ -295,12 +295,31 @@ export function toggleEditTable (tableID) {
   }
 }
 
+export function updateAllOutboundConnections () {
+  return (dispatch, getState) => {
+    const { tables } = getState()
+    const cleanTables = helpers.cloneObject(tables)
+    cleanTables.map(table => {
+      if (table.connectionCount < 1) { return table }
+      table.rows.map(row => {
+        Object.keys(row.connections.outbound).map(connection => {
+          let { cleanRow } = helpers.findRowWithID(tables, connection)
+          row.connections.outbound[connection] = cleanRow.position
+        })
+        return row
+      })
+      dispatch(updateTable(table))
+    })
+  }
+}
+
 export function updateAllTableRowsPosition (tableID) {
   // Also update connections here
   return (dispatch, getState) => {
     const { tables } = getState()
     const cleanTable = helpers.findTableWithID(tables, tableID)
     cleanTable.rows.map(row => dispatch(updateRow(row)))
+    dispatch(updateAllOutboundConnections())
   }
 }
 
