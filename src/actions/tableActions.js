@@ -273,7 +273,15 @@ export function selectTable (tableID) {
 }
 
 export function toggleEditRow (tableID, rowID) {
-  return { type: types.TOGGLE_EDIT_ROW, tableID, rowID }
+  return (dispatch, getState) => {
+    (async () => {
+      await dispatch({ type: types.TOGGLE_EDIT_ROW, tableID, rowID })
+      const { tables } = getState()
+      const cleanTable = helpers.findTableWithID(tables, tableID)
+      const updatedTablePosition = helpers.setTableWidthFromDOM(tables, cleanTable)
+      return dispatch(updateTable(updatedTablePosition))
+    })()
+  }
 }
 
 export function toggleEditTable (tableID) {
