@@ -82,13 +82,16 @@ export function addRow (tableID, row) {
 
 export function createTable () {
   return dispatch => {
-    let table = helpers.generateNewTable()
-    dispatch({type: types.CREATE_TABLE, table})
-    dispatch(addNewRow(table.id))
-    dispatch(disableEditAndSave())
-    dispatch(deselectOtherRows(table.id))
-    dispatch(checkSetRowSelection(table.id))
-    return table
+    (async () => {
+      let table = helpers.generateNewTable()
+      await dispatch({type: types.CREATE_TABLE, table})
+      await dispatch(addNewRow(table.id))
+      await dispatch(updateTableWidth(table.id))
+      await dispatch(disableEditAndSave())
+      await dispatch(deselectOtherRows(table.id))
+      await dispatch(checkSetRowSelection(table.id))
+      return table
+    })()
   }
 }
 
@@ -276,7 +279,8 @@ export function toggleEditRow (tableID, rowID) {
   return (dispatch, getState) => {
     (async () => {
       await dispatch({ type: types.TOGGLE_EDIT_ROW, tableID, rowID })
-      return dispatch(updateTableWidth(tableID))
+      await dispatch(updateTableWidth(tableID))
+      return dispatch(updateAllTableRowsPosition(tableID))
     })()
   }
 }
@@ -285,8 +289,18 @@ export function toggleEditTable (tableID) {
   return (dispatch, getState) => {
     (async () => {
       await dispatch({ type: types.TOGGLE_EDIT_TABLE, tableID })
-      return dispatch(updateTableWidth(tableID))
+      await dispatch(updateTableWidth(tableID))
+      return dispatch(updateAllTableRowsPosition(tableID))
     })()
+  }
+}
+
+export function updateAllTableRowsPosition (tableID) {
+  // Also update connections here
+  return (dispatch, getState) => {
+    const { tables } = getState()
+    const cleanTable = helpers.findTableWithID(tables, tableID)
+    cleanTable.rows.map(row => dispatch(updateRow(row)))
   }
 }
 
