@@ -15,3 +15,7 @@ export function setIDAddFK (rowID) {
 export function setIDRemoveFK (rowID) {
   return {type: types.SET_ID_REMOVE_FK, rowID}
 }
+
+export function toggleLoadScreen () {
+  return {type: types.TOGGLE_LOAD_SCREEN}
+}

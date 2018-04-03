@@ -2,13 +2,14 @@ import * as types from '../actions/actionTypes'
 import * as dataTypes from './dataTypes'
 
 const defaultState = {
-  dataType: dataTypes.pg,
   addFKOrigin: null,
+  dataType: dataTypes.pg,
+  displayLoadScreen: false,
   rmFKOrigin: null,
   selectedTableID: '',
   selectedRowID: '',
-  windowWidth: 10000,
-  windowHeight: 10000
+  windowWidth: window.innerWidth,
+  windowHeight: window.innerHeight
 }
 
 export default function navReducer (state = defaultState, action) {
@@ -23,7 +24,6 @@ export default function navReducer (state = defaultState, action) {
       return Object.assign({}, state, {addFKOrigin: null, rmFKOrigin: null})
 
     case types.SET_DATA_TYPE:
-    // NOTE: not sure about this line will come back to when I build options flow
       return Object.assign({}, state, {dataType: dataTypes[action.dataType]})
 
     case types.SET_ID_ADD_FK:
@@ -41,8 +41,8 @@ export default function navReducer (state = defaultState, action) {
         state,
         {selectedTableID: action.tableID, selectedRowID: action.rowID})
 
-    case types.CLEAR_TABLES:
-      return defaultState
+    case types.TOGGLE_LOAD_SCREEN:
+      return Object.assign({}, state, {displayLoadScreen: !state.displayLoadScreen})
 
     default:
       return state

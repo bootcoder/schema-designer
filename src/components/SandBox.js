@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux'
 import * as tableActions from '../actions/tableActions'
 import * as navActions from '../actions/navActions'
 import SideBar from './SideBar'
+import LoadScreen from './LoadScreen'
 import ConnectionPath from './ConnectionPath'
 import Table from './Table'
 import '../css/SandBox.css'
@@ -13,6 +14,7 @@ class SandBox extends Component {
     super(props, context)
 
     this.displayTable = this.displayTable.bind(this)
+    this.displayLoadScreen = this.displayLoadScreen.bind(this)
     this.renderAllConnectionPaths = this.renderAllConnectionPaths.bind(this)
     this.renderTableConnectionPath = this.renderTableConnectionPath.bind(this)
   }
@@ -41,6 +43,14 @@ class SandBox extends Component {
         )
       })
     })
+  }
+
+  displayLoadScreen () {
+    if (this.props.nav.displayLoadScreen === true) {
+      return (
+        <LoadScreen />
+      )
+    }
   }
 
   displayTable (table, index) {
@@ -101,6 +111,7 @@ class SandBox extends Component {
             {this.renderAllConnectionPaths()}
           </svg>
           <div className='grid'>
+            {this.displayLoadScreen()}
             {this.props.tables.map(this.displayTable)}
           </div>
         </div>
