@@ -204,11 +204,29 @@ export function loadSchemaFromLocalStorage () {
 }
 
 export function moveDown (tableID, rowID) {
-  return {type: types.MOVE_DOWN, tableID, rowID}
+  return (dispatch, getState) => {
+    (async () => {
+      await dispatch({type: types.MOVE_DOWN, tableID, rowID})
+      const { tables } = getState()
+      const cleanTable = helpers.findTableWithID(tables, tableID)
+      if (cleanTable.connectionCount > 0) {
+        return dispatch(updateAllTableRowsPosition(tableID))
+      }
+    })()
+  }
 }
 
 export function moveUp (tableID, rowID) {
-  return {type: types.MOVE_UP, tableID, rowID}
+  return (dispatch, getState) => {
+    (async () => {
+      await dispatch({type: types.MOVE_UP, tableID, rowID})
+      const { tables } = getState()
+      const cleanTable = helpers.findTableWithID(tables, tableID)
+      if (cleanTable.connectionCount > 0) {
+        return dispatch(updateAllTableRowsPosition(tableID))
+      }
+    })()
+  }
 }
 
 export function removeRow (tableID, rowID) {
