@@ -59,7 +59,10 @@ class SandBox extends Component {
   displayLoadScreen () {
     if (this.props.nav.displayLoadScreen === true) {
       return (
-        <LoadScreen loadSchemaFromJSON={this.props.actions.loadSchemaFromJSON} />
+        <LoadScreen
+          loadSchemaFromJSON={this.props.actions.loadSchemaFromJSON}
+          loadSchemaFromLocalStorage={this.props.actions.loadSchemaFromLocalStorage}
+        />
       )
     }
   }

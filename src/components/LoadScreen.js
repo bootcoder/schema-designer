@@ -7,6 +7,7 @@ class LoadScreen extends Component {
 
     this.state = { payload: '' }
 
+    this.displayLocalStorageLoadButton = this.displayLocalStorageLoadButton.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
@@ -25,6 +26,19 @@ class LoadScreen extends Component {
     this.props.loadSchemaFromJSON(this.state.payload)
   }
 
+  displayLocalStorageLoadButton () {
+    const localTables = window.localStorage.getItem('tables')
+    if (localTables) {
+      let tables = JSON.parse(localTables)
+      return (
+        <div>
+          <p>Found {tables.length} tables in local storage, would you like to load these now?</p>
+          <button onClick={this.props.loadSchemaFromLocalStorage}>Load Local Storage</button>
+        </div>
+      )
+    }
+  }
+
   render () {
     const windowWidth = window.innerWidth
     const windowHeight = window.innerHeight
@@ -38,12 +52,13 @@ class LoadScreen extends Component {
         <p>LoadScreen</p>
         <form onSubmit={this.handleSubmit}>
           <textarea
-            rows='50'
-            cols='100'
+            rows='30'
+            cols='50'
             ref={(input) => { this.textarea = input }}
             value={this.state.payload}
             onChange={this.handleChange}
           />
+          {this.displayLocalStorageLoadButton()}
           <input type='submit' />
         </form>
       </div>
