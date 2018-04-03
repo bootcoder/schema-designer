@@ -5,11 +5,21 @@ class LoadScreen extends Component {
   constructor (props) {
     super(props)
 
-    this.state = { payload: '' }
+    this.state = {
+      payload: '',
+      localTables: JSON.parse(window.localStorage.getItem('tables') || '[]')
+    }
 
+    this.clearLocalStorage = this.clearLocalStorage.bind(this)
     this.displayLocalStorageLoadButton = this.displayLocalStorageLoadButton.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.handleSave = this.handleSave.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  clearLocalStorage () {
+    window.localStorage.removeItem('tables')
+    this.setState({localTables: []})
   }
 
   componentDidMount () {
@@ -21,19 +31,25 @@ class LoadScreen extends Component {
     this.setState({payload})
   }
 
+  handleSave () {
+    const tables = this.props.saveSchemaToLocalStorage()
+    const payload = JSON.stringify(tables, null, '\t')
+    this.setState({payload, localTables: tables})
+  }
+
   handleSubmit (e) {
     e.preventDefault()
     this.props.loadSchemaFromJSON(this.state.payload)
   }
 
   displayLocalStorageLoadButton () {
-    const localTables = window.localStorage.getItem('tables')
-    if (localTables) {
-      let tables = JSON.parse(localTables)
+    if (this.state.localTables.length) {
       return (
         <div>
-          <p>Found {tables.length} tables in local storage, would you like to load these now?</p>
-          <button onClick={this.props.loadSchemaFromLocalStorage}>Load Local Storage</button>
+          <p>Found {this.state.localTables.length} tables in local storage.</p>
+          <p>Would you like to load these now?</p>
+          <button className='load-btn' onClick={this.props.loadSchemaFromLocalStorage}>Load Local Storage</button>
+          <button className='danger-btn' onClick={this.clearLocalStorage}>CLEAR Local Storage</button>
         </div>
       )
     }
@@ -44,22 +60,26 @@ class LoadScreen extends Component {
     const windowHeight = window.innerHeight
     const divStyle = {
       marginLeft: windowWidth / 5,
-      marginTop: windowHeight / 5
+      marginTop: windowHeight / 10
     }
 
     return (
       <div className='LoadScreen' style={divStyle}>
-        <p>LoadScreen</p>
+        <h4>Save / Load<button onClick={this.props.setDefaultSandboxView}>X</button></h4>
+        <button onClick={this.handleSave}>Save Schema / Generate JSON</button>
+        {this.displayLocalStorageLoadButton()}
+        <hr />
+        <p>Paste or copy Schema JSON here.</p>
         <form onSubmit={this.handleSubmit}>
           <textarea
-            rows='30'
-            cols='50'
+            rows='15'
+            cols='60'
             ref={(input) => { this.textarea = input }}
             value={this.state.payload}
             onChange={this.handleChange}
           />
-          {this.displayLocalStorageLoadButton()}
-          <input type='submit' />
+          <br />
+          <input type='submit' value='Load Schema' />
         </form>
       </div>
     )

@@ -16,7 +16,6 @@ class SideBar extends Component {
     this.handleRemoveFK = this.handleRemoveFK.bind(this)
     this.handleRemoveRow = this.handleRemoveRow.bind(this)
     this.handleRemoveTable = this.handleRemoveTable.bind(this)
-    this.handleSaveSchema = this.handleSaveSchema.bind(this)
   }
 
   componentWillMount () {
@@ -72,10 +71,6 @@ class SideBar extends Component {
     }
   }
 
-  handleSaveSchema () {
-    this.props.actions.saveSchemaToLocalStorage()
-  }
-
   render () {
     return (
       <div className='Sidebar'>
@@ -91,12 +86,12 @@ class SideBar extends Component {
           <div className='sidebar-content'>
             <ul>
               <div className='sidebar-break' />
-              <p className='sidebar-title'>Tables:</p>
+              <p className='sidebar-title'>Tables</p>
               <a onClick={this.handleCreateTable}><li>New</li></a>
               <a onClick={this.handleClearTables}><li>Clear</li></a>
               <a onClick={this.handleRemoveTable}><li>Remove</li></a>
               <div className='sidebar-break' />
-              <p className='sidebar-title'>Rows:</p>
+              <p className='sidebar-title'>Rows</p>
               <a onClick={this.handleAddRow}><li>Add</li></a>
               <a onClick={this.handleEditRow}><li>Edit</li></a>
               <a onClick={this.handleRemoveRow}><li>Remove</li></a>
@@ -105,9 +100,8 @@ class SideBar extends Component {
               <a onClick={this.handleAddFK}><li>+ FK</li></a>
               <a onClick={this.handleRemoveFK}><li>- FK</li></a>
               <div className='sidebar-break' />
-              <p className='sidebar-title'>Schema:</p>
-              <a onClick={this.handleSaveSchema}><li>Save</li></a>
-              <a onClick={this.handleLoadSchema}><li>Load</li></a>
+              <p className='sidebar-title'>File</p>
+              <a onClick={this.handleLoadSchema}><li>Save / Load</li></a>
               <div className='sidebar-break' />
             </ul>
           </div>

@@ -30,8 +30,8 @@
   -moz-transition: left 0.9s ease;
   transition: left 0.9s ease;
   position: fixed;
-  top: 40px;
-  left: 150px;
+  top: 45px;
+  left: 145px;
   z-index: 1000;
   cursor: pointer;
 }

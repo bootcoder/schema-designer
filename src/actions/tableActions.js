@@ -253,6 +253,7 @@ export function saveSchemaToLocalStorage () {
   return (dispatch, getState) => {
     const { tables } = getState()
     window.localStorage.setItem('tables', JSON.stringify(tables))
+    return tables
   }
 }
 

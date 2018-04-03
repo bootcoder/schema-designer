@@ -78,6 +78,8 @@ class SandBox extends Component {
         <LoadScreen
           loadSchemaFromJSON={this.props.actions.loadSchemaFromJSON}
           loadSchemaFromLocalStorage={this.props.actions.loadSchemaFromLocalStorage}
+          saveSchemaToLocalStorage={this.props.actions.saveSchemaToLocalStorage}
+          setDefaultSandboxView={this.props.actions.setDefaultSandboxView}
         />
       )
     }
