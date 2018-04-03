@@ -342,7 +342,6 @@ export function updateAllOutboundConnections () {
 }
 
 export function updateAllTableRowsPosition (tableID) {
-  // Also update connections here
   return (dispatch, getState) => {
     const { tables } = getState()
     const cleanTable = helpers.findTableWithID(tables, tableID)

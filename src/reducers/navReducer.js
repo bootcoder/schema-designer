@@ -13,6 +13,9 @@ const defaultState = {
 
 export default function navReducer (state = defaultState, action) {
   switch (action.type) {
+    case types.CLEAR_TABLES:
+      return Object.assign({}, state, {addFKOrigin: null, rmFKOrigin: null, selectedTableID: '', selectedRowID: ''})
+
     case types.DESELECT_NAV_ROW:
       return Object.assign({}, state, {selectedRowID: ''})
 
