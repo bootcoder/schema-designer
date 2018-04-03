@@ -21,6 +21,9 @@ export default function navReducer (state = defaultState, action) {
     case types.DESELECT_NAV_ROW:
       return Object.assign({}, state, {selectedRowID: ''})
 
+    case types.LOAD_SCHEMA:
+      return Object.assign({}, state, {displayLoadScreen: false})
+
     case types.REMOVE_FK_OF_ORIGIN_ROW:
       return Object.assign({}, state, {addFKOrigin: null, rmFKOrigin: null})
 

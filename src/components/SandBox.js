@@ -59,7 +59,7 @@ class SandBox extends Component {
   displayLoadScreen () {
     if (this.props.nav.displayLoadScreen === true) {
       return (
-        <LoadScreen />
+        <LoadScreen loadSchemaFromJSON={this.props.actions.loadSchemaFromJSON} />
       )
     }
   }
@@ -117,12 +117,12 @@ class SandBox extends Component {
     return (
       <div className='app-container'>
         <SideBar actions={this.props.actions} nav={this.props.nav} />
+        {this.displayLoadScreen()}
         <div className='SandBox' style={{width: this.props.nav.windowWidth, height: this.props.nav.windowHeight}} >
           <svg id='svg-container' style={{width: this.props.nav.windowWidth, height: this.props.nav.windowHeight}} >
             {this.renderAllConnectionPaths()}
           </svg>
           <div className='grid'>
-            {this.displayLoadScreen()}
             {this.props.tables.map(this.displayTable)}
           </div>
         </div>

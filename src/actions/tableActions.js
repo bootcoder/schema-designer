@@ -183,6 +183,14 @@ export function loadSchema (tables) {
   }
 }
 
+export function loadSchemaFromJSON (payload) {
+  return dispatch => {
+    String(payload).replace(/^\s+|\s+$/g, '')
+    // debugger
+    return dispatch(loadSchema(JSON.parse(payload)))
+  }
+}
+
 export function loadSchemaFromLocalStorage () {
   return (dispatch, getState) => {
     const payload = window.localStorage.getItem('tables')

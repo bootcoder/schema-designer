@@ -1,0 +1,6 @@
+.LoadScreen {
+  position: absolute;
+  background-color: LightGray;
+  padding: 1%;
+  z-index: 500;
+}
