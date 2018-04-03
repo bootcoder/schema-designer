@@ -24,6 +24,7 @@ class SandBox extends Component {
   componentDidMount () {
     window.addEventListener('resize', this.handleWindowResize, false)
     window.addEventListener('keyup', this.handleEscape, false)
+    this.handleWindowResize()
   }
 
   handleEscape (e) {

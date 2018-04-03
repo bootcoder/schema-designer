@@ -5,7 +5,26 @@ export function deselectNavRow () {
 }
 
 export function resizeSandbox (width, height) {
-  return {type: types.RESIZE_SANDBOX, width, height}
+  return (dispatch, getState) => {
+    const { tables } = getState()
+
+    // Check provided w/h do not exceed bounds of schema
+    // Pass largest value to resize sandbox
+    let biggestX = 0
+    let biggestY = 0
+
+    tables.forEach(table => {
+      let tableX = table.position.x + table.position.width
+      let tableY = table.position.y
+      biggestX = tableX > biggestX ? tableX : biggestX
+      biggestY = tableY > biggestY ? tableY : biggestY
+    })
+
+    width = width > biggestX ? width : biggestX
+    height = height > biggestY ? height : biggestY
+
+    return dispatch({type: types.RESIZE_SANDBOX, width: width + 50, height: height + 50})
+  }
 }
 
 export function setDataType (dataType) {

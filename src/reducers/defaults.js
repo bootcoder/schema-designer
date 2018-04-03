@@ -1,12 +1,13 @@
 export const tables = [
   {
     'edit': false,
-    'connectionCount': 4,
+    'connectionCount': 2,
     'id': '2be8p0',
     'name': 'dogs',
     'position': {
-      'x': 583,
-      'y': 45
+      'x': 615,
+      'y': 41,
+      'width': 90
     },
     'rows': [
       {
@@ -22,9 +23,9 @@ export const tables = [
           },
           'outbound': {
             'pw7yu2-1': {
-              'x': 212,
-              'y': 127,
-              'width': 90,
+              'x': 390,
+              'y': 243,
+              'width': 107,
               'height': 28
             }
           }
@@ -37,8 +38,8 @@ export const tables = [
         'tableID': '2be8p0',
         'title': 'id',
         'position': {
-          'x': 583,
-          'y': 73,
+          'x': 615,
+          'y': 69,
           'width': 90,
           'height': 28
         }
@@ -57,8 +58,8 @@ export const tables = [
         'tableID': '2be8p0',
         'title': 'age',
         'position': {
-          'x': 583,
-          'y': 101,
+          'x': 615,
+          'y': 97,
           'width': 90,
           'height': 28
         }
@@ -77,8 +78,8 @@ export const tables = [
         'tableID': '2be8p0',
         'title': 'name',
         'position': {
-          'x': 583,
-          'y': 129,
+          'x': 615,
+          'y': 125,
           'width': 90,
           'height': 28
         }
@@ -97,8 +98,8 @@ export const tables = [
         'tableID': '2be8p0',
         'title': 'breed',
         'position': {
-          'x': 583,
-          'y': 157,
+          'x': 615,
+          'y': 153,
           'width': 90,
           'height': 28
         }
@@ -117,8 +118,8 @@ export const tables = [
         'tableID': '2be8p0',
         'title': 'birthday',
         'position': {
-          'x': 583,
-          'y': 185,
+          'x': 615,
+          'y': 181,
           'width': 90,
           'height': 28
         }
@@ -137,8 +138,8 @@ export const tables = [
         'tableID': '2be8p0',
         'title': 'cute?',
         'position': {
-          'x': 583,
-          'y': 213,
+          'x': 615,
+          'y': 209,
           'width': 90,
           'height': 28
         }
@@ -152,8 +153,9 @@ export const tables = [
     'id': '8gp5qd',
     'name': 'owners',
     'position': {
-      'x': 584,
-      'y': 299
+      'x': 214,
+      'y': 117,
+      'width': 90
     },
     'rows': [
       {
@@ -162,8 +164,8 @@ export const tables = [
           'inbound': {},
           'outbound': {
             'pw7yu2-2': {
-              'x': 212,
-              'y': 155,
+              'x': 390,
+              'y': 271,
               'width': 107,
               'height': 28
             }
@@ -177,8 +179,8 @@ export const tables = [
         'tableID': '8gp5qd',
         'title': 'id',
         'position': {
-          'x': 584,
-          'y': 327,
+          'x': 214,
+          'y': 144,
           'width': 90,
           'height': 28
         }
@@ -197,8 +199,8 @@ export const tables = [
         'tableID': '8gp5qd',
         'title': 'age',
         'position': {
-          'x': 584,
-          'y': 355,
+          'x': 214,
+          'y': 172,
           'width': 90,
           'height': 28
         }
@@ -213,18 +215,18 @@ export const tables = [
         'dataType': 'text',
         'edit': false,
         'id': '8gp5qd-2',
-        'selected': false,
+        'selected': true,
         'tableID': '8gp5qd',
         'title': 'name',
         'position': {
-          'x': 584,
-          'y': 383,
+          'x': 214,
+          'y': 200,
           'width': 90,
           'height': 28
         }
       }
     ],
-    'selected': false
+    'selected': true
   },
   {
     'edit': false,
@@ -232,8 +234,9 @@ export const tables = [
     'id': 'pw7yu2',
     'name': 'dog_owners',
     'position': {
-      'x': 212,
-      'y': 99
+      'x': 390,
+      'y': 217,
+      'width': 107
     },
     'rows': [
       {
@@ -257,9 +260,9 @@ export const tables = [
         'tableID': 'pw7yu2',
         'title': 'dog_id',
         'position': {
-          'x': 212,
-          'y': 127,
-          'width': 90,
+          'x': 390,
+          'y': 243,
+          'width': 107,
           'height': 28
         }
       },
@@ -284,8 +287,8 @@ export const tables = [
         'tableID': 'pw7yu2',
         'title': 'owner_id',
         'position': {
-          'x': 212,
-          'y': 155,
+          'x': 390,
+          'y': 273,
           'width': 107,
           'height': 28
         }
@@ -299,8 +302,9 @@ export const tables = [
     'id': '9h52tb',
     'name': 'toys',
     'position': {
-      'x': 929,
-      'y': 198
+      'x': 400,
+      'y': 31,
+      'width': 90
     },
     'rows': [
       {
@@ -317,8 +321,8 @@ export const tables = [
         'tableID': '9h52tb',
         'title': 'id',
         'position': {
-          'x': 929,
-          'y': 226,
+          'x': 400,
+          'y': 58,
           'width': 90,
           'height': 28
         }
@@ -329,8 +333,8 @@ export const tables = [
           'inbound': {},
           'outbound': {
             '2be8p0-1': {
-              'x': 583,
-              'y': 73,
+              'x': 615,
+              'y': 69,
               'width': 90,
               'height': 28
             }
@@ -344,8 +348,8 @@ export const tables = [
         'tableID': '9h52tb',
         'title': 'dog_id',
         'position': {
-          'x': 929,
-          'y': 254,
+          'x': 400,
+          'y': 86,
           'width': 90,
           'height': 28
         }
@@ -364,8 +368,8 @@ export const tables = [
         'tableID': '9h52tb',
         'title': 'name',
         'position': {
-          'x': 929,
-          'y': 282,
+          'x': 400,
+          'y': 114,
           'width': 90,
           'height': 28
         }
@@ -380,17 +384,17 @@ export const tables = [
         'dataType': 'varchar',
         'edit': false,
         'id': '9h52tb-3',
-        'selected': true,
+        'selected': false,
         'tableID': '9h52tb',
         'title': 'brand',
         'position': {
-          'x': 929,
-          'y': 310,
-          'width': 90,
-          'height': 28
+          'x': 400,
+          'y': 143,
+          'height': 28,
+          'width': 90
         }
       }
     ],
-    'selected': true
+    'selected': false
   }
 ]
