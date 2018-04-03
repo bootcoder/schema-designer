@@ -73,6 +73,14 @@ export default function tableReducer (state = defaults.tables, action) {
         return Object.assign({}, table, {selected: true})
       })
 
+    case types.SET_DEFAULT_SANDBOX_VIEW:
+      return state.map(table => {
+        const rows = table.rows.map(row => {
+          return Object.assign({}, row, {edit: false})
+        })
+        return Object.assign({}, table, {rows, edit: false})
+      })
+
     case types.TOGGLE_EDIT_ROW:
       return state.map((table) => {
         const rows = table.rows.map((row) => {
@@ -82,7 +90,7 @@ export default function tableReducer (state = defaults.tables, action) {
             return Object.assign({}, row, {edit: false})
           }
         })
-        return Object.assign({}, table, {rows: rows})
+        return Object.assign({}, table, {rows})
       })
 
     case types.TOGGLE_EDIT_TABLE:

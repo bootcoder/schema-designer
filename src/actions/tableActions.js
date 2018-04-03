@@ -174,6 +174,10 @@ export function disableEditAndSave () {
   }
 }
 
+export function setDefaultSandboxView () {
+  return {type: types.SET_DEFAULT_SANDBOX_VIEW}
+}
+
 export function loadSchema (tables) {
   return dispatch => {
     (async () => {

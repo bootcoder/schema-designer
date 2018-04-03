@@ -33,6 +33,9 @@ export default function navReducer (state = defaultState, action) {
     case types.SET_DATA_TYPE:
       return Object.assign({}, state, {dataType: dataTypes[action.dataType]})
 
+    case types.SET_DEFAULT_SANDBOX_VIEW:
+      return Object.assign({}, state, {displayLoadScreen: false, addFKOrigin: null, rmFKOrigin: null})
+
     case types.SET_ID_ADD_FK:
       return Object.assign({}, state, {addFKOrigin: action.rowID})
 

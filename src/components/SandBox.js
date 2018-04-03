@@ -16,12 +16,25 @@ class SandBox extends Component {
     this.displayTable = this.displayTable.bind(this)
     this.displayLoadScreen = this.displayLoadScreen.bind(this)
     this.handleWindowResize = this.handleWindowResize.bind(this)
+    this.handleEscape = this.handleEscape.bind(this)
     this.renderAllConnectionPaths = this.renderAllConnectionPaths.bind(this)
     this.renderTableConnectionPath = this.renderTableConnectionPath.bind(this)
   }
 
   componentDidMount () {
     window.addEventListener('resize', this.handleWindowResize, false)
+    window.addEventListener('keyup', this.handleEscape, false)
+  }
+
+  handleEscape (e) {
+    e = e || window.event
+    var escapePressed = false
+    if ('key' in e) {
+      escapePressed = (e.key === 'Escape' || e.key === 'Esc')
+    } else {
+      escapePressed = (e.keyCode === 27)
+    }
+    if (escapePressed) { this.props.actions.setDefaultSandboxView() }
   }
 
   handleWindowResize () {
