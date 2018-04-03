@@ -67,6 +67,7 @@ export function addNewRow (tableID) {
       let { tables } = getState()
       let cleanTable = helpers.findTableWithID(tables, tableID)
       let newRow = helpers.generateRow(cleanTable)
+      // newRow.edit = true
       dispatch(addRow(tableID, newRow))
       resolve(newRow)
     }).then((row) => {

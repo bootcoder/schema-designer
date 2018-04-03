@@ -13,7 +13,7 @@ export function generateNewTable () {
   const newTableID = Math.random().toString(36).substring(2, 5) + Math.random().toString(36).substring(2, 5)
 
   const newTable = {
-    edit: false,
+    edit: true,
     connectionCount: 0,
     id: newTableID,
     // NOTE: DEVELOPMENT DEBUGGER ONLY:
@@ -41,7 +41,7 @@ export function generateRow (table) {
     },
     connectionColor,
     dataType: 'int',
-    edit: false,
+    edit: true,
     id: generateRowID(table),
     selected: false,
     tableID: table.id,
