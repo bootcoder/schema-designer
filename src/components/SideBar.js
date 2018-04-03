@@ -42,7 +42,7 @@ class SideBar extends Component {
   }
 
   handleLoadSchema () {
-
+    this.props.actions.loadSchemaFromLocalStorage()
   }
 
   handleMoveDown () {

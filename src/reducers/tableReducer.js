@@ -9,8 +9,14 @@ export default function tableReducer (state = defaults.tables, action) {
         return Object.assign({}, table, {rows: [...table.rows, action.row]})
       })
 
+    case types.CLEAR_TABLES:
+      return []
+
     case types.CREATE_TABLE:
       return [...state, action.table]
+
+    case types.LOAD_SCHEMA:
+      return action.tables
 
     case types.MOVE_DOWN:
       return state.map((table) => {
@@ -22,9 +28,6 @@ export default function tableReducer (state = defaults.tables, action) {
         rows.splice(targetIndex + 1, 0, row)
         return Object.assign({}, table, {rows})
       })
-
-    case types.CLEAR_TABLES:
-      return []
 
     case types.MOVE_UP:
       return state.map((table) => {

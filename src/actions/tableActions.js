@@ -174,6 +174,19 @@ export function disableEditAndSave () {
   }
 }
 
+export function loadSchema (tables) {
+  return {type: types.LOAD_SCHEMA, tables}
+}
+
+export function loadSchemaFromLocalStorage () {
+  return (dispatch, getState) => {
+    const payload = window.localStorage.getItem('tables')
+    const tables = payload && JSON.parse(payload)
+    console.log(tables)
+    dispatch(loadSchema(tables))
+  }
+}
+
 export function moveDown (tableID, rowID) {
   return {type: types.MOVE_DOWN, tableID, rowID}
 }
