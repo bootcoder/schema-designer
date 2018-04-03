@@ -329,6 +329,7 @@ export function updateAllOutboundConnections () {
     cleanTables.map(table => {
       if (table.connectionCount < 1) { return table }
       table.rows.map(row => {
+        if (Object.keys(row.connections.outbound).length < 1) { return row }
         Object.keys(row.connections.outbound).map(connection => {
           let { cleanRow } = helpers.findRowWithID(tables, connection)
           row.connections.outbound[connection] = cleanRow.position
