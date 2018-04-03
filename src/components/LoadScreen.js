@@ -13,6 +13,7 @@ class LoadScreen extends Component {
 
     this.clearLocalStorage = this.clearLocalStorage.bind(this)
     this.displayLocalStorageLoadButton = this.displayLocalStorageLoadButton.bind(this)
+    this.handleCopy = this.handleCopy.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleSave = this.handleSave.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -25,6 +26,11 @@ class LoadScreen extends Component {
 
   componentDidMount () {
     this.textarea.focus()
+  }
+
+  handleCopy () {
+    this.textarea.select()
+    document.execCommand('copy')
   }
 
   handleChange (e) {
@@ -65,12 +71,14 @@ class LoadScreen extends Component {
     }
 
     return (
-      <Draggable bounds='parent' >
+      <Draggable bounds='parent' handle={'.load'}>
         <div className='LoadScreen' style={divStyle}>
-          <h4>Save / Load<button onClick={this.props.setDefaultSandboxView}>X</button></h4>
-          <button onClick={this.handleSave}>Save Schema / Generate JSON</button>
-          {this.displayLocalStorageLoadButton()}
-          <hr />
+          <div className='load'>
+            <h4>Save / Load<button onClick={this.props.setDefaultSandboxView}>X</button></h4>
+            <button onClick={this.handleSave}>Save Schema / Generate JSON</button>
+            {this.displayLocalStorageLoadButton()}
+            <hr />
+          </div>
           <p>Paste or copy Schema JSON here.</p>
           <form onSubmit={this.handleSubmit}>
             <textarea
@@ -82,6 +90,7 @@ class LoadScreen extends Component {
             />
             <br />
             <input type='submit' value='Load Schema' />
+            <button onClick={this.handleCopy}>Copy Payload</button>
           </form>
         </div>
       </Draggable>

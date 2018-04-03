@@ -23,7 +23,7 @@ export function resizeSandbox (width, height) {
     width = width > biggestX ? width : biggestX
     height = height > biggestY ? height : biggestY
 
-    return dispatch({type: types.RESIZE_SANDBOX, width: width + 50, height: height + 50})
+    return dispatch({type: types.RESIZE_SANDBOX, width: width + 150, height: height + 250})
   }
 }
 
