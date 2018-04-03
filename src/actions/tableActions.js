@@ -202,6 +202,13 @@ export function removeTable (tableID) {
   }
 }
 
+export function saveSchemaToLocalStorage () {
+  return (dispatch, getState) => {
+    const { tables } = getState()
+    window.localStorage.setItem('tables', JSON.stringify(tables))
+  }
+}
+
 function selectNextRow (tableID, rowID) {
   return (dispatch, getState) => {
     let { tables } = getState()

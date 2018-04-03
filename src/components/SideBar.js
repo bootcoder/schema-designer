@@ -10,11 +10,13 @@ class SideBar extends Component {
     this.handleCreateTable = this.handleCreateTable.bind(this)
     this.handleClearTables = this.handleClearTables.bind(this)
     this.handleEditRow = this.handleEditRow.bind(this)
+    this.handleLoadSchema = this.handleLoadSchema.bind(this)
     this.handleMoveDown = this.handleMoveDown.bind(this)
     this.handleMoveUp = this.handleMoveUp.bind(this)
     this.handleRemoveFK = this.handleRemoveFK.bind(this)
     this.handleRemoveRow = this.handleRemoveRow.bind(this)
     this.handleRemoveTable = this.handleRemoveTable.bind(this)
+    this.handleSaveSchema = this.handleSaveSchema.bind(this)
   }
 
   handleAddFK () {
@@ -39,6 +41,10 @@ class SideBar extends Component {
     this.props.actions.toggleEditRow(this.props.nav.selectedTableID, this.props.nav.selectedRowID)
   }
 
+  handleLoadSchema () {
+
+  }
+
   handleMoveDown () {
     this.props.actions.moveDown(this.props.nav.selectedTableID, this.props.nav.selectedRowID)
   }
@@ -59,6 +65,10 @@ class SideBar extends Component {
     if (window.confirm('Remove this table')) {
       this.props.actions.removeTable(this.props.nav.selectedTableID)
     }
+  }
+
+  handleSaveSchema () {
+    this.props.actions.saveSchemaToLocalStorage()
   }
 
   render () {
@@ -88,6 +98,10 @@ class SideBar extends Component {
               <a onClick={this.handleMoveDown}><li>Down</li></a>
               <a onClick={this.handleAddFK}><li>+ FK</li></a>
               <a onClick={this.handleRemoveFK}><li>- FK</li></a>
+              <div className='sidebar-break' />
+              <p className='sidebar-title'>State:</p>
+              <a onClick={this.handleSaveSchema}><li>Save</li></a>
+              <a onClick={this.handleLoadSchema}><li>Load</li></a>
               <div className='sidebar-break' />
             </ul>
           </div>
