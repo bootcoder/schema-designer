@@ -11,6 +11,10 @@ class LoadScreen extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
+  componentDidMount () {
+    this.textarea.focus()
+  }
+
   handleChange (e) {
     let payload = e.target.value
     this.setState({payload})
@@ -36,6 +40,7 @@ class LoadScreen extends Component {
           <textarea
             rows='50'
             cols='100'
+            ref={(input) => { this.textarea = input }}
             value={this.state.payload}
             onChange={this.handleChange}
           />
