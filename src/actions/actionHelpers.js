@@ -120,7 +120,8 @@ export function setRowPositionFromTable (tables, row) {
   return cleanRow
 }
 
-export function setTableWidthFromDOM (tables, table) {
+export function setTableWidthFromDOM (table) {
+  console.log(table)
   const cleanTable = cloneObject(table)
   const tableElement = document.getElementById(table.id)
   const position = tableElement.getBoundingClientRect()

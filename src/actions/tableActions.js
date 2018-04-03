@@ -37,6 +37,7 @@ export function addForeignKeyConnection (destRowID, orgRowID) {
 }
 
 function removeForeignKeyConnection (destRowID, orgRowID) {
+  console.log(destRowID, orgRowID)
   return (dispatch, getState) => {
     const { tables } = getState()
 
@@ -63,22 +64,19 @@ function removeForeignKeyConnection (destRowID, orgRowID) {
 
 export function addNewRow (tableID) {
   return (dispatch, getState) => {
-    new Promise((resolve, reject) => {
-      let { tables } = getState()
+    (async () => {
+      let { tables, nav } = getState()
       let cleanTable = helpers.findTableWithID(tables, tableID)
       let newRow = helpers.generateRow(cleanTable)
-      // newRow.edit = true
-      dispatch(addRow(tableID, newRow))
-      resolve(newRow)
-    }).then((row) => {
-      dispatch(updateRow(helpers.setRowPositionFromDOM(row)))
-      return dispatch(selectRow(tableID, row.id))
-    })
+      await dispatch(addRow(tableID, newRow, nav.selectedRowID))
+      await dispatch(updateRow(helpers.setRowPositionFromDOM(newRow)))
+      return dispatch(selectRow(tableID, newRow.id))
+    })()
   }
 }
 
-export function addRow (tableID, row) {
-  return {type: types.ADD_ROW, tableID, row}
+export function addRow (tableID, row, selectedRowID) {
+  return {type: types.ADD_ROW, tableID, row, selectedRowID}
 }
 
 export function createTable () {
@@ -91,6 +89,7 @@ export function createTable () {
       await dispatch(disableEditAndSave())
       await dispatch(deselectOtherRows(table.id))
       await dispatch(checkSetRowSelection(table.id))
+      await dispatch(toggleEditTable(table.id))
       return table
     })()
   }
@@ -292,17 +291,16 @@ export function selectRow (tableID, rowID = null) {
     let { tables, nav } = getState()
 
     // Handles when adding a new foreign key
-    if (nav.addFKOrigin !== null && nav.addFKOrigin !== rowID) {
-      new Promise((resolve, reject) => {
-        dispatch(addForeignKeyConnection(rowID, nav.addFKOrigin))
-        resolve(tableID)
-      }).then(tableID => {
+    if (rowID !== null && nav.addFKOrigin !== null && nav.addFKOrigin !== rowID) {
+      (async () => {
+        console.log(rowID)
+        await dispatch(addForeignKeyConnection(rowID, nav.addFKOrigin))
         return dispatch(selectRow(tableID, rowID))
-      })
+      })()
     }
 
     // Handles when removing a foreign key
-    if (nav.rmFKOrigin !== null && nav.rmFKOrigin !== rowID) {
+    if (rowID !== null && nav.rmFKOrigin !== null && nav.rmFKOrigin !== rowID) {
       // Just had to use the new hotness!
       (async () => {
         await dispatch(removeForeignKeyConnection(rowID, nav.rmFKOrigin))
@@ -335,6 +333,7 @@ export function selectTable (tableID) {
 }
 
 export function toggleEditRow (tableID, rowID) {
+  console.log(tableID, rowID)
   return (dispatch, getState) => {
     (async () => {
       await dispatch({ type: types.TOGGLE_EDIT_ROW, tableID, rowID })
@@ -417,7 +416,7 @@ export function updateTableWidth (tableID) {
   return (dispatch, getState) => {
     const { tables } = getState()
     const cleanTable = helpers.findTableWithID(tables, tableID)
-    const updatedTablePosition = helpers.setTableWidthFromDOM(tables, cleanTable)
+    const updatedTablePosition = helpers.setTableWidthFromDOM(cleanTable)
     return dispatch(updateTable(updatedTablePosition))
   }
 }

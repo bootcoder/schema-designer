@@ -66,7 +66,7 @@ class SideBar extends Component {
   }
 
   handleRemoveTable () {
-    if (window.confirm('Remove this table')) {
+    if (window.confirm('Remove the selected table?')) {
       this.props.actions.removeTable(this.props.nav.selectedTableID)
     }
   }

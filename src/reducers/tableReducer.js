@@ -6,7 +6,14 @@ export default function tableReducer (state = defaults.tables, action) {
     case types.ADD_ROW:
       return state.map((table) => {
         if (table.id !== action.tableID) { return table }
-        return Object.assign({}, table, {rows: [...table.rows, action.row]})
+        if (action.selectedRowID === '') {
+          return Object.assign({}, table, {rows: [...table.rows, action.row]})
+        }
+        const targetIndex = table.rows.findIndex((row) => row.id === action.selectedRowID)
+        let rows = [...table.rows]
+        rows.splice(targetIndex + 1, 0, action.row)
+        console.log(rows)
+        return Object.assign({}, table, {rows})
       })
 
     case types.CLEAR_TABLES:
