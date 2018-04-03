@@ -117,8 +117,7 @@ class Table extends Component {
         bounds='parent'
         position={{x: details.position.x, y: details.position.y}}
         onDrag={this.handleDrag}
-        onStop={this.handleStop}
-        handle='.handle' >
+        onStop={this.handleStop} >
         <div
           id={details.id}
           className={details.selected ? 'Table selected-table' : 'Table'}>

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Draggable from 'react-draggable'
 import '../css/LoadScreen.css'
 
 class LoadScreen extends Component {
@@ -64,24 +65,26 @@ class LoadScreen extends Component {
     }
 
     return (
-      <div className='LoadScreen' style={divStyle}>
-        <h4>Save / Load<button onClick={this.props.setDefaultSandboxView}>X</button></h4>
-        <button onClick={this.handleSave}>Save Schema / Generate JSON</button>
-        {this.displayLocalStorageLoadButton()}
-        <hr />
-        <p>Paste or copy Schema JSON here.</p>
-        <form onSubmit={this.handleSubmit}>
-          <textarea
-            rows='15'
-            cols='60'
-            ref={(input) => { this.textarea = input }}
-            value={this.state.payload}
-            onChange={this.handleChange}
-          />
-          <br />
-          <input type='submit' value='Load Schema' />
-        </form>
-      </div>
+      <Draggable bounds='parent' >
+        <div className='LoadScreen' style={divStyle}>
+          <h4>Save / Load<button onClick={this.props.setDefaultSandboxView}>X</button></h4>
+          <button onClick={this.handleSave}>Save Schema / Generate JSON</button>
+          {this.displayLocalStorageLoadButton()}
+          <hr />
+          <p>Paste or copy Schema JSON here.</p>
+          <form onSubmit={this.handleSubmit}>
+            <textarea
+              rows='15'
+              cols='60'
+              ref={(input) => { this.textarea = input }}
+              value={this.state.payload}
+              onChange={this.handleChange}
+            />
+            <br />
+            <input type='submit' value='Load Schema' />
+          </form>
+        </div>
+      </Draggable>
     )
   }
 }
