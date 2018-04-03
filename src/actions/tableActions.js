@@ -352,7 +352,7 @@ export function updateTable (table) {
   return {type: types.UPDATE_TABLE, table}
 }
 
-function updateTableWidth (tableID) {
+export function updateTableWidth (tableID) {
   return (dispatch, getState) => {
     const { tables } = getState()
     const cleanTable = helpers.findTableWithID(tables, tableID)

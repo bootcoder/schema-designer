@@ -63,6 +63,10 @@ class Table extends Component {
   }
 
   handleDrag (e, data) {
+    // Check to see that a table has width. This is an edge case
+    if (this.props.details.position.width === undefined) {
+      this.props.actions.updateTableWidth(this.props.details.id)
+    }
     // IF table has connections
     // Iterate over each row and each connection
     // console.log('*******************************************')
