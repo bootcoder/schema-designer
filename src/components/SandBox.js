@@ -49,6 +49,7 @@ class SandBox extends Component {
       if (table.connectionCount > 0) {
         return this.renderTableConnectionPath(table)
       }
+      return null
     })
   }
 
