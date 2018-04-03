@@ -19,6 +19,10 @@ class SideBar extends Component {
     this.handleSaveSchema = this.handleSaveSchema.bind(this)
   }
 
+  componentWillMount () {
+    this.sideBarMidpoint = {top: this.props.nav.windowHeight / 2}
+  }
+
   handleAddFK () {
     this.props.actions.setIDAddFK(this.props.nav.selectedRowID)
   }
@@ -79,6 +83,7 @@ class SideBar extends Component {
         <div className='container'>
           <label htmlFor='slide' className='toggle'>
             <img
+              style={this.sideBarMidpoint}
               className='toggle-img'
               src={require('../images/arrow.png')}
               alt='slide' />
