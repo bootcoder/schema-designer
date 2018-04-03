@@ -1,5 +1,5 @@
-.sidebar-content * {
-  outline: 1px solid gray;
+.sidebar-content {
+  /* outline: 1px solid gray; */
 }
 
 .sidebar-content .sidebar-title {
@@ -38,14 +38,14 @@ cursor: pointer;
 
 .sidebar-content {
 position: fixed;
-top: 10px;
+top: 32px;
 bottom: 0;
 left: 0;
 -moz-transition: left 1.0s ease;
 transition: left 1.0s ease;
 width: auto;
 text-align: center;
-padding: 1.5em;
+padding: 1em;
 background: #19C4BC;
 z-index: 100;
 }
@@ -58,9 +58,9 @@ width: 100%;
 }
 
 .sidebar-content a li{
-font-size: 1.2em;
+font-size: 1.1em;
 margin: 0;
-margin-bottom: 16px;
+margin-bottom: 1%;
 cursor: pointer;
 text-decoration: none;
 line-height: 200%;

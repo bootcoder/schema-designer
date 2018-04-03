@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux'
 import * as tableActions from '../actions/tableActions'
 import * as navActions from '../actions/navActions'
 import SideBar from './SideBar'
+import Header from './Header'
 import LoadScreen from './LoadScreen'
 import ConnectionPath from './ConnectionPath'
 import Table from './Table'
@@ -134,6 +135,7 @@ class SandBox extends Component {
   render () {
     return (
       <div className='app-container'>
+        <Header nav={this.props.nav} />
         <SideBar actions={this.props.actions} nav={this.props.nav} />
         {this.displayLoadScreen()}
         <div className='SandBox' style={{width: this.props.nav.windowWidth, height: this.props.nav.windowHeight}} >

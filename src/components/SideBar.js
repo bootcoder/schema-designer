@@ -100,7 +100,7 @@ class SideBar extends Component {
               <a onClick={this.handleAddFK}><li>+ FK</li></a>
               <a onClick={this.handleRemoveFK}><li>- FK</li></a>
               <div className='sidebar-break' />
-              <p className='sidebar-title'>State:</p>
+              <p className='sidebar-title'>Schema:</p>
               <a onClick={this.handleSaveSchema}><li>Save</li></a>
               <a onClick={this.handleLoadSchema}><li>Load</li></a>
               <div className='sidebar-break' />

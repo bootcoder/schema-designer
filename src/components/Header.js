@@ -4,8 +4,11 @@ import '../css/Header.css'
 
 class Header extends Component {
   render () {
+    this.headerStyle = {
+      width: this.props.nav.windowWidth
+    }
     return (
-      <header className='Header'>
+      <header className='Header' style={this.headerStyle}>
         <ul className='nav-items'>
           <li className='nav-item'>
             <img
