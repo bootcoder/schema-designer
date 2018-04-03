@@ -175,14 +175,18 @@ export function disableEditAndSave () {
 }
 
 export function loadSchema (tables) {
-  return {type: types.LOAD_SCHEMA, tables}
+  return dispatch => {
+    (async () => {
+      await dispatch({type: types.LOAD_SCHEMA, tables})
+      return dispatch(selectRow(tables[0].id, tables[0].rows[0].id))
+    })()
+  }
 }
 
 export function loadSchemaFromLocalStorage () {
   return (dispatch, getState) => {
     const payload = window.localStorage.getItem('tables')
     const tables = payload && JSON.parse(payload)
-    console.log(tables)
     dispatch(loadSchema(tables))
   }
 }
@@ -274,10 +278,13 @@ export function selectRow (tableID, rowID = null) {
       })()
     }
 
+    // Disable all edits when selecting a different row
     if (rowID !== null && (tableID !== nav.selectedTableID || rowID !== nav.selectedRowID)) {
       dispatch(disableEditAndSave())
     }
 
+    // Edgecase when attempting to select with no input given.
+    //
     if (rowID === null) {
       let rows = tables.filter(table => table.id === tableID)[0].rows
       rowID = rows.length > 0 && rows[rows.length - 1].id
