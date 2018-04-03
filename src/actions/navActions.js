@@ -4,6 +4,10 @@ export function deselectNavRow () {
   return {type: types.DESELECT_NAV_ROW}
 }
 
+export function resizeSandbox (width, height) {
+  return {type: types.RESIZE_SANDBOX, width, height}
+}
+
 export function setDataType (dataType) {
   return {type: types.SET_DATA_TYPE, dataType}
 }

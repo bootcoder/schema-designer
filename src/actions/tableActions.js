@@ -333,10 +333,12 @@ export function updateAllOutboundConnections () {
         Object.keys(row.connections.outbound).map(connection => {
           let { cleanRow } = helpers.findRowWithID(tables, connection)
           row.connections.outbound[connection] = cleanRow.position
+          return connection
         })
         return row
       })
       dispatch(updateTable(table))
+      return table
     })
   }
 }

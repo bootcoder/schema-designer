@@ -3,6 +3,7 @@ import * as dataTypes from './dataTypes'
 
 const defaultState = {
   addFKOrigin: null,
+  customSize: false,
   dataType: dataTypes.pg,
   displayLoadScreen: false,
   rmFKOrigin: null,
@@ -22,6 +23,9 @@ export default function navReducer (state = defaultState, action) {
 
     case types.REMOVE_FK_OF_ORIGIN_ROW:
       return Object.assign({}, state, {addFKOrigin: null, rmFKOrigin: null})
+
+    case types.RESIZE_SANDBOX:
+      return Object.assign({}, state, {windowWidth: action.width, windowHeight: action.height})
 
     case types.SET_DATA_TYPE:
       return Object.assign({}, state, {dataType: dataTypes[action.dataType]})

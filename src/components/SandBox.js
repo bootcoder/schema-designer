@@ -15,8 +15,19 @@ class SandBox extends Component {
 
     this.displayTable = this.displayTable.bind(this)
     this.displayLoadScreen = this.displayLoadScreen.bind(this)
+    this.handleWindowResize = this.handleWindowResize.bind(this)
     this.renderAllConnectionPaths = this.renderAllConnectionPaths.bind(this)
     this.renderTableConnectionPath = this.renderTableConnectionPath.bind(this)
+  }
+
+  componentDidMount () {
+    window.addEventListener('resize', this.handleWindowResize, false)
+  }
+
+  handleWindowResize () {
+    if (this.props.nav.customSize === false) {
+      this.props.actions.resizeSandbox(window.innerWidth, window.innerHeight)
+    }
   }
 
   renderAllConnectionPaths () {
