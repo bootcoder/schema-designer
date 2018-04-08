@@ -55,11 +55,14 @@ class Table extends Component {
   }
 
   displayTableOptions () {
-    return (
-      <div className='table-options'>
-        <span onClick={() => console.log('twas clicked')}>+</span>
-      </div>
-    )
+    if (this.props.details.selected) {
+      return (
+        <div className='table-options'>
+          <button onClick={() => this.props.actions.addNewRow(this.props.details.id)}>+ Row</button>
+          <button onClick={() => this.props.actions.setIDAddFK(this.props.nav.selectedRowID)}>+ FK</button>
+        </div>
+      )
+    }
   }
 
   handleDrag (e, data) {
@@ -122,8 +125,8 @@ class Table extends Component {
           id={details.id}
           className={details.selected ? 'Table selected-table' : 'Table'}>
           {this.displayTableName()}
-          {/* {this.displayTableOptions()} */}
           {details.rows.map(this.displayRows)}
+          {this.displayTableOptions()}
         </div>
       </Draggable>
     )

@@ -15,7 +15,6 @@
 
 .handle {
   text-align: center;
-  /* color: lightgray; */
   background-color: #19C4BC;
   padding: 5px 10px 5px 10px;
   margin: 0;
@@ -26,4 +25,27 @@
   outline-color: lime;
   outline-width: 3px;
   outline-style: solid;
+}
+
+.table-options {
+  background-color: #19C4BC;
+}
+
+.table-options button {
+  margin-top: 2px;
+  background-color: #19C4BC;
+}
+
+.table-options button:hover {
+  background-color: #53e2d9;
+}
+
+.table-options button:first-child {
+  /* margin-left: 1px; */
+  float: left;
+}
+
+.table-options button:last-child {
+  /* margin-right: 1px; */
+  float: right;
 }
