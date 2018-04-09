@@ -37,7 +37,6 @@ export function addForeignKeyConnection (destRowID, orgRowID) {
 }
 
 function removeForeignKeyConnection (destRowID, orgRowID) {
-  console.log(destRowID, orgRowID)
   return (dispatch, getState) => {
     const { tables } = getState()
 
@@ -286,14 +285,12 @@ function selectNextRow (tableID, rowID) {
 }
 
 export function selectRow (tableID, rowID = null) {
-  console.log('=> selectRow')
   return (dispatch, getState) => {
     let { tables, nav } = getState()
 
     // Handles when adding a new foreign key
     if (rowID !== null && nav.addFKOrigin !== null && nav.addFKOrigin !== rowID) {
       (async () => {
-        console.log(rowID)
         await dispatch(addForeignKeyConnection(rowID, nav.addFKOrigin))
         return dispatch(selectRow(tableID, rowID))
       })()
@@ -333,7 +330,6 @@ export function selectTable (tableID) {
 }
 
 export function toggleEditRow (tableID, rowID) {
-  console.log(tableID, rowID)
   return (dispatch, getState) => {
     (async () => {
       await dispatch({ type: types.TOGGLE_EDIT_ROW, tableID, rowID })

@@ -108,24 +108,20 @@ class SandBox extends Component {
 
     // Full Left - Set start anchor left
     if (startLeft < endLeft && startRight < endLeft) {
-      // console.log('full left')
       clnStart.x += clnStart.width
 
     // Mid Left - Set under flag true
     } else if (startLeft < endLeft && startRight > endLeft) {
-      // console.log('mid left')
       clnStart.under = true
 
     // Mid Right - Set under flag true - Set both anchors right
     } else if (startLeft < endRight && startRight > endRight) {
-      // console.log('mid right')
       clnStart.under = true
       clnStart.x += clnStart.width
       clnEnd.x += clnEnd.width
 
     // Full Right - Set end anchor right
     } else if (startLeft > endRight) {
-      // console.log('full right')
       clnEnd.x += clnEnd.width
     }
 

@@ -12,7 +12,6 @@ export default function tableReducer (state = defaults.tables, action) {
         const targetIndex = table.rows.findIndex((row) => row.id === action.selectedRowID)
         let rows = [...table.rows]
         rows.splice(targetIndex + 1, 0, action.row)
-        console.log(rows)
         return Object.assign({}, table, {rows})
       })
 

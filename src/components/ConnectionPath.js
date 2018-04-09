@@ -4,7 +4,6 @@ class ConnectionPath extends Component {
   render () {
     const { start, end, color } = this.props
     if (Object.keys(start).length > 1) {
-      // console.log('drawing path')
       const half = Math.floor((end.x - start.x) / 2)
       const startHalf = start.under === true ? start.x - (half * 2) : start.x + half
 
@@ -25,7 +24,6 @@ class ConnectionPath extends Component {
         ${/* X,Y End */''}
         ${end.x}
         ${end.y}`
-      // console.log(pathString)
 
       return (
         <path
