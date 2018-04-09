@@ -1,4 +1,5 @@
 import genRowColor from './rowColors.js'
+import uuid from 'uuid/v1'
 
 // //////////////////////
 // ///// HELPERS ////////
@@ -10,7 +11,7 @@ export function cloneObject (obj) {
 
 // DEFAULT table lives here.
 export function generateNewTable () {
-  const newTableID = Math.random().toString(36).substring(2, 5) + Math.random().toString(36).substring(2, 5)
+  const newTableID = uuid().split('-')[0]
 
   const newTable = {
     edit: true,
