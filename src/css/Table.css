@@ -27,25 +27,25 @@
   outline-style: solid;
 }
 
+
 .table-options {
+  overflow: hidden;
   background-color: #19C4BC;
 }
 
 .table-options button {
-  margin-top: 2px;
-  background-color: #19C4BC;
+  margin: 4px 0px;
+  background-color: lightgray;
 }
 
 .table-options button:hover {
-  background-color: #53e2d9;
+  background-color: gray;
 }
 
 .table-options button:first-child {
-  /* margin-left: 1px; */
   float: left;
 }
 
 .table-options button:last-child {
-  /* margin-right: 1px; */
   float: right;
 }
