@@ -35,8 +35,6 @@ class EditRow extends Component {
 
   handleSave (event) {
     event.preventDefault()
-    // const newRow = Object.assign({}, this.props.details, {edit: false})
-    // this.props.actions.updateRow(newRow)
     this.props.actions.toggleEditRow(this.props.details.tableID, this.props.details.id)
   }
 

@@ -262,13 +262,12 @@ html, body {
 .table-options button {
   *padding: 1%;
   border-radius: 5px;
-  margin: 4px 0px;
-  background-color: #e9e9e9;
-  margin: 3% 0%;
+  margin: 3px 0px;
+  background-color: goldenrod;
   text-align: center;
   vertical-align: middle;
   cursor: pointer;
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 700;
   -webkit-border-radius: 5px;
   border-bottom-color: #c3c3c3;
