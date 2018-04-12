@@ -6,6 +6,10 @@ import uuid from 'uuid/v1'
 // //////////////////////
 
 export function cloneObject (obj) {
+  if (!obj) {
+    window.alert('No valid selection.')
+    return null
+  }
   return JSON.parse(JSON.stringify(obj))
 }
 
@@ -59,7 +63,7 @@ export function generateRowID (table) {
     return `${table.id}-${0}`
   }
   const findTrailingDigits = /-(\d+)/
-  const lastID = table.rows.length > 0 && table.rows.reduce((max, b) => {
+  const lastID = table.rows.length && table.rows.reduce((max, b) => {
     const id = parseInt(findTrailingDigits.exec(b.id)[1], 10)
     return Math.max(max, id)
   }, parseInt(findTrailingDigits.exec(table.rows[0].id)[1], 10))
