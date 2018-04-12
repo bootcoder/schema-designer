@@ -309,7 +309,7 @@ export function selectRow (tableID, rowID = null) {
     if (rowID !== null && (tableID !== nav.selectedTableID || rowID !== nav.selectedRowID)) {
       (async () => {
         await dispatch(disableEditAndSave())
-        await dispatch(updateTableWidth(tableID))
+        await dispatch(updateAllTablesWidth())
         dispatch(updateAllTableRowsPosition(tableID))
       })()
     }
@@ -412,12 +412,24 @@ export function updateTable (table) {
   return {type: types.UPDATE_TABLE, table}
 }
 
+export function updateAllTablesWidth () {
+  return (dispatch, getState) => {
+    const { tables } = getState()
+    tables.map(table => {
+      const updatedTablePosition = helpers.setTableWidthFromDOM(table);
+      (async () => {
+        await dispatch(updateTable(updatedTablePosition))
+        return dispatch(updateAllTableRowsPosition(table.id))
+      })()
+    })
+  }
+}
+
 export function updateTableWidth (tableID) {
   return (dispatch, getState) => {
     const { tables } = getState()
     const cleanTable = helpers.findTableWithID(tables, tableID)
     const updatedTablePosition = helpers.setTableWidthFromDOM(cleanTable)
-    console.log(updatedTablePosition.position.width)
     return dispatch(updateTable(updatedTablePosition))
   }
 }
