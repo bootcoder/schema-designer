@@ -1,13 +1,16 @@
 .EditRow {
-  width: 150px;
-  padding: 5px;
+  width: 100%;
   font: 13px Arial, Helvetica, sans-serif; }
 
+.EditRow form {
+  width: 150px;
+  padding: 5px; }
+
 .EditRow .input-field {
-  width: 100%; }
+  width: 150px; }
 
 .EditRow .Select {
-  max-width: 150px; }
+  width: 150px; }
 
 .EditRow label > span {
   width: 50%;
@@ -45,7 +48,7 @@
   border: none;
   padding: 8px 15px 8px 15px;
   background: #FF8500;
-  color: #fff;
+  color: black;
   box-shadow: 1px 1px 4px #DADADA;
   -moz-box-shadow: 1px 1px 4px #DADADA;
   -webkit-box-shadow: 1px 1px 4px #DADADA;
@@ -55,6 +58,6 @@
 
 .EditRow input[type=submit]:hover {
   background: #EA7B00;
-  color: #fff; }
+  color: black; }
 
 /*# sourceMappingURL=EditRow.css.map */
