@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Draggable from 'react-draggable'
-import '../css/LoadScreen.css'
 
 class LoadScreen extends Component {
   constructor (props) {

@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import Draggable from 'react-draggable'
 import Row from './Row'
 import EditRow from './EditRow'
-import '../css/Table.css'
 
 class Table extends Component {
   constructor (props, context) {

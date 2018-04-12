@@ -8,7 +8,6 @@ import Header from './Header'
 import LoadScreen from './LoadScreen'
 import ConnectionPath from './ConnectionPath'
 import Table from './Table'
-import '../css/SandBox.css'
 
 class SandBox extends Component {
   constructor (props, context) {

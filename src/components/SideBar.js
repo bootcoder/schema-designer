@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import '../css/SideBar.css'
 
 class SideBar extends Component {
   constructor (props, context) {
