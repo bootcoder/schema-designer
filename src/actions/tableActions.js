@@ -305,9 +305,13 @@ export function selectRow (tableID, rowID = null) {
       })()
     }
 
-    // Disable all edits when selecting a different row
+    // Disable all edits when selecting a different row then reset all widths
     if (rowID !== null && (tableID !== nav.selectedTableID || rowID !== nav.selectedRowID)) {
-      dispatch(disableEditAndSave())
+      (async () => {
+        await dispatch(disableEditAndSave())
+        await dispatch(updateTableWidth(tableID))
+        dispatch(updateAllTableRowsPosition(tableID))
+      })()
     }
 
     // Edgecase when attempting to select with no input given.
@@ -413,6 +417,7 @@ export function updateTableWidth (tableID) {
     const { tables } = getState()
     const cleanTable = helpers.findTableWithID(tables, tableID)
     const updatedTablePosition = helpers.setTableWidthFromDOM(cleanTable)
+    console.log(updatedTablePosition.position.width)
     return dispatch(updateTable(updatedTablePosition))
   }
 }
