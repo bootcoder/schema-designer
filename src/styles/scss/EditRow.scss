@@ -1,17 +1,16 @@
-
 .EditRow {
   width: 100%;
   font: 13px Arial, Helvetica, sans-serif;
 }
 
 .EditRow form {
+  border: 2px solid crimson;
   overflow: hidden;
   width: 150px;
   padding: 5px;
 }
 
 .EditRow .input-field {
-  // width: 100%;
   width: 150px;
 }
 
@@ -68,10 +67,10 @@
   float: left;
 }
 
-.EditRow input[type=submit] {
+%edit-row-btn {
   border: none;
+  cursor: pointer;
   padding: 8px 15px 8px 15px;
-  background: #FF8500;
   display: inline;
   color: black;
   box-shadow: 1px 1px 4px #DADADA;
@@ -80,6 +79,11 @@
   border-radius: 3px;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
+}
+
+.EditRow input[type=submit] {
+  @extend %edit-row-btn;
+  background: #FF8500;
 }
 
 .EditRow input[type=submit]:hover {
