@@ -115,6 +115,7 @@ class Table extends Component {
     return (
       <Draggable
         bounds='parent'
+        handle='.handle'
         position={{x: details.position.x, y: details.position.y}}
         onDrag={this.handleDrag}
         onStop={this.handleStop} >
