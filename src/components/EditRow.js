@@ -7,8 +7,9 @@ class EditRow extends Component {
     super(props)
     this.optionsFromDataTypes = this.optionsFromDataTypes.bind(this)
     this.handleChange = this.handleChange.bind(this)
-    this.handleSelectChange = this.handleSelectChange.bind(this)
+    this.handleRemoveRow = this.handleRemoveRow.bind(this)
     this.handleSave = this.handleSave.bind(this)
+    this.handleSelectChange = this.handleSelectChange.bind(this)
   }
 
   optionsFromDataTypes () {
@@ -25,6 +26,11 @@ class EditRow extends Component {
     let newState = Object.assign({}, this.props.details)
     newState[target.name] = value
     this.props.actions.updateRow(newState)
+  }
+
+  handleRemoveRow (e) {
+    e.preventDefault()
+    this.props.actions.removeRow(this.props.details.tableID, this.props.details.id)
   }
 
   handleSave (event) {
@@ -104,8 +110,10 @@ class EditRow extends Component {
             />
             <span>Allow NULL</span>
           </div>
-
-          <label><input type='submit' value='Save Row' /></label>
+          <div>
+            <label><input type='submit' value='Save' className='float-left' /></label>
+            <label><input type='submit' onClick={this.handleRemoveRow} value='Remove' className='float-right' /></label>
+          </div>
         </form>
       </div>
     )

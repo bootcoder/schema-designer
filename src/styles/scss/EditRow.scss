@@ -5,6 +5,7 @@
 }
 
 .EditRow form {
+  overflow: hidden;
   width: 150px;
   padding: 5px;
 }
@@ -57,10 +58,21 @@
   border: 1px solid #0C0;
 }
 
+.EditRow .float-right {
+  width: 45%;
+  float: right;
+}
+
+.EditRow .float-left {
+  width: 45%;
+  float: left;
+}
+
 .EditRow input[type=submit] {
   border: none;
   padding: 8px 15px 8px 15px;
   background: #FF8500;
+  display: inline;
   color: black;
   box-shadow: 1px 1px 4px #DADADA;
   -moz-box-shadow: 1px 1px 4px #DADADA;
