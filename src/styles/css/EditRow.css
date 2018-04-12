@@ -46,20 +46,15 @@
 .EditRow .input-field:focus {
   border: 1px solid #0C0; }
 
-.EditRow .float-right {
+.EditRow .btn-right, .EditRow .btn-left {
   width: 45%;
-  float: right; }
-
-.EditRow .float-left {
-  width: 45%;
-  float: left; }
-
-.EditRow input[type=submit] {
-  border: none;
+  border: 1px solid black;
   cursor: pointer;
-  padding: 8px 15px 8px 15px;
   display: inline;
   color: black;
+  font-weight: 700;
+  font-size: 11px;
+  text-align: center;
   box-shadow: 1px 1px 4px #DADADA;
   -moz-box-shadow: 1px 1px 4px #DADADA;
   -webkit-box-shadow: 1px 1px 4px #DADADA;
@@ -67,11 +62,16 @@
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px; }
 
-.EditRow input[type=submit] {
-  background: #FF8500; }
+.EditRow .btn-right {
+  background: #FF8500;
+  float: right; }
+
+.EditRow .btn-left {
+  background: yellowgreen;
+  float: left; }
 
 .EditRow input[type=submit]:hover {
-  background: #EA7B00;
+  background: gray;
   color: black; }
 
 /*# sourceMappingURL=EditRow.css.map */

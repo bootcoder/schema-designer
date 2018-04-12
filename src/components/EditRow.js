@@ -109,8 +109,8 @@ class EditRow extends Component {
             <span>Allow NULL</span>
           </div>
           <div>
-            <label><input type='submit' value='Save' className='float-left' /></label>
-            <label><input type='submit' onClick={this.handleRemoveRow} value='Remove' className='float-right' /></label>
+            <label><input type='submit' value='Save' className='btn-left' /></label>
+            <label><input type='submit' onClick={this.handleRemoveRow} value='Remove' className='btn-right' /></label>
           </div>
         </form>
       </div>
