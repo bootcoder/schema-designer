@@ -22,14 +22,20 @@ class Header extends Component {
               src={require('../images/construction.gif')}
               alt='Under Construction' />
           </li>
-          <li className='nav-item'>Demo tables pending Github adapter completion</li>
+          <li className='nav-item'>Under Construction</li>
           <li className='nav-item'>
             <img
               className='construction-img'
               src={require('../images/construction.gif')}
               alt='Under Construction' />
           </li>
-          <li className='nav-item'><Link to='/'>Load or Clear tables to start</Link></li>
+          <li className='nav-item'><Link to='/'>Load / Clear tables to start</Link></li>
+          <li className='nav-item'>
+            <img
+              className='construction-img'
+              src={require('../images/construction.gif')}
+              alt='Under Construction' />
+          </li>
         </ul>
       </header>
     )
