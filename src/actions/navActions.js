@@ -10,8 +10,10 @@ export function resizeSandbox (width, height) {
 
     // Check provided w/h do not exceed bounds of schema
     // Pass largest value to resize sandbox
+    const sidebar = document.getElementById('Sidebar')
+    const y = sidebar.getBoundingClientRect().y
     let biggestX = 0
-    let biggestY = 0
+    let biggestY = y
 
     tables.forEach(table => {
       let tableX = table.position.x + table.position.width

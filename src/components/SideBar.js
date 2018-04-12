@@ -72,7 +72,7 @@ class SideBar extends Component {
 
   render () {
     return (
-      <div className='Sidebar'>
+      <div className='Sidebar' id='Sidebar'>
         <input id='slide' type='checkbox' role='button' />
         <div className='container'>
           <label htmlFor='slide' className='toggle'>

@@ -158,7 +158,7 @@ html, body {
   background-size: 50px 50px; }
 
 .sidebar-content {
-  /* outline: 1px solid gray; */ }
+  overflow-y: scroll; }
 
 .sidebar-content .sidebar-title {
   outline: 0; }
