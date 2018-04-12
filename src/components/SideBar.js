@@ -94,8 +94,8 @@ class SideBar extends Component {
               <a onClick={this.handleAddRow}><li>Add</li></a>
               <a onClick={this.handleEditRow}><li>Edit</li></a>
               <a onClick={this.handleRemoveRow}><li>Remove</li></a>
-              <a onClick={this.handleMoveUp}><li>Up</li></a>
-              <a onClick={this.handleMoveDown}><li>Down</li></a>
+              <a onClick={this.handleMoveUp}><li>&#8679; Up</li></a>
+              <a onClick={this.handleMoveDown}><li>&#8681; Down</li></a>
               <a onClick={this.handleAddFK}><li>+ FK</li></a>
               <a onClick={this.handleRemoveFK}><li>- FK</li></a>
               <div className='sidebar-break' />
