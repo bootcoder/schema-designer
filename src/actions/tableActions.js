@@ -64,9 +64,9 @@ function removeForeignKeyConnection (destRowID, orgRowID) {
 export function addNewRow (tableID) {
   return (dispatch, getState) => {
     (async () => {
-      let { tables, nav } = getState()
-      let cleanTable = helpers.findTableWithID(tables, tableID)
-      let newRow = helpers.generateRow(cleanTable)
+      const { tables, nav } = getState()
+      const cleanTable = helpers.findTableWithID(tables, tableID)
+      const newRow = helpers.generateRow(cleanTable)
       await dispatch(addRow(tableID, newRow, nav.selectedRowID))
       await dispatch(updateRow(helpers.setRowPositionFromDOM(newRow)))
       return dispatch(selectRow(tableID, newRow.id))
@@ -242,7 +242,7 @@ export function removeRow (tableID, rowID) {
 export function removeTable (tableID) {
   return (dispatch, getState) => {
     let { tables } = getState()
-    let newTable = tables.filter(table => table.id !== tableID)[0]
+    let newTable = tables.find(table => table.id !== tableID)
     newTable && dispatch(selectTable(newTable.id))
     return dispatch({type: types.REMOVE_TABLE, tableID})
   }
@@ -317,7 +317,7 @@ export function selectRow (tableID, rowID = null) {
     // Edgecase when attempting to select with no input given.
     //
     if (rowID === null) {
-      let rows = tables.filter(table => table.id === tableID)[0].rows
+      let rows = tables.find(table => table.id === tableID).rows
       rowID = rows.length > 0 && rows[rows.length - 1].id
     }
 
@@ -392,19 +392,30 @@ export function updateInboundConnectionOrigin (remoteRowID, currentRow, data) {
     const currentRowPosition = helpers.setRowPositionFromTable(tables, currentRow).position
     remoteRow.connections.outbound[currentRow.id] = currentRowPosition
 
-    return dispatch({type: types.UPDATE_ROW, tableID: remoteRow.tableID, rowID: remoteRow.id, row: remoteRow})
+    return dispatch({
+      type: types.UPDATE_ROW,
+      tableID: remoteRow.tableID,
+      rowID: remoteRow.id,
+      row: remoteRow})
   }
 }
 
 export function updatePosition (tableID, data) {
-  return {type: types.UPDATE_POSITION, tableID, position: {x: data.lastX, y: data.lastY}}
+  return {
+    type: types.UPDATE_POSITION,
+    tableID,
+    position: {x: data.lastX, y: data.lastY}}
 }
 
 export function updateRow (row) {
   return (dispatch, getState) => {
     const { tables } = getState()
     const updatedRowPosition = helpers.setRowPositionFromTable(tables, row)
-    return dispatch({type: types.UPDATE_ROW, tableID: row.tableID, rowID: row.id, row: updatedRowPosition})
+    return dispatch({
+      type: types.UPDATE_ROW,
+      tableID: row.tableID,
+      rowID: row.id,
+      row: updatedRowPosition})
   }
 }
 

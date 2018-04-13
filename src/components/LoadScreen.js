@@ -54,8 +54,16 @@ class LoadScreen extends Component {
         <div>
           <p>Found {this.state.localTables.length} tables in local storage.</p>
           <p>Would you like to load these now?</p>
-          <button className='load-btn' onClick={this.props.loadSchemaFromLocalStorage}>Load Local Storage</button>
-          <button className='danger-btn' onClick={this.clearLocalStorage}>CLEAR Local Storage</button>
+          <button
+            className='load-btn'
+            onClick={this.props.loadSchemaFromLocalStorage}>
+            Load Local Storage
+          </button>
+          <button
+            className='danger-btn'
+            onClick={this.clearLocalStorage}>
+            CLEAR Local Storage
+          </button>
         </div>
       )
     }
@@ -85,8 +93,7 @@ class LoadScreen extends Component {
               cols='60'
               ref={(input) => { this.textarea = input }}
               value={this.state.payload}
-              onChange={this.handleChange}
-            />
+              onChange={this.handleChange} />
             <br />
             <input type='submit' value='Load Schema' />
             <button onClick={this.handleCopy}>Copy Payload</button>

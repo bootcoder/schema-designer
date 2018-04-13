@@ -76,13 +76,13 @@ export function tableIDFromRowID (rowID) {
 }
 
 export function findTableWithID (tables, tableID) {
-  return cloneObject(tables.filter(table => table.id === tableID)[0])
+  return cloneObject(tables.find(table => table.id === tableID))
 }
 
 export function findRowWithID (tables, rowID) {
   const tableID = tableIDFromRowID(rowID)
-  const table = tables.filter(table => table.id === tableID)[0]
-  const row = table.rows.filter(row => row.id === rowID)[0]
+  const table = tables.find(table => table.id === tableID)
+  const row = table.rows.find(row => row.id === rowID)
   const cleanTable = cloneObject(table)
   const cleanRow = cloneObject(row)
   return { cleanRow, cleanTable }

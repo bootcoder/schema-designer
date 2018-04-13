@@ -14,7 +14,7 @@ class EditRow extends Component {
 
   optionsFromDataTypes () {
     let options = []
-    Object.keys(this.props.dataTypes).map((dataType, idx) => {
+    Object.keys(this.props.dataTypes).map((dataType) => {
       return options.push({value: dataType, label: dataType})
     })
     return options

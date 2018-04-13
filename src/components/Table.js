@@ -18,21 +18,23 @@ class Table extends Component {
   }
 
   displayRows (row, index) {
-    return row.edit
-      ? <EditRow
+    return row.edit ? (
+      <EditRow
         actions={this.props.actions}
         dataTypes={this.props.nav.dataType}
         details={row}
         key={row.id}
         table={this.props.details}
       />
-      : <Row
+    ) : (
+      <Row
         actions={this.props.actions}
         dataTypes={this.props.nav.dataType}
         details={row}
         key={row.id}
         table={this.props.details}
       />
+    )
   }
 
   displayTableName () {
