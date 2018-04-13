@@ -50,13 +50,6 @@ class EditRow extends Component {
     return (
       <div className='EditRow' style={{backgroundColor: `${this.props.dataTypes[details.dataType].color}`}}>
         <form onSubmit={this.handleSave} >
-          <Select
-            name='dataType'
-            value={details.dataType}
-            onChange={this.handleSelectChange}
-            options={this.optionsFromDataTypes()}
-            clearable={false}
-          />
 
           <label htmlFor='name'><span>Name:<span className='required'>*</span></span>
             <input autoFocus
@@ -67,6 +60,16 @@ class EditRow extends Component {
               onFocus={(e) => e.target.select()}
               type='text'
               value={details.title}
+            />
+          </label>
+
+          <label htmlFor='datatype'><span>DataType:</span>
+            <Select
+              name='dataType'
+              value={details.dataType}
+              onChange={this.handleSelectChange}
+              options={this.optionsFromDataTypes()}
+              clearable={false}
             />
           </label>
 

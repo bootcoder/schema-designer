@@ -3,7 +3,7 @@
   font: 13px Arial, Helvetica, sans-serif; }
 
 .EditRow form {
-  border: 2px solid crimson;
+  border: 2px solid black;
   overflow: hidden;
   width: 150px;
   padding: 5px; }
@@ -48,7 +48,7 @@
 
 .EditRow .btn-right, .EditRow .btn-left {
   width: 45%;
-  border: 1px solid black;
+  border: 1px solid gray;
   cursor: pointer;
   display: inline;
   color: black;
