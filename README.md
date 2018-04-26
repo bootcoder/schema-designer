@@ -1,1 +1,2 @@
-Schemalator - schema designer that doesn't suck...
+# Schema Designer
+[schema-designer.com](schema-designer.com)

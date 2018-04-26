@@ -1,0 +1,19 @@
+.Row {
+  padding: 5px 10px 5px 10px;
+  box-shadow: 0 -1px 0 #000;
+}
+
+.selected-row{
+  padding: 5px 0px 5px 0px;
+}
+
+.selected-title-right {
+  float: right;
+  color: red;
+}
+
+.selected-title-left {
+  margin-right: 1px;
+  float: left;
+  color: red;
+}

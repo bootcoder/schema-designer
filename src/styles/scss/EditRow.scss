@@ -1,0 +1,96 @@
+.EditRow {
+  width: 100%;
+  font: 13px Arial, Helvetica, sans-serif;
+}
+
+.EditRow form {
+  border: 2px solid black;
+  overflow: hidden;
+  width: 150px;
+  padding: 5px;
+}
+
+.EditRow .input-field {
+  width: 150px;
+}
+
+.EditRow .Select {
+  width: 150px;
+}
+
+.EditRow label > span {
+  width: 50%;
+  font-weight: bold;
+  float: left;
+  padding-top: 8px;
+}
+
+.EditRow .checkbox {
+  padding: 2px 0px 2px 0px;
+}
+
+.EditRow .checkbox span {
+  padding: 0px 0px 0px 5px;
+}
+
+
+.EditRow span.required {
+  color:red;
+}
+
+.EditRow input.input-field {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  border: 1px solid #C2C2C2;
+  box-shadow: 1px 1px 4px #EBEBEB;
+  -moz-box-shadow: 1px 1px 4px #EBEBEB;
+  -webkit-box-shadow: 1px 1px 4px #EBEBEB;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  padding: 7px;
+  outline: none;
+}
+
+.EditRow .input-field:focus {
+  border: 1px solid #0C0;
+}
+
+
+%edit-row-btn {
+  width: 45%;
+  border: 1px solid gray;
+  cursor: pointer;
+  display: inline;
+  color: black;
+  font-weight: 700;
+  font-size: 11px;
+  text-align: center;
+  box-shadow: 1px 1px 4px #DADADA;
+  -moz-box-shadow: 1px 1px 4px #DADADA;
+  -webkit-box-shadow: 1px 1px 4px #DADADA;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+}
+
+.EditRow .btn-right {
+  @extend %edit-row-btn;
+  background: #FF8500;
+  float: right;
+}
+
+.EditRow .btn-left {
+  @extend %edit-row-btn;
+  background: yellowgreen;
+  float: left;
+}
+
+.EditRow input[type=submit] {
+}
+
+.EditRow input[type=submit]:hover {
+  background: gray;
+  color: black;
+}

@@ -1,0 +1,74 @@
+.sidebar-content {
+  overflow-y: scroll; }
+
+.sidebar-content .sidebar-title {
+  outline: 0; }
+
+.sidebar-break {
+  height: 5px;
+  background-color: black;
+  width: 100%; }
+
+.sidebar-title {
+  font-size: 1.5em;
+  color: white;
+  margin: 5px; }
+
+.toggle-img {
+  height: 35px;
+  width: 35px; }
+
+.toggle {
+  text-decoration: none;
+  font-size: 2em;
+  color: rgba(0, 0, 0, 0.61);
+  -moz-transition: left 0.9s ease;
+  transition: left 0.9s ease;
+  position: fixed;
+  top: 45px;
+  left: 145px;
+  z-index: 1000;
+  cursor: pointer; }
+
+.sidebar-content {
+  position: fixed;
+  top: 32px;
+  bottom: 0;
+  left: 0;
+  -moz-transition: left 1.0s ease;
+  transition: left 1.0s ease;
+  width: auto;
+  text-align: center;
+  padding: 1em;
+  background: #19C4BC;
+  z-index: 100; }
+
+.sidebar-content ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%; }
+
+.sidebar-content a li {
+  font-size: 1.1em;
+  margin: 0;
+  margin-bottom: 1%;
+  cursor: pointer;
+  text-decoration: none;
+  line-height: 200%; }
+
+.sidebar-content a:hover {
+  color: rgba(0, 0, 0, 0.61); }
+
+#slide:checked + .container .sidebar-content {
+  left: -190px; }
+
+#slide:checked + .container .toggle {
+  left: 10px;
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1); }
+
+#slide {
+  display: none; }
+
+/*# sourceMappingURL=SideBar.css.map */
