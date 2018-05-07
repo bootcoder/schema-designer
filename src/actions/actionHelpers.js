@@ -111,6 +111,26 @@ export function setRowPositionFromDOM (row) {
   return cleanRow
 }
 
+export function removeAllConnectionsFromTable (table, tableID) {
+  table = cloneObject(table)
+  table.rows.map(row => {
+    Object.keys(row.connections.inbound).map(connection => {
+      if (tableID === tableIDFromRowID(connection)) {
+        delete row.connections.inbound[connection]
+      }
+    })
+
+    Object.keys(row.connections.outbound).map(connection => {
+      if (tableID === tableIDFromRowID(connection)) {
+        delete row.connections.outbound[connection]
+      }
+    })
+
+    return row
+  })
+  return table
+}
+
 export function setRowPositionFromTable (tables, row) {
   const cleanTable = findTableWithID(tables, row.tableID)
   let cleanRow = cloneObject(row)

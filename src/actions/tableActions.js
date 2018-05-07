@@ -189,7 +189,6 @@ export function loadSchema (tables) {
 export function loadSchemaFromJSON (payload) {
   return dispatch => {
     String(payload).replace(/^\s+|\s+$/g, '')
-    // debugger
     return dispatch(loadSchema(JSON.parse(payload)))
   }
 }
@@ -242,6 +241,12 @@ export function removeRow (tableID, rowID) {
 export function removeTable (tableID) {
   return (dispatch, getState) => {
     let { tables } = getState()
+
+    tables.map(table => {
+      let cleanTable = helpers.removeAllConnectionsFromTable(table, tableID)
+      dispatch(updateTable(cleanTable))
+    })
+
     let newTable = tables.find(table => table.id !== tableID)
     newTable && dispatch(selectTable(newTable.id))
     return dispatch({type: types.REMOVE_TABLE, tableID})
