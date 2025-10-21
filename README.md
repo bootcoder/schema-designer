@@ -1,2 +1,2 @@
 # Schema Designer
-[schema-designer.com](schema-designer.com)
+[schema-designer.com](https://www.schema-designer.com/)
